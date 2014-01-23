@@ -40,7 +40,7 @@ class interface():
                 n.update("Recherche de l'action associée a ",text)
                 n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_EXECUTE, gtk.ICON_SIZE_DIALOG))
                 n.show()
-                sp = stringParser(text,'google2ubuntu.conf')
+                sp = stringParser(text,os.getcwd()+'/google2ubuntu.conf')
             except ValueError:
                 n.update("Erreur:","Traduction Impossible")
                 n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_DIALOG_ERROR, gtk.ICON_SIZE_DIALOG))
@@ -87,8 +87,7 @@ class stringParser():
             # si oui, alors on lui passe en paramètre le dernier mot prononcé
             check = do.split('/')
             if check[0] != 'interne': 
-                if len(check) >= 4:
-                    if check[1] == 'modules':
+                if len(check) >= 4 and check[1] == 'modules':
                         wm = workWithModule(check[2],check[3],text)
                 else:
                     os.system(do)
@@ -118,6 +117,7 @@ class stringParser():
         #extraction des mots
         tab = []
         # get all words
+        key = key.rstrip('*')
         Key = key.split('*')
         for var in Key:
             # get the end of the word
@@ -132,7 +132,6 @@ class stringParser():
                 
         return tab          
     
-
 class workWithModule():
     def __init__(self,module_path,module_name,text):
         try:
@@ -145,10 +144,9 @@ class workWithModule():
             plus=ligne.split('=')[1] 
             f.close()  
             
-            os.system("clear")
-            print linker
             print text.split(linker)
             param = text.split(linker)[1]
+                        
             if plus == 1:
                 param=param.replace(' ','+')
                

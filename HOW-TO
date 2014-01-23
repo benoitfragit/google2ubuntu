@@ -1,0 +1,78 @@
+1. UTILISATION DU PROGRAMME
+Le programme proposé ici est une version light de ma version précédente
+de google2ubuntu. Je l'ai revu et corrigé de façon à le rendre plus
+rapide, plus léger et plus souple. Le script record.sh se charge 
+uniquement d'enregistrer votre voix pendant 5 secondes. Le script 
+google2ubuntu.py gère le lancement d l'acquisition audio et le parsing 
+du texte.
+
+L'ensemble des commandes sont regroupées dans le fichier google2ubuntu.conf 
+qui doit se trouver dans le même dossier que le programme google2ubuntu.py. 
+
+Pour lancer la reconnaissance, il suffit de lancer le programme google2ubuntu.py
+
+2. CONSTITUTION DU FICHIER DE CONFIGURATION
+Le fichier de configuration permet de mapper les actions aux phrases clés.
+Chaque ligne du fichier correspond à un mapping, voici un exemple:
+
+[b/B]onjour*vous=clear;echo "comment allez vous?"
+
+Ici, on voit que l'on peut mettre des minuscules ou majuscules en début
+de mot. Les * correspondent à des mots qui ne servent à rien. dans notre
+exemple "*=, comment allez". Les * permettent donc de supprimer les textes
+et espaces inutiles. La seconde partie de la ligne correspond à la commande
+à exécuter. Ces commandes peuvent être de plusieurs types:
+- commandes internes
+- commandes externes
+- appel à un module
+
+3. DESCRIPTIONS/AJOUTS DES COMMANDES
+
+	3.1 AJOUTS DE COMMANDES INTERNES
+	Certaines commandes sont considérées comme ultra-basique et sont
+	intégrés dans google2ubuntu.py. Le but est d'en avoir le moins 
+	possible. Pour l'instant, il y en a que 2: obtenir l'heure et la
+	batterie
+	
+	Pour ajouter une commande interne, il faut regarder la classe 
+	basicCommand de google2ubuntu.py et ajouter le code qui convient
+	de façon à router votre nouvelle fonction à un mot clé.
+	
+	Ensuite, pour permettre l'appel d'une telle commande, il suffit 
+	d'ajouter une ligne comme ceci dans le fichier de configuration:
+	[C/c]ombien*batterie=interne/batterie
+
+	Ici, le mot "interne" permet de détecté que l'on veut exécuté des 
+	fonctions internes. le mot clé qui sera envoyé à lors de la création
+	de la classe basicCommand est juste	après. Vous avez deviné que cette
+	ligne permet de dire au programme d'exécuter. une commande interne 
+	et d'envoyer à basicCommand le mot "batterie"
+
+3.2 AJOUTS DE COMMANDES EXTERNES
+	Il suffit d'ajouter une ligne formatée comme décrite dans la partie 2
+	
+3.3 AJOUTS DE MODULES
+	Les modules permettent d'ajouter vos propres scripts aux projets. 
+	Les modules ont été introduit pour exécuter des fonctions dont l'appel
+	fait intervenir des paramètres. Par exemple, un module météo ou un
+	module "moteur de recherche".
+	
+	L'ajout d'un nouveau module est assez simple. Il suffit de créer dans
+	le dossier modules/ un nouveau dossier portant le nom de votre module.
+	Dans ce dossier, créer votre module et ajouter à ces cotés un fichier
+	nommé args.
+	
+	Un module peut être appelé avec des arguments, on doit donc savoir quel
+	mots détecté pour séparer l'appel du module et les argument à lui envoyer
+	Par exemple: "Quelle est la météo à Paris ?" Ici, j'ai choisi " à " ce 
+	terme correspond au champ linker du fichier args. Ensuite, le second champ
+	permet de savoir si vous voulez oui ou non convertir les espaces en plus.
+	
+	L'appel d'un module ce fait en ajoutant dans le fichier de configuration
+	une ligne du type:
+	[r/R]echerche*sur=/modules/search/search.sh
+	
+	le mot "modules" permet de détecter que je fais appel à un module.
+	Ici, on voit que c'est le module de recherche qui sera exécuté. Le 
+	programme google2ubuntu.py lui enverra automatiquement le texte que
+	je prononcerai après le mot de liaison.
