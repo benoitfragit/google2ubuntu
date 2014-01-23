@@ -1,5 +1,11 @@
 *.py[cod]
 
+# sound files
+voix.flac
+
+# configuration files
+google2ubuntu.conf
+
 # C extensions
 *.so
 
