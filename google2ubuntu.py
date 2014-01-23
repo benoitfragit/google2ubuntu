@@ -25,7 +25,9 @@ class interface():
         n.update("Enregistrememnt:","En cours...")
         n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_MEDIA_RECORD, gtk.ICON_SIZE_DIALOG))
         n.show()
-        p = subprocess.check_call(['./record.sh'])  
+        command = os.path.dirname(__file__)+'/record.sh'
+        print command
+        p = subprocess.check_call([command])  
         n.update("Fin de l'enregistrement !","Envoi a Google")
         n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_NETWORK, gtk.ICON_SIZE_DIALOG))
         n.show()
@@ -44,7 +46,8 @@ class interface():
                 n.update("Recherche de l'action associée a ",text)
                 n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_EXECUTE, gtk.ICON_SIZE_DIALOG))
                 n.show()
-                sp = stringParser(text,os.getcwd()+'/google2ubuntu.conf')
+                config =  os.path.dirname(__file__) + '/google2ubuntu.conf'
+                sp = stringParser(text,config)
             except ValueError:
                 n.update("Erreur:","Traduction Impossible")
                 n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_DIALOG_ERROR, gtk.ICON_SIZE_DIALOG))
@@ -140,7 +143,7 @@ class stringParser():
 class workWithModule():
     def __init__(self,module_path,module_name,text):
         try:
-            argsfile='modules/'+module_path+'/args';
+            argsfile=os.path.dirname(__file__)+'/modules/'+module_path+'/args';
             print argsfile
             f = open(argsfile,'r')
             ligne=(f.readline()).rstrip('\n\r')  
@@ -155,8 +158,9 @@ class workWithModule():
                                    
                 if plus == 1:
                     param=param.replace(' ','+')
-        
-                os.system('./modules/'+module_path+'/'+module_name+' '+param)
+				
+                execute = os.path.dirname(__file__)+'/modules/'+module_path+'/'+module_name+' '+param
+                os.system(execute)
             else:
                 n.update("Erreur:","Vous avez appelez un module sans prononcer le mot de liaison\n"+linker)
                 n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_DIALOG_ERROR, gtk.ICON_SIZE_DIALOG))
