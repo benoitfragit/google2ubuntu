@@ -145,12 +145,19 @@ class workWithModule():
             f.close()  
             
             print text.split(linker)
-            param = text.split(linker)[1]
-                        
-            if plus == 1:
-                param=param.replace(' ','+')
-               
-            os.system('./modules/'+module_path+'/'+module_name+' '+param)
+            if text.count(linker) > 0:
+                param = text.split(linker)[1]
+                                   
+                if plus == 1:
+                    param=param.replace(' ','+')
+        
+                os.system('./modules/'+module_path+'/'+module_name+' '+param)
+            else:
+                n.update("Erreur:","Vous avez appelez un module sans prononcer le mot de liaison\n"+linker)
+                n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_DIALOG_ERROR, gtk.ICON_SIZE_DIALOG))
+                n.show()
+                time.sleep(3)
+                n.close()                
             
         except IOError:
             n.update("Erreur:","Le fichier args associé au module est absent ou illisible")
