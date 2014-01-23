@@ -1,18 +1,24 @@
 1. UTILISATION DU PROGRAMME
-Le programme proposé ici est une version light de ma version précédente
+	
+	Le programme proposé ici est une version light de ma version précédente
 de google2ubuntu. Je l'ai revu et corrigé de façon à le rendre plus
 rapide, plus léger et plus souple. Le script record.sh se charge 
 uniquement d'enregistrer votre voix pendant 5 secondes. Le script 
 google2ubuntu.py gère le lancement d l'acquisition audio et le parsing 
 du texte.
 
+Les dépendances sont pour l'instant très peu nombreuses avec python, gtk+2
+et pynotify
+
 L'ensemble des commandes sont regroupées dans le fichier google2ubuntu.conf 
 qui doit se trouver dans le même dossier que le programme google2ubuntu.py. 
 
 Pour lancer la reconnaissance, il suffit de lancer le programme google2ubuntu.py
+via un raccourci ou autre.
 
 2. CONSTITUTION DU FICHIER DE CONFIGURATION
-Le fichier de configuration permet de mapper les actions aux phrases clés.
+	
+	Le fichier de configuration permet de mapper les actions aux phrases clés.
 Chaque ligne du fichier correspond à un mapping, voici un exemple:
 
 [b/B]onjour*vous=clear;echo "comment allez vous?"
@@ -29,7 +35,8 @@ et espaces inutiles. La seconde partie de la ligne correspond à la commande
 3. DESCRIPTIONS/AJOUTS DES COMMANDES
 
 	3.1 AJOUTS DE COMMANDES INTERNES
-	Certaines commandes sont considérées comme ultra-basique et sont
+		
+		Certaines commandes sont considérées comme ultra-basique et sont
 	intégrés dans google2ubuntu.py. Le but est d'en avoir le moins 
 	possible. Pour l'instant, il y en a que 2: obtenir l'heure et la
 	batterie
@@ -48,11 +55,13 @@ et espaces inutiles. La seconde partie de la ligne correspond à la commande
 	ligne permet de dire au programme d'exécuter. une commande interne 
 	et d'envoyer à basicCommand le mot "batterie"
 
-3.2 AJOUTS DE COMMANDES EXTERNES
-	Il suffit d'ajouter une ligne formatée comme décrite dans la partie 2
+	3.2 AJOUTS DE COMMANDES EXTERNES
+		
+		Il suffit d'ajouter une ligne formatée comme décrite dans la partie 2
 	
-3.3 AJOUTS DE MODULES
-	Les modules permettent d'ajouter vos propres scripts aux projets. 
+	3.3 AJOUTS DE MODULES
+		
+		Les modules permettent d'ajouter vos propres scripts aux projets. 
 	Les modules ont été introduit pour exécuter des fonctions dont l'appel
 	fait intervenir des paramètres. Par exemple, un module météo ou un
 	module "moteur de recherche".
@@ -76,3 +85,6 @@ et espaces inutiles. La seconde partie de la ligne correspond à la commande
 	Ici, on voit que c'est le module de recherche qui sera exécuté. Le 
 	programme google2ubuntu.py lui enverra automatiquement le texte que
 	je prononcerai après le mot de liaison.
+	Exemple, si je dis: Quelle est la météo à Issy les moulineaux ? 
+	Alors Issy les moulineaux sera envoyé au script à vous de gérer
+	corretement cela dans vos script

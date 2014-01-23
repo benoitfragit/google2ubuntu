@@ -10,12 +10,16 @@ import urllib2
 import pynotify
 import time
 
+# Initialisation les notifications
 pynotify.init("Google2Ubuntu")
 n = pynotify.Notification("Google2Ubuntu est pret","")
 n.set_urgency(pynotify.URGENCY_CRITICAL)    
 n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_MEDIA_PLAY, gtk.ICON_SIZE_DIALOG))
 n.show()
+time.sleep(0.5)
 
+# La classe interface permet de lancer l'enregistrement et de communiquer
+# avec Google
 class interface():
     def __init__(self):
         n.update("Enregistrememnt:","En cours...")
@@ -56,7 +60,7 @@ class interface():
             n.close()
             sys.exit(1)
 
-            
+# Permet d'exécuter la commande associée à un mot prononcé
 class stringParser():
     def __init__(self,text,file):
         # read configuration files
@@ -131,7 +135,8 @@ class stringParser():
                 tab.extend([tmp[0]])
                 
         return tab          
-    
+
+# Permet de faire appel aux modules    
 class workWithModule():
     def __init__(self,module_path,module_name,text):
         try:
@@ -166,7 +171,8 @@ class workWithModule():
             time.sleep(3)
             n.close()
             sys.exit(1) 
-            
+ 
+# Permet de faire appel aux fonctions basiques
 class basicCommands():
     def __init__(self,text):
         if text == 'heure':
