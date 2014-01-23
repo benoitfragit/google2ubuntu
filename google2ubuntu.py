@@ -85,12 +85,15 @@ class stringParser():
             
             # on regarde si la commande fait appel à un module
             # si oui, alors on lui passe en paramètre le dernier mot prononcé
-            check = do.split('/') 
-            if len(check) >= 4:
-                if check[1] == 'modules':
-                    self.workWithModule(check[2],check[3],text)
+            check = do.split('/')
+            if check[0] != 'interne': 
+                if len(check) >= 4:
+                    if check[1] == 'modules':
+                        wm = workWithModule(check[2],check[3],text)
+                else:
+                    os.system(do)
             else:
-                os.system(do)  
+                b = basicCommands(check[1])
             
             time.sleep(1)
             n.close()
@@ -129,7 +132,9 @@ class stringParser():
                 
         return tab          
     
-    def workWithModule(self,module_path,module_name,text):
+
+class workWithModule():
+    def __init__(self,module_path,module_name,text):
         try:
             argsfile='modules/'+module_path+'/args';
             print argsfile
@@ -144,9 +149,9 @@ class stringParser():
             print linker
             print text.split(linker)
             param = text.split(linker)[1]
-            if plus == '1':
+            if plus == 1:
                 param=param.replace(' ','+')
-                
+               
             os.system('./modules/'+module_path+'/'+module_name+' '+param)
             
         except IOError:
@@ -155,6 +160,42 @@ class stringParser():
             n.show()
             time.sleep(3)
             n.close()
-            sys.exit(1)
+            sys.exit(1) 
+            
+class basicCommands():
+    def __init__(self,text):
+        if text == 'heure':
+            self.getTime()
+        elif text == 'batterie':
+            self.getPower()
+        else:
+            print "no action found"
+        
+    def getTime(self):
+        var=time.strftime('%d/%m/%y %H:%M',time.localtime())
+        n.update("Système",var)
+        n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_YES, gtk.ICON_SIZE_DIALOG))
+        n.show()
+            		
+    def getPower(self):
+        command = "acpi -b"
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        output,error  = process.communicate()
+        #parsing output
+        if output.count('Battery') > 0:
+            pcent = output.split(' ')[3]
+            rtime = output.split(' ')[4]
+            
+            if output.count('Charging') > 0:
+                message = 'En charge: '+pcent+'\n'+rtime+' avant la fin de la charge'
+            else:
+                message = 'En déchage: '+pcent+'\n'+rtime+' restant'
+        else:
+            message = "La batterie n'est pas branchée"
+        
+        n.update("Batterie",message)
+        n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_DIALOG_INFO, gtk.ICON_SIZE_DIALOG))
+        n.show()
+        time.sleep(3)
 
 g2u = interface()
