@@ -6,6 +6,7 @@ from gi.repository import Gdk
 from gi.repository import Gio
 import os
 import sys
+import subprocess
 
 class MyWindow(Gtk.ApplicationWindow):
     def __init__(self,app):
@@ -13,6 +14,7 @@ class MyWindow(Gtk.ApplicationWindow):
         self.set_default_size(200, 100)  
         self.set_resizable(False)     
         self.set_border_width(10)
+        self.get_focus()
         
         # Gtk.ListStore will hold data for the TreeView
         # Only the first two columns will be displayed
@@ -77,15 +79,22 @@ class MyWindow(Gtk.ApplicationWindow):
         toolbar.show()
 
         # Use a grid to add all item
-        grid = Gtk.Grid()
-        grid.set_row_spacing(5);
-        scrolled_window.reparent(grid)
-        grid.attach(toolbar,0,0,2,1)
-        grid.attach(scrolled_window, 0, 1, 2, 1)    
-        grid.attach(self.labelState,0,2,2,1)
+        self.grid = Gtk.Grid()
+        self.grid.set_row_spacing(2);
+        scrolled_window.reparent(self.grid)
+        self.grid.attach(toolbar,0,0,2,1)
+        self.grid.attach(scrolled_window, 0, 1, 2, 1)    
+        self.grid.attach(self.labelState,0,2,2,1)
         
-        self.add(grid)
+        self.add(self.grid)
         self.show_all()
+
+    def show_label(self,action):
+        etat = self.labelState.get_parent()
+        if action == 'show' and etat == None:
+            self.grid.attach(self.labelState,0,2,2,1)
+        elif action == 'hide' and etat != None:
+            self.grid.remove(self.labelState)
 
     def command_edited(self, widget, path, text,store):
         store[path][1] = text
@@ -94,13 +103,12 @@ class MyWindow(Gtk.ApplicationWindow):
     def key_edited(self, widget, path, text,store):
         store[path][0] = text
         self.saveTree(store)
-        self.saveTree(store)
 
     def on_changed(self, selection):
         # get the model and the iterator that points at the data in the model
         (model, iter) = selection.get_selected()
         if iter is not None:
-            self.labelState.set_text('')                  
+            self.show_label('hide')          
          
         return True
 
@@ -122,10 +130,18 @@ class MyWindow(Gtk.ApplicationWindow):
         add_button.set_tooltip_text('Ajouter une nouvelle commande')
         add_button.show()
  
+        # create a button for the "try" action
+        try_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_MEDIA_PLAY)
+        try_button.set_is_important(True)
+        toolbar.insert(try_button,1)
+        try_button.connect("clicked",self.try_command,store)
+        try_button.set_tooltip_text('Tester la commande')
+        try_button.show() 
+         
         # create a button for the "remove" action
         remove_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_REMOVE)
         remove_button.set_is_important(True)
-        toolbar.insert(remove_button,1)
+        toolbar.insert(remove_button,2)
         remove_button.connect("clicked",self.remove_clicked,store)
         remove_button.set_tooltip_text('Supprimer la commande sélectionnée')
         remove_button.show()
@@ -133,11 +149,11 @@ class MyWindow(Gtk.ApplicationWindow):
         # create a button for the "remove all" action
         all_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_STOP)
         all_button.set_is_important(True)
-        toolbar.insert(all_button,2)
+        toolbar.insert(all_button,3)
         all_button.connect("clicked",self.removeall_clicked,store)
         all_button.set_tooltip_text('Supprimer toutes les commandes')
         all_button.show() 
-        
+
         # return the complete toolbar
         return toolbar
     
@@ -148,6 +164,7 @@ class MyWindow(Gtk.ApplicationWindow):
         if len(store) != 0:
             (model, iter) = self.selection.get_selected()
             if iter is not None:
+                self.show_label('show')
                 self.labelState.set_text('Suppression: '+model[iter][0]+' '+model[iter][1]) 
                 store.remove(iter)
                 self.saveTree(store)
@@ -172,6 +189,15 @@ class MyWindow(Gtk.ApplicationWindow):
             self.saveTree(store)   
         print "Empty list"        
 
+    def try_command(self,button,store):
+        (model, iter) = self.selection.get_selected()
+        if iter is not None:
+            command = model[iter][1]
+            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            output,error  = process.communicate() 
+            self.show_label('show')       
+            self.labelState.set_text(output+'\n'+error)
+
     def populate_store(self, store):
         config = os.path.dirname(os.path.abspath(__file__)) +'/google2ubuntu.conf'
         try:
@@ -195,6 +221,7 @@ class MyWindow(Gtk.ApplicationWindow):
                 for i in range(len(store)):
                     iter = store.get_iter(i)
                     f.write(model[iter][0]+'='+model[iter][1]+'\n')
+                    self.show_label('show')
                     self.labelState.set_text('Sauvegarde des commandes')                
 
             f.close()
