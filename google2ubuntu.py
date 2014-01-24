@@ -26,7 +26,6 @@ class interface():
         n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_MEDIA_RECORD, gtk.ICON_SIZE_DIALOG))
         n.show()
         command =os.path.dirname(os.path.abspath(__file__))+'/record.sh'
-        print command
         p = subprocess.check_call([command])  
         n.update("Fin de l'enregistrement !","Envoi a Google")
         n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_NETWORK, gtk.ICON_SIZE_DIALOG))
@@ -42,13 +41,22 @@ class interface():
         try:
             ret = urllib2.urlopen(req)
             try:
-                text = json.loads(ret.read())['hypotheses'][0]['utterance']
-                n.update("Recherche de l'action associée a ",text)
-                n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_EXECUTE, gtk.ICON_SIZE_DIALOG))
-                n.show()
-                config = os.path.dirname(os.path.abspath(__file__)) + '/google2ubuntu.conf'
-                sp = stringParser(text,config)
-            except ValueError:
+                result=json.loads(ret.read())['hypotheses']
+                if len(result) != 0:
+                    text = result[0]['utterance']
+                    n.update("Recherche de l'action associée a ",text)
+                    n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_EXECUTE, gtk.ICON_SIZE_DIALOG))
+                    n.show()
+                    config = os.path.dirname(os.path.abspath(__file__)) + '/google2ubuntu.conf'
+                    sp = stringParser(text,config)
+                else:
+                    n.update("Erreur:","Je ne comprends pas ce que vous dites")
+                    n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_DIALOG_ERROR, gtk.ICON_SIZE_DIALOG))
+                    n.show()
+                    time.sleep(3)
+                    n.close()
+                    sys.exit(1)                
+            except ValueError, IndexError:
                 n.update("Erreur:","Traduction Impossible")
                 n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_DIALOG_ERROR, gtk.ICON_SIZE_DIALOG))
                 n.show()

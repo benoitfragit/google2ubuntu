@@ -13,7 +13,7 @@ class MyWindow(Gtk.ApplicationWindow):
         Gtk.Window.__init__(self, title="Gestionnaire de commandes Google2Ubuntu",application=app)
         self.set_default_size(200, 100)  
         self.set_resizable(False)     
-        self.set_border_width(10)
+        self.set_border_width(0)
         self.get_focus()
         
         # Gtk.ListStore will hold data for the TreeView
@@ -118,9 +118,14 @@ class MyWindow(Gtk.ApplicationWindow):
         toolbar = Gtk.Toolbar()
         # which is the primary toolbar of the application
         toolbar.get_style_context().add_class(Gtk.STYLE_CLASS_PRIMARY_TOOLBAR);
+        toolbar.set_icon_size(Gtk.IconSize.LARGE_TOOLBAR)    
+        toolbar.set_style(Gtk.ToolbarStyle.BOTH_HORIZ)
 
         # create a button for the "add" action, with a stock image
         add_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_ADD)
+        add_button.set_label("Ajouter")
+        image = Gtk.Image()
+        image.set_from_stock(Gtk.STOCK_ADD, Gtk.IconSize.BUTTON)
         # label is shown
         add_button.set_is_important(True)
         # insert the button at position in the toolbar
@@ -132,6 +137,7 @@ class MyWindow(Gtk.ApplicationWindow):
  
         # create a button for the "try" action
         try_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_MEDIA_PLAY)
+        try_button.set_label("Essayer")
         try_button.set_is_important(True)
         toolbar.insert(try_button,1)
         try_button.connect("clicked",self.try_command,store)
@@ -140,6 +146,7 @@ class MyWindow(Gtk.ApplicationWindow):
          
         # create a button for the "remove" action
         remove_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_REMOVE)
+        remove_button.set_label("Supprimer")
         remove_button.set_is_important(True)
         toolbar.insert(remove_button,2)
         remove_button.connect("clicked",self.remove_clicked,store)
@@ -148,6 +155,7 @@ class MyWindow(Gtk.ApplicationWindow):
         
         # create a button for the "remove all" action
         all_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_STOP)
+        all_button.set_label("Nettoyer")
         all_button.set_is_important(True)
         toolbar.insert(all_button,3)
         all_button.connect("clicked",self.removeall_clicked,store)
