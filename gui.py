@@ -28,6 +28,8 @@ class MyWindow(Gtk.ApplicationWindow):
         # the first ListStore column (text=0), which contains
         # file names
         renderer_1 = Gtk.CellRendererText()        
+        renderer_1.set_property("editable", True)
+        renderer_1.connect("edited", self.key_edited,store)
         column_1 = Gtk.TreeViewColumn('Clés', renderer_1, text=0)
         # Calling set_sort_column_id makes the treeViewColumn sortable
         # by clicking on its header. The column is sorted by
@@ -38,6 +40,8 @@ class MyWindow(Gtk.ApplicationWindow):
         
         # xalign=1 right-aligns the file sizes in the second column
         renderer_2 = Gtk.CellRendererText(xalign=1)
+        renderer_2.set_property("editable", True)
+        renderer_2.connect("edited", self.command_edited,store)
         # text=1 pulls the data from the second ListStore column
         # which contains filesizes in bytes formatted as strings
         # with thousand separators
@@ -47,16 +51,7 @@ class MyWindow(Gtk.ApplicationWindow):
         column_2.set_sort_column_id(2)
         treeview.append_column(column_2)
         
-
         # the label we use to show the selection
-        labelKey = Gtk.Label()
-        labelKey.set_text("Clés")
-        labelKey.set_justify(Gtk.Justification.LEFT) 
-        labelKey.set_halign(Gtk.Align.START)        
-        labelCommand = Gtk.Label()
-        labelCommand.set_text("Commandes")        
-        labelCommand.set_justify(Gtk.Justification.LEFT) 
-        labelCommand.set_halign(Gtk.Align.START) 
         self.labelState = Gtk.Label()
         self.labelState.set_text("Ready")
         self.labelState.set_justify(Gtk.Justification.LEFT) 
@@ -74,12 +69,6 @@ class MyWindow(Gtk.ApplicationWindow):
         scrolled_window.add(treeview)
         scrolled_window.set_min_content_height(200)
         
-        # entry text in order to add or modify itme
-        self.entryKey = Gtk.Entry()
-        self.entryCommand = Gtk.Entry()
-        self.entryKey.set_tooltip_text("Écrire ici la phrase d'appel de la nouvelle commande\nUtiliser * pour remplacer des mots inutiles.\nPour mettre une majuscule en début de mot écrire la première lettre du mot ainsi [a/A]")
-        self.entryCommand.set_tooltip_text("Commande associée à la phrase clé\nAppel d'un module par /modules/<path>\nAppel d'une commande interne par: interne/keyword")
-        
         # a toolbar created in the method create_toolbar (see below)
         toolbar = self.create_toolbar(store)
         # with extra horizontal space
@@ -92,26 +81,27 @@ class MyWindow(Gtk.ApplicationWindow):
         grid.set_row_spacing(5);
         scrolled_window.reparent(grid)
         grid.attach(toolbar,0,0,2,1)
-        grid.attach(scrolled_window, 0, 1, 2, 1)
-        grid.attach(labelKey,0,2,1,1)
-        grid.attach(self.entryKey,1,2,1,1)
-        grid.attach(labelCommand,0,3,1,1)
-        grid.attach(self.entryCommand,1,3,1,1)        
-        grid.attach(self.labelState,0,4,2,1)
+        grid.attach(scrolled_window, 0, 1, 2, 1)    
+        grid.attach(self.labelState,0,2,2,1)
         
         self.add(grid)
         self.show_all()
+
+    def command_edited(self, widget, path, text,store):
+        store[path][1] = text
+        self.saveTree(store)
+
+    def key_edited(self, widget, path, text,store):
+        store[path][0] = text
+        self.saveTree(store)
+        self.saveTree(store)
 
     def on_changed(self, selection):
         # get the model and the iterator that points at the data in the model
         (model, iter) = selection.get_selected()
         if iter is not None:
-            self.entryKey.set_text("%s" %(model[iter][0]))
-            self.entryCommand.set_text("%s" %(model[iter][1]))
             self.labelState.set_text('')                  
-        else:
-            self.entryKey.set_text("")
-            self.entryCommand.set_text("")            
+         
         return True
 
     # a method to create the toolbar
@@ -140,18 +130,10 @@ class MyWindow(Gtk.ApplicationWindow):
         remove_button.set_tooltip_text('Supprimer la commande sélectionnée')
         remove_button.show()
         
-        # create a button for the "edit" action
-        edit_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_EDIT)
-        edit_button.set_is_important(True)
-        toolbar.insert(edit_button,1)
-        edit_button.connect("clicked",self.edit_clicked,store)
-        edit_button.set_tooltip_text('Modifier la commande sélectionnée')
-        edit_button.show()        
-        
         # create a button for the "remove all" action
         all_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_STOP)
         all_button.set_is_important(True)
-        toolbar.insert(all_button,3)
+        toolbar.insert(all_button,2)
         all_button.connect("clicked",self.removeall_clicked,store)
         all_button.set_tooltip_text('Supprimer toutes les commandes')
         all_button.show() 
@@ -160,13 +142,8 @@ class MyWindow(Gtk.ApplicationWindow):
         return toolbar
     
     def add_clicked(self,button,store):
-        key = self.entryKey.get_text()
-        command = self.entryCommand.get_text()
-        if key != '' and command != '':
-            store.append([key,command])
-            self.saveTree(store)
-            self.labelState.set_text('Ajout: '+key+' '+command)
-    
+            store.append(['',''])
+
     def remove_clicked(self,button,store):
         if len(store) != 0:
             (model, iter) = self.selection.get_selected()
@@ -194,20 +171,7 @@ class MyWindow(Gtk.ApplicationWindow):
             
             self.saveTree(store)   
         print "Empty list"        
-        
-    def edit_clicked(self,button,store):
-        if len(store) != 0:
-            (model, iter) = self.selection.get_selected()
-            if iter is not None:
-                key = self.entryKey.get_text()
-                command = self.entryCommand.get_text()   
-                if key != '' and command != '':
-                    store.remove(iter)
-                    store.append([key,command])
-                    self.saveTree(store)
-                    self.labelState.set_text('Modification...')                
 
-                     
     def populate_store(self, store):
         config = os.path.dirname(os.path.abspath(__file__)) +'/google2ubuntu.conf'
         try:

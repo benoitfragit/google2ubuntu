@@ -34,7 +34,7 @@ class interface():
         self.sendto()    
 
     def sendto(self):
-        filename='voix.flac'
+        filename='/tmp/voix.flac'
         f = open(filename)
         data = f.read()
         f.close()
