@@ -2,6 +2,7 @@
 #!/usr/bin/env python
 # use  the new PyGObject binding
 from gi.repository import Gtk
+from gi.repository import Notify
 from gi.repository import Gdk
 from gi.repository import Gio
 import os
@@ -162,6 +163,15 @@ class MyWindow(Gtk.ApplicationWindow):
         all_button.set_tooltip_text('Supprimer toutes les commandes')
         all_button.show() 
 
+        # create a button for the "Help" action
+        help_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_HELP)
+        help_button.set_label("Aide")
+        help_button.set_is_important(True)
+        toolbar.insert(help_button,4)
+        help_button.connect("clicked",self.help_clicked )
+        help_button.set_tooltip_text("Afficher l'aide")
+        help_button.show() 
+
         # return the complete toolbar
         return toolbar
     
@@ -205,6 +215,9 @@ class MyWindow(Gtk.ApplicationWindow):
             output,error  = process.communicate() 
             self.show_label('show')       
             self.labelState.set_text(output+'\n'+error)
+    
+    def help_clicked(self,button):
+        win = HelpWindow()
 
     def populate_store(self, store):
         config = os.path.dirname(os.path.abspath(__file__)) +'/google2ubuntu.conf'
@@ -235,6 +248,39 @@ class MyWindow(Gtk.ApplicationWindow):
             f.close()
         except IOError:    
             print "Unable to write the file"
+
+
+class HelpWindow():
+    # constructor for a window (the parent window)
+    def __init__(self):
+        #a  Gtk.AboutDialog
+        self.aboutdialog = Gtk.AboutDialog()
+
+        # lists of authors and documenters (will be used later)
+        authors = ["Franquet Benoit"]
+        documenters = ["Franquet Benoit"]
+
+        # we fill in the aboutdialog
+        self.aboutdialog.set_program_name("Aide Google2Ubuntu")
+        self.aboutdialog.set_copyright("Copyright \xc2\xa9 2014 Franquet Benoit")
+        self.aboutdialog.set_authors(authors)
+        self.aboutdialog.set_documenters(documenters)
+        self.aboutdialog.set_website("https://github.com/benoitfragit/google2ubuntu")
+        self.aboutdialog.set_website_label("http://forum.ubuntu-fr.org/viewtopic.php?id=804211&p=1")
+
+        # we do not want to show the title, which by default would be "About AboutDialog Example"
+        # we have to reset the title of the messagedialog window after setting the program name
+        self.aboutdialog.set_title("")
+
+        # to close the aboutdialog when "close" is clicked we connect the
+        # "response" signal to on_close
+        self.aboutdialog.connect("response", self.on_close)
+        # show the aboutdialog
+        self.aboutdialog.show()
+        
+    # destroy the aboutdialog
+    def on_close(self, action, parameter):
+        action.destroy()
 
 class MyApplication(Gtk.Application):
     def __init__(self):
