@@ -25,7 +25,7 @@ class interface():
         n.update("Enregistrememnt:","En cours...")
         n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_MEDIA_RECORD, gtk.ICON_SIZE_DIALOG))
         n.show()
-        command = os.path.dirname(__file__)+'/record.sh'
+        command =os.path.dirname(os.path.abspath(__file__))+'/record.sh'
         print command
         p = subprocess.check_call([command])  
         n.update("Fin de l'enregistrement !","Envoi a Google")
@@ -46,7 +46,7 @@ class interface():
                 n.update("Recherche de l'action associée a ",text)
                 n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_EXECUTE, gtk.ICON_SIZE_DIALOG))
                 n.show()
-                config =  os.path.dirname(__file__) + '/google2ubuntu.conf'
+                config = os.path.dirname(os.path.abspath(__file__)) + '/google2ubuntu.conf'
                 sp = stringParser(text,config)
             except ValueError:
                 n.update("Erreur:","Traduction Impossible")
@@ -124,7 +124,7 @@ class stringParser():
         #extraction des mots
         tab = []
         # get all words
-        key = key.rstrip('*')
+        key = key.strip('*')
         Key = key.split('*')
         for var in Key:
             # get the end of the word
@@ -143,7 +143,7 @@ class stringParser():
 class workWithModule():
     def __init__(self,module_path,module_name,text):
         try:
-            argsfile=os.path.dirname(__file__)+'/modules/'+module_path+'/args';
+            argsfile=os.path.dirname(os.path.abspath(__file__))+'/modules/'+module_path+'/args';
             print argsfile
             f = open(argsfile,'r')
             ligne=(f.readline()).rstrip('\n\r')  
@@ -159,7 +159,7 @@ class workWithModule():
                 if plus == 1:
                     param=param.replace(' ','+')
 				
-                execute = os.path.dirname(__file__)+'/modules/'+module_path+'/'+module_name+' '+param
+                execute = os.path.dirname(os.path.abspath(__file__))+'/modules/'+module_path+'/'+module_name+' '+param
                 os.system(execute)
             else:
                 n.update("Erreur:","Vous avez appelez un module sans prononcer le mot de liaison\n"+linker)
@@ -204,7 +204,7 @@ class basicCommands():
             if output.count('Charging') > 0:
                 message = 'En charge: '+pcent+'\n'+rtime+' avant la fin de la charge'
             else:
-                message = 'En déchage: '+pcent+'\n'+rtime+' restant'
+                message = 'En décharge: '+pcent+'\n'+rtime+' restant'
         else:
             message = "La batterie n'est pas branchée"
         
