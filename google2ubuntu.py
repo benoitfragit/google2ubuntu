@@ -3,6 +3,7 @@
 from subprocess import *
 from gi.repository import Gtk
 from gi.repository import Notify
+from os.path import expanduser
 import sys
 import subprocess 
 import os
@@ -60,7 +61,7 @@ class interface():
                 if len(result) != 0:
                     text = result[0]['utterance']
                     notif.update("Recherche de l'action associee à:",text,'EXECUTE')
-                    config = os.path.dirname(os.path.abspath(__file__)) + '/google2ubuntu.conf'
+                    config = expanduser('~') + '/.config/google2ubuntu/google2ubuntu.conf'
                     sp = stringParser(text,config)
                 else:
                     notif.update('Erreur','Je ne comprends pas ce que vous dites','ERROR')
@@ -219,6 +220,6 @@ class basicCommands():
         notif.update('Batterie',message,'INFO')
         time.sleep(3)
 
-# Initialisation les notifications
+# Initialisation des notifications
 notif = notification('Google2Ubuntu','prêt...')
 g2u = interface()

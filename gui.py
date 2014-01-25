@@ -5,6 +5,7 @@ from gi.repository import Gtk
 from gi.repository import Notify
 from gi.repository import Gdk
 from gi.repository import Gio
+from os.path import expanduser
 import os
 import sys
 import subprocess
@@ -12,7 +13,7 @@ import subprocess
 class MyWindow(Gtk.ApplicationWindow):
     def __init__(self,app):
         Gtk.Window.__init__(self, title="Gestionnaire de commandes Google2Ubuntu",application=app)
-        self.set_default_size(200, 100)  
+        self.set_default_size(500, 500)  
         self.set_resizable(False)     
         self.set_border_width(0)
         self.get_focus()
@@ -220,8 +221,8 @@ class MyWindow(Gtk.ApplicationWindow):
         win = HelpWindow()
 
     def populate_store(self, store):
-        config = os.path.dirname(os.path.abspath(__file__)) +'/google2ubuntu.conf'
-        try:
+        config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.conf'
+        try:            
             f = open(config,"r")
             for line in f:
                 if len(line.split('=')) == 2:
@@ -235,9 +236,12 @@ class MyWindow(Gtk.ApplicationWindow):
     def saveTree(self,store):
         # if there is still an entry in the model
         (model, aa) = self.selection.get_selected()
-        config = os.path.dirname(os.path.abspath(__file__)) +'/google2ubuntu.conf'            
+        config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.conf'            
         try:
-            f = open(config,"w")        
+            if not os.path.exists(os.path.dirname(config)):
+                os.makedirs(os.path.dirname(config))
+            
+            f = open(config,"w") 
             if len(store) != 0:
                 for i in range(len(store)):
                     iter = store.get_iter(i)
