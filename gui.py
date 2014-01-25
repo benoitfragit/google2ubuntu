@@ -17,6 +17,7 @@ class MyWindow(Gtk.ApplicationWindow):
         self.set_resizable(False)     
         self.set_border_width(0)
         self.get_focus()
+        self.set_position(Gtk.WindowPosition.CENTER)
         
         # Gtk.ListStore will hold data for the TreeView
         # Only the first two columns will be displayed
@@ -27,6 +28,9 @@ class MyWindow(Gtk.ApplicationWindow):
         
         treeview = Gtk.TreeView(model=store)
         treeview.set_tooltip_text('Liste des commandes')
+        treeview.set_headers_visible(False)
+        treeview.set_enable_search(True)
+        treeview.set_search_column(0)
 
         # The first TreeView column displays the data from
         # the first ListStore column (text=0), which contains
@@ -52,7 +56,7 @@ class MyWindow(Gtk.ApplicationWindow):
         column_2 = Gtk.TreeViewColumn('Commandes', renderer_2, text=1)
         # Mak the Treeview column sortable by the third ListStore column
         # which contains the actual file sizes
-        column_2.set_sort_column_id(2)
+        column_2.set_sort_column_id(1)
         treeview.append_column(column_2)
         
         # the label we use to show the selection
@@ -119,13 +123,28 @@ class MyWindow(Gtk.ApplicationWindow):
         # a toolbar
         toolbar = Gtk.Toolbar()
         # which is the primary toolbar of the application
-        toolbar.get_style_context().add_class(Gtk.STYLE_CLASS_PRIMARY_TOOLBAR);
         toolbar.set_icon_size(Gtk.IconSize.LARGE_TOOLBAR)    
         toolbar.set_style(Gtk.ToolbarStyle.BOTH_HORIZ)
 
+        # create a menu
+        menu = Gtk.Menu()
+        externe = Gtk.MenuItem(label="Commande externe")
+        externe.connect("activate",self.add_clicked,store,'externe')
+        externe.show()
+        menu.append(externe)
+        interne = Gtk.MenuItem(label="Commande interne")
+        interne.connect("activate",self.add_clicked,store,'interne')
+        interne.show()
+        menu.append(interne)        
+        module = Gtk.MenuItem(label="Module")
+        module.connect("activate",self.add_clicked,store,'module')
+        module.show()
+        menu.append(module)
+
         # create a button for the "add" action, with a stock image
-        add_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_ADD)
+        add_button = Gtk.MenuToolButton.new_from_stock(Gtk.STOCK_ADD)
         add_button.set_label("Ajouter")
+        add_button.set_menu(menu)
         image = Gtk.Image()
         image.set_from_stock(Gtk.STOCK_ADD, Gtk.IconSize.BUTTON)
         # label is shown
@@ -133,7 +152,7 @@ class MyWindow(Gtk.ApplicationWindow):
         # insert the button at position in the toolbar
         toolbar.insert(add_button, 0)
         # show the button
-        add_button.connect("clicked", self.add_clicked,store)
+        add_button.connect("clicked", self.add_clicked,store,'externe')
         add_button.set_tooltip_text('Ajouter une nouvelle commande')
         add_button.show()
  
@@ -176,8 +195,14 @@ class MyWindow(Gtk.ApplicationWindow):
         # return the complete toolbar
         return toolbar
     
-    def add_clicked(self,button,store):
-            store.append(['',''])
+    def add_clicked(self,button,store,add_type):
+        if add_type == 'externe':
+            store.append(['','='])
+        elif add_type == 'interne':
+            store.append(['','interne/'])
+        elif add_type == 'module':
+            store.append(['','/modules/'])
+        
 
     def remove_clicked(self,button,store):
         if len(store) != 0:
