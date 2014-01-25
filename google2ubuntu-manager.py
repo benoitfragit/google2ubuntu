@@ -201,7 +201,26 @@ class MyWindow(Gtk.ApplicationWindow):
         elif add_type == 'interne':
             store.append(['','interne/'])
         elif add_type == 'module':
-            store.append(['','/modules/'])
+            mo = moduleSelection()
+            module = mo.getModule()
+            if module != '-1':
+                name = module.split('/')[-1]
+                module=module.strip(name)
+                if os.path.exists(module+'/args'):
+                    path = module.split('/')[-2]
+                    store.append(['<votre phrase clé>','/modules/'+path+'/'+name])
+                    module_path=expanduser('~')+'/.config/google2ubuntu/modules/'
+                    if not os.path.exists(module_path):
+                        os.makedirs(os.path.dirname(config))
+                        os.system('cp -r '+module+' '+module_path)
+                else:
+                    self.show_label('show')
+                    self.labelState.set_text("Erreur, le fichier args n'existe pas")
+            else:
+                self.show_label('show')
+                self.labelState.set_text("Erreur, vous n'avez choisi aucun fichier")
+                
+        self.saveTree(store)
         
 
     def remove_clicked(self,button,store):
@@ -310,6 +329,25 @@ class HelpWindow():
     # destroy the aboutdialog
     def on_close(self, action, parameter):
         action.destroy()
+
+class moduleSelection():
+    def __init__(self):
+        w=Gtk.Window()
+        dialog = Gtk.FileChooserDialog("Choisissez un fichier", w,Gtk.FileChooserAction.OPEN,(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,Gtk.STOCK_OPEN, Gtk.ResponseType.OK))        
+        dialog.set_default_size(800, 400)
+
+        response = dialog.run()
+        self.module = '-1'
+        if response == Gtk.ResponseType.OK:
+            self.module=dialog.get_filename()
+        elif response == Gtk.ResponseType.CANCEL:
+            print("Cancel clicked")
+
+        dialog.destroy()
+    
+    def getModule(self):
+        return self.module
+
 
 class MyApplication(Gtk.Application):
     def __init__(self):

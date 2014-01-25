@@ -158,23 +158,22 @@ class stringParser():
 class workWithModule():
     def __init__(self,module_path,module_name,text):
         try:
-            argsfile=os.path.dirname(os.path.abspath(__file__))+'/modules/'+module_path+'/args';
+            argsfile=expanduser('~')+'/.config/google2ubuntu/modules/'+module_path+'/args';
             print argsfile
             f = open(argsfile,'r')
             ligne=(f.readline()).rstrip('\n\r')  
-            linker=ligne.split('=')[1]
+            linker=unicode(ligne.split('=')[1],"utf-8")
             ligne=(f.readline()).rstrip('\n\r')              
             plus=ligne.split('=')[1] 
             f.close()  
-            
-            print text.split(linker)
+
             if text.count(linker) > 0:
                 param = text.split(linker)[1]
                                    
                 if plus == 1:
                     param=param.replace(' ','+')
-				
-                execute = os.path.dirname(os.path.abspath(__file__))+'/modules/'+module_path+'/'+module_name+' '+param
+                print "ok go"
+                execute = expanduser('~') +'/.config/google2ubuntu/modules/'+module_path+'/'+module_name+' '+param
                 os.system(execute)
             else:
                 notif.update('Erreur',"Vous avez appelez un module sans prononcer le mot de liaison\n"+linker,'ERROR')    
