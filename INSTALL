@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#installation des dépendances
+gksudo apt-get install python-gi libnotify-dev
+
+#création du dossier dans /usr/share
+if [[ -d "/usr/share/google2ubuntu" ]];then
+	sudo rm -r /usr/share/google2ubuntu/
+	sudo mkdir /usr/share/google2ubuntu/
+else
+	sudo mkdir /usr/share/google2ubuntu/
+fi
+
+if [[ -f /usr/share/applications/google2ubuntu.desktop ]]; then
+	sudo rm /usr/share/applications/google2ubuntu.desktop
+fi
+
+#copie des fichiers
+chmod +x google2ubuntu.py
+chmod +x google2ubuntu-manager.py 
+chmod +x record.sh
+
+sudo cp google2ubuntu.py /usr/share/google2ubuntu/
+sudo cp google2ubuntu-manager.py /usr/share/google2ubuntu/
+sudo cp record.sh /usr/share/google2ubuntu/
+sudo cp icons.png /usr/share/google2ubuntu/
+sudo cp google2ubuntu.desktop /usr/share/applications/
+sudo cp LICENSE /usr/share/google2ubuntu/
+sudo cp -r modules/ /usr/share/google2ubuntu/
+
+exit 0

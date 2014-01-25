@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=google2ubuntu
+GenericName=google2ubuntu
+Comment=Utiliser la reconnaissance vocale de Google
+Icon=/usr/share/google2ubuntu/icons.png
+Exec=python /usr/share/google2ubuntu/google2ubuntu-manager.py
+Terminal=false
+StartupNotify=false
+Categories=Application
