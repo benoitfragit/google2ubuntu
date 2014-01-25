@@ -1,35 +1,50 @@
 # -*- coding: utf-8 -*-  
-#!/usr/bin/env python
+#!/usr/bin/python
 from subprocess import *
+from gi.repository import Gtk
+from gi.repository import Notify
 import sys
-import gtk
 import subprocess 
 import os
 import json
 import urllib2
-import pynotify
 import time
 
-# Initialisation les notifications
-pynotify.init("Google2Ubuntu")
-n = pynotify.Notification("Google2Ubuntu est pret","")
-n.set_urgency(pynotify.URGENCY_CRITICAL)    
-n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_MEDIA_PLAY, gtk.ICON_SIZE_DIALOG))
-n.show()
-time.sleep(0.5)
+class notification():
+    def __init__(self,titre,corps):
+        Notify.init(titre)
+        self.n = Notify.Notification.new(titre,corps,"")
+        self.n.set_urgency(Notify.Urgency.CRITICAL)    
+        self.n.set_icon_from_pixbuf(Gtk.Label().render_icon(Gtk.STOCK_MEDIA_PLAY, Gtk.IconSize.DIALOG))
+        self.n.show()
+        time.sleep(0.5)
+
+    def update(self,titre,text,typeicon):
+        self.n.update(titre,text,"")
+        if typeicon == 'RECORD':
+            self.n.set_icon_from_pixbuf(Gtk.Label().render_icon(Gtk.STOCK_MEDIA_RECORD, Gtk.IconSize.DIALOG))
+        elif typeicon == 'NETWORK':
+            self.n.set_icon_from_pixbuf(Gtk.Label().render_icon(Gtk.STOCK_MEDIA_RECORD, Gtk.IconSize.DIALOG))
+        elif typeicon == 'EXECUTE':
+            self.n.set_icon_from_pixbuf(Gtk.Label().render_icon(Gtk.STOCK_EXECUTE, Gtk.IconSize.DIALOG))
+        elif typeicon == 'ERROR':
+            self.n.set_icon_from_pixbuf(Gtk.Label().render_icon(Gtk.STOCK_DIALOG_ERROR, Gtk.IconSize.DIALOG))   
+        else:
+            self.n.set_icon_from_pixbuf(Gtk.Label().render_icon(Gtk.STOCK_INFO, Gtk.IconSize.DIALOG))    
+        
+        self.n.show()
+    
+    def close(self):
+        self.n.close()
 
 # La classe interface permet de lancer l'enregistrement et de communiquer
 # avec Google
 class interface():
     def __init__(self):
-        n.update("Enregistrememnt:","En cours...")
-        n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_MEDIA_RECORD, gtk.ICON_SIZE_DIALOG))
-        n.show()
+        notif.update('Enregistrement:','En cours','RECORD')
         command =os.path.dirname(os.path.abspath(__file__))+'/record.sh'
         p = subprocess.check_call([command])  
-        n.update("Fin de l'enregistrement !","Envoi a Google")
-        n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_NETWORK, gtk.ICON_SIZE_DIALOG))
-        n.show()
+        notif.update("Fin de l'enregistrement",'Envoi à Google','NETWORK')
         self.sendto()    
 
     def sendto(self):
@@ -44,31 +59,24 @@ class interface():
                 result=json.loads(ret.read())['hypotheses']
                 if len(result) != 0:
                     text = result[0]['utterance']
-                    n.update("Recherche de l'action associée a ",text)
-                    n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_EXECUTE, gtk.ICON_SIZE_DIALOG))
-                    n.show()
+                    notif.update("Recherche de l'action associee à:",text,'EXECUTE')
                     config = os.path.dirname(os.path.abspath(__file__)) + '/google2ubuntu.conf'
                     sp = stringParser(text,config)
                 else:
-                    n.update("Erreur:","Je ne comprends pas ce que vous dites")
-                    n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_DIALOG_ERROR, gtk.ICON_SIZE_DIALOG))
-                    n.show()
+                    notif.update('Erreur','Je ne comprends pas ce que vous dites','ERROR')
                     time.sleep(3)
-                    n.close()
+                    notif.close()
                     sys.exit(1)                
+                    
             except ValueError, IndexError:
-                n.update("Erreur:","Traduction Impossible")
-                n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_DIALOG_ERROR, gtk.ICON_SIZE_DIALOG))
-                n.show()
+                notif.update('Erreur','Traduction impossible','ERROR')
                 time.sleep(3)
-                n.close()
+                notif.close()
                 sys.exit(1)
         except urllib2.URLError:
-            n.update("Erreur:","Envoi à Google impossible")
-            n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_DIALOG_ERROR, gtk.ICON_SIZE_DIALOG))
-            n.show()
+            notif.update('Erreur','Envoi à Google impossible','ERROR')    
             time.sleep(3)
-            n.close()
+            notif.close()
             sys.exit(1)
 
 # Permet d'exécuter la commande associée à un mot prononcé
@@ -92,7 +100,7 @@ class stringParser():
                 tab = self.getAllKeys(keys[i])
                 score = 0;
                 for j in range(len(tab)):
-                    score += text.count(tab[j])
+                    score += text.count(unicode(tab[j],"utf-8"))
                         
                 if max < score:
                     max = score
@@ -110,14 +118,12 @@ class stringParser():
                 b = basicCommands(check[1])
             
             time.sleep(1)
-            n.close()
+            notif.close()
             
         except IOError:
-            n.update("Erreur:","Lecture fichier config impossible")
-            n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_DIALOG_ERROR, gtk.ICON_SIZE_DIALOG))
-            n.show()
+            notif.update('Erreur','Lecture du fichier de config impossible','ERROR')
             time.sleep(3)
-            n.close()            
+            notif.close()            
             sys.exit(1)   
             
     
@@ -170,18 +176,14 @@ class workWithModule():
                 execute = os.path.dirname(os.path.abspath(__file__))+'/modules/'+module_path+'/'+module_name+' '+param
                 os.system(execute)
             else:
-                n.update("Erreur:","Vous avez appelez un module sans prononcer le mot de liaison\n"+linker)
-                n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_DIALOG_ERROR, gtk.ICON_SIZE_DIALOG))
-                n.show()
+                notif.update('Erreur',"Vous avez appelez un module sans prononcer le mot de liaison\n"+linker,'ERROR')    
                 time.sleep(3)
-                n.close()                
+                notif.close()                
             
         except IOError:
-            n.update("Erreur:","Le fichier args associé au module est absent ou illisible")
-            n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_DIALOG_ERROR, gtk.ICON_SIZE_DIALOG))
-            n.show()
+            notif.update('Erreur','Le fichier args du module est absent','ERROR')
             time.sleep(3)
-            n.close()
+            notif.close()
             sys.exit(1) 
  
 # Permet de faire appel aux fonctions basiques
@@ -196,9 +198,7 @@ class basicCommands():
         
     def getTime(self):
         var=time.strftime('%d/%m/%y %H:%M',time.localtime())
-        n.update("Système",var)
-        n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_YES, gtk.ICON_SIZE_DIALOG))
-        n.show()
+        notif.update('Heure',var,'INFO')
             		
     def getPower(self):
         command = "acpi -b"
@@ -216,9 +216,9 @@ class basicCommands():
         else:
             message = "La batterie n'est pas branchée"
         
-        n.update("Batterie",message)
-        n.set_icon_from_pixbuf(gtk.Label().render_icon(gtk.STOCK_DIALOG_INFO, gtk.ICON_SIZE_DIALOG))
-        n.show()
+        notif.update('Batterie',message,'INFO')
         time.sleep(3)
 
+# Initialisation les notifications
+notif = notification('Google2Ubuntu','prêt...')
 g2u = interface()
