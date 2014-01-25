@@ -11,9 +11,11 @@ else
 	sudo mkdir /usr/share/google2ubuntu/
 fi
 
-if [[ ! -d $HOME/.config/google2ubuntu/ ]]; then
-	mkdir $HOME/.config/google2ubuntu/
+if [[ -d $HOME/.config/google2ubuntu/ ]]; then
+	rm -r mkdir $HOME/.config/google2ubuntu/
 fi
+
+mkdir $HOME/.config/google2ubuntu/
 
 if [[ -f /usr/share/applications/google2ubuntu.desktop ]]; then
 	sudo rm /usr/share/applications/google2ubuntu.desktop
