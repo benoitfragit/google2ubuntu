@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-  
-#!/usr/bin/python
+#!/usr/bin/env python
 from subprocess import *
 from gi.repository import Gtk
 from gi.repository import Notify
