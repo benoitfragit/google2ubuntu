@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-  
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-  
 # use  the new PyGObject binding
 from gi.repository import Gtk
 from gi.repository import Notify
