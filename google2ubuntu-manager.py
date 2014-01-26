@@ -31,8 +31,9 @@ class MyWindow(Gtk.ApplicationWindow):
         # activing filter
         self.filter = store.filter_new()
            
-        #treeview = Gtk.TreeView(model=store)
-        treeview = Gtk.TreeView(self.filter)
+        #treeview = Gtk.TreeView(self.filter)
+        treeview = Gtk.TreeView(model=store)
+        #treeview.set_model(self.filter)
         treeview.set_tooltip_text('Liste des commandes')
         treeview.set_headers_visible(False)
         treeview.set_enable_search(True)
@@ -353,7 +354,7 @@ class MyWindow(Gtk.ApplicationWindow):
     def saveTree(self,store):
         # if there is still an entry in the model
         (model, aa) = self.selection.get_selected()
-        config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.conf'            
+        config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.conf'          
         try:
             if not os.path.exists(os.path.dirname(config)):
                 os.makedirs(os.path.dirname(config))
