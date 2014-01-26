@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ -d "/usr/share/google2ubuntu/" ]]; then
-	gksudo rm -r /usr/share/google2ubuntu
+	sudo rm -r /usr/share/google2ubuntu
 fi
 
 if [[ -f "/usr/share/applications/google2ubuntu.desktop" ]]; then

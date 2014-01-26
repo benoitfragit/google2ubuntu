@@ -79,9 +79,14 @@ class interface():
                     
                     # fichier de configuration
                     config = expanduser('~') + '/.config/google2ubuntu/google2ubuntu.conf'
+                    default = os.path.dirname(os.path.abspath(__file__))+'/default.conf'
+                    if os.path.exists(config):
+                        config_file = config
+                    else:
+                        config_file = default
                     
                     # parsing du résultat pour trouver l'action
-                    sp = stringParser(text,config)
+                    sp = stringParser(text,config_file)
                 else:
                     notif.update('Erreur','Je ne comprends pas ce que vous dites','ERROR')
                     time.sleep(3)

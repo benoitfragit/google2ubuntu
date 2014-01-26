@@ -243,9 +243,10 @@ class MyWindow(Gtk.ApplicationWindow):
 
     def removeall_clicked(self,button,store):
         # if there is still an entry in the model
-        old = os.path.dirname(os.path.abspath(__file__)) +'/google2ubuntu.conf'
-        new = os.path.dirname(os.path.abspath(__file__)) +'/.google2ubuntu.bak'
-        os.rename(old,new)
+        old = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.conf'
+        new = expanduser('~') +'/.config/google2ubuntu/.google2ubuntu.bak'
+        if os.path.exists(old):
+            os.rename(old,new)
 
         if len(store) != 0:
             # remove all the entries in the model
@@ -271,8 +272,14 @@ class MyWindow(Gtk.ApplicationWindow):
 
     def populate_store(self, store):
         config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.conf'
-        try:            
-            f = open(config,"r")
+        default = os.path.dirname(os.path.abspath(__file__))+'/default.conf'
+        try:
+            if os.path.exists(config) :        
+                f = open(config,"r")
+            else:
+                # utilisation du fichier de config par défaut
+                f = open(default,"r")
+                
             for line in f:
                 if len(line.split('=')) == 2:
                     line = line.rstrip('\n\r') 
@@ -280,7 +287,7 @@ class MyWindow(Gtk.ApplicationWindow):
                     
             f.close()
         except IOError:
-            print "Le fichier de config n'existe pas"
+            print "Le fichier de config et le fichier default n'existent pas"
 
     def saveTree(self,store):
         # if there is still an entry in the model
