@@ -10,10 +10,12 @@ import os
 import sys
 import subprocess
 
+commandtype=[["Tous"],["Commandes externes"],["Commandes internes"],["Modules"]]
+
 class MyWindow(Gtk.ApplicationWindow):
     def __init__(self,app):
         Gtk.Window.__init__(self, title="google2ubuntu-manager",application=app)
-        self.set_default_size(500, 500)  
+        self.set_default_size(700, 500)  
         self.set_resizable(True)     
         self.set_border_width(0)
         self.get_focus()
@@ -26,13 +28,18 @@ class MyWindow(Gtk.ApplicationWindow):
         # Get the data - see below
         self.populate_store(store)
         
-        treeview = Gtk.TreeView(model=store)
+        # activing filter
+        self.filter = store.filter_new()
+           
+        #treeview = Gtk.TreeView(model=store)
+        treeview = Gtk.TreeView(self.filter)
         treeview.set_tooltip_text('Liste des commandes')
         treeview.set_headers_visible(False)
         treeview.set_enable_search(True)
         treeview.set_search_column(1)
         treeview.set_hexpand(True)
         treeview.set_vexpand(True)
+        
 
         # The first TreeView column displays the data from
         # the first ListStore column (text=0), which contains
@@ -86,6 +93,8 @@ class MyWindow(Gtk.ApplicationWindow):
         toolbar.set_hexpand(True)
         # show the toolbar
         toolbar.show()
+
+        self.filter.set_visible_func(self.match_func)     
 
         # Use a grid to add all item
         self.grid = Gtk.Grid()
@@ -185,18 +194,79 @@ class MyWindow(Gtk.ApplicationWindow):
         all_button.connect("clicked",self.removeall_clicked,store)
         all_button.set_tooltip_text('Supprimer toutes les commandes')
         all_button.show() 
+        
+        # add a combobox
+        self.combo = self.getCombobox()
+        itemCombo = Gtk.ToolItem.new()
+        itemCombo.add(self.combo)
+        itemCombo.show()
+        toolbar.insert(itemCombo,4)
 
         # create a button for the "Help" action
         help_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_HELP)
         help_button.set_label("Aide")
         help_button.set_is_important(True)
-        toolbar.insert(help_button,4)
+        toolbar.insert(help_button,5)
         help_button.connect("clicked",self.help_clicked )
         help_button.set_tooltip_text("Afficher l'aide")
         help_button.show() 
 
         # return the complete toolbar
         return toolbar
+    
+    def getCombobox(self):
+        listmodel = Gtk.ListStore(str)
+        # append the data in the model
+        for i in range(len(commandtype)):
+            listmodel.append(commandtype[i])
+
+        # a combobox to see the data stored in the model
+        combobox = Gtk.ComboBox(model=listmodel)
+
+        # a cellrenderer to render the text
+        cell = Gtk.CellRendererText()
+
+        # pack the cell into the beginning of the combobox, allocating
+        # no more space than needed
+        combobox.pack_start(cell, False)
+        # associate a property ("text") of the cellrenderer (cell) to a column (column 0)
+        # in the model used by the combobox
+        combobox.add_attribute(cell, "text", 0)
+
+        # the first row is the active one by default at the beginning
+        combobox.set_active(0)
+        
+        # set tooltip
+        combobox.set_tooltip_text("Choisir quelle type de commande afficher")
+
+        # connect the signal emitted when a row is selected to the callback function
+        combobox.connect("changed", self.oncombo_changed)
+        return combobox
+    
+    def oncombo_changed(self, combo):
+        self.filter.refilter()
+        
+    def match_func(self, model, iterr, data=None):
+        nb = self.combo.get_active()
+        query = commandtype[nb][0]
+        value = model.get_value(iterr, 1)
+        value = value.strip('.')
+        item = value.split('/')
+
+        if query == "Tous":
+            return True
+        elif query == "Commandes externes":
+            if (not 'interne' in item) and (not 'modules' in item):
+                return True
+        elif query == "Commandes internes":
+            if 'interne' in item:
+                return True
+        elif query == "Modules":
+            if 'modules' in item:
+                return True
+        else:
+            return True
+
     
     def add_clicked(self,button,store,add_type):
         if add_type == 'externe':
