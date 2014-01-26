@@ -34,6 +34,7 @@ class MyWindow(Gtk.ApplicationWindow):
         treeview.set_hexpand(True)
         treeview.set_vexpand(True)
         
+        
 
         # The first TreeView column displays the data from
         # the first ListStore column (text=0), which contains
@@ -201,9 +202,9 @@ class MyWindow(Gtk.ApplicationWindow):
     
     def add_clicked(self,button,store,add_type):
         if add_type == 'externe':
-            store.append(['','='])
+            store.append(['<phrase clé>','<votre commande>'])
         elif add_type == 'interne':
-            store.append(['','interne/'])
+            store.append(['<phrase clé>','interne/<mot>'])
         elif add_type == 'module':
             mo = moduleSelection()
             module = mo.getModule()

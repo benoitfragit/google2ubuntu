@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #installation des dépendances
-sudo apt-get install -y python-gi libnotify-dev sox
+sudo apt-get install -y python-gi libnotify-dev sox alsa-utils
 
 #création du dossier dans /usr/share
 if [[ -d "/usr/share/google2ubuntu" ]];then
@@ -32,6 +32,6 @@ sudo cp record.sh /usr/share/google2ubuntu/
 sudo cp icons.png /usr/share/google2ubuntu/
 sudo cp google2ubuntu.desktop /usr/share/applications/
 sudo cp LICENSE /usr/share/google2ubuntu/
-sudo cp -r modules/ $HOME/.config/google2ubuntu/
-
+sudo cp sound.wav /usr/share/google2ubuntu/
+cp -r modules/ $HOME/.config/google2ubuntu/
 exit 0
