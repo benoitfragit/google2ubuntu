@@ -223,7 +223,7 @@ class MyWindow(Gtk.ApplicationWindow):
                 self.show_label('show')
                 self.labelState.set_text("Erreur, vous n'avez choisi aucun fichier")
                 
-        self.saveTree(store)
+        self.selection.select_iter(store.get_iter(len(store)-1))
         
 
     def remove_clicked(self,button,store):
