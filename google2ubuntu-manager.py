@@ -14,7 +14,7 @@ class MyWindow(Gtk.ApplicationWindow):
     def __init__(self,app):
         Gtk.Window.__init__(self, title="google2ubuntu-manager",application=app)
         self.set_default_size(500, 500)  
-        self.set_resizable(False)     
+        self.set_resizable(True)     
         self.set_border_width(0)
         self.get_focus()
         self.set_position(Gtk.WindowPosition.CENTER)
@@ -31,6 +31,8 @@ class MyWindow(Gtk.ApplicationWindow):
         treeview.set_headers_visible(False)
         treeview.set_enable_search(True)
         treeview.set_search_column(1)
+        treeview.set_hexpand(True)
+        treeview.set_vexpand(True)
 
         # The first TreeView column displays the data from
         # the first ListStore column (text=0), which contains
@@ -75,6 +77,7 @@ class MyWindow(Gtk.ApplicationWindow):
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.add(treeview)
+        scrolled_window.set_min_content_width(200)
         scrolled_window.set_min_content_height(200)
         
         # a toolbar created in the method create_toolbar (see below)
@@ -87,7 +90,7 @@ class MyWindow(Gtk.ApplicationWindow):
         # Use a grid to add all item
         self.grid = Gtk.Grid()
         self.grid.set_row_spacing(2);
-        scrolled_window.reparent(self.grid)
+        scrolled_window.reparent(self)
         self.grid.attach(toolbar,0,0,2,1)
         self.grid.attach(scrolled_window, 0, 1, 2, 1)    
         self.grid.attach(self.labelState,0,2,2,1)
