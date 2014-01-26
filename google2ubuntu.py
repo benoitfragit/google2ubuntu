@@ -116,8 +116,9 @@ class stringParser():
             # clé/commande
             for ligne in f:
                 k,a = self.getKeyAction(ligne)
-                keys.extend([k])
-                actions.extend([a])        
+                if k is not 'error':
+                    keys.extend([k])
+                    actions.extend([a])        
             
             f.close();
             
@@ -167,11 +168,14 @@ class stringParser():
     
     def getKeyAction(self,line):
         #supprimer le caractere de fin de ligne
-        data=line.rstrip('\n\r')    
-        keys = data.split('=')[0]
-        actions = data.split('=')[1]
-        # retourne un couple clé, action
-        return keys,actions;
+        data=line.rstrip('\n\r')
+        if len(data) >= 2:    
+            keys = data.split('=')[0]
+            actions = data.split('=')[1]
+            # retourne un couple clé, action
+            return keys,actions;
+        else:
+            return 'error','error'
                        
     def getAllKeys(self,key):
         #extraction des mots
