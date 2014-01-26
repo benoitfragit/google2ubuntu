@@ -21,6 +21,10 @@ if [[ -f /usr/share/applications/google2ubuntu.desktop ]]; then
 	sudo rm /usr/share/applications/google2ubuntu.desktop
 fi
 
+if [[ -f /usr/share/applications/google2ubuntu-gui.desktop ]]; then
+	sudo rm /usr/share/applications/google2ubuntu-gui.desktop
+fi
+
 #copie des fichiers
 chmod +x google2ubuntu.py
 chmod +x google2ubuntu-manager.py 
@@ -31,6 +35,7 @@ sudo cp google2ubuntu-manager.py /usr/share/google2ubuntu/
 sudo cp record.sh /usr/share/google2ubuntu/
 sudo cp icons.png /usr/share/google2ubuntu/
 sudo cp google2ubuntu.desktop /usr/share/applications/
+sudo cp google2ubuntu-gui.desktop /usr/share/applications/
 sudo cp LICENSE /usr/share/google2ubuntu/
 sudo cp sound.wav /usr/share/google2ubuntu/
 sudo cp default.conf /usr/share/google2ubuntu/
