@@ -294,9 +294,11 @@ class MyWindow(Gtk.ApplicationWindow):
             if len(store) != 0:
                 for i in range(len(store)):
                     iter = store.get_iter(i)
-                    f.write(model[iter][0]+'='+model[iter][1]+'\n')
-                    self.show_label('show')
-                    self.labelState.set_text('Sauvegarde des commandes')                
+                    if model[iter][0] != '' and model[iter][1] != '':
+                        f.write(model[iter][0]+'='+model[iter][1]+'\n')
+                
+                self.show_label('show')
+                self.labelState.set_text('Sauvegarde des commandes')                
 
             f.close()
         except IOError:    
