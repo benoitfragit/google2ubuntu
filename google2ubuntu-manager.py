@@ -17,6 +17,7 @@ class MyWindow(Gtk.ApplicationWindow):
         self.set_border_width(0)
         self.get_focus()
         self.set_position(Gtk.WindowPosition.CENTER)
+        self.set_default_icon_from_file(os.path.dirname(os.path.abspath(__file__))+'/icons.png')
         
         # Gtk.ListStore will hold data for the TreeView
         # Only the first two columns will be displayed
