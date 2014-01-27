@@ -11,5 +11,3 @@ fi
 if [[ -f "/usr/share/applications/google2ubuntu-gui.desktop" ]]; then
 	sudo rm /usr/share/applications/google2ubuntu-gui.desktop 
 fi
-
-sudo /usr/share/locale/*/LC_MESSAGES/google2ubuntu*

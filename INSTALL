@@ -39,14 +39,7 @@ sudo cp google2ubuntu-gui.desktop /usr/share/applications/
 sudo cp LICENSE /usr/share/google2ubuntu/
 sudo cp sound.wav /usr/share/google2ubuntu/
 sudo cp default.conf /usr/share/google2ubuntu/
+sudo cp -r locale/ /usr/share/google2ubuntu/
 cp -r modules/ $HOME/.config/google2ubuntu/
-
-# copie des locales
-for file in $(ls i18n/*/LC_MESSAGES/*.mo)
-do
-	lc=$(echo $file | cut -f2 -d"/")
-	name=$(basename $file)
-	sudo cp $file /usr/share/locale/$lc/LC_MESSAGES/$name
-done
 
 exit 0
