@@ -39,7 +39,6 @@ sudo cp google2ubuntu-gui.desktop /usr/share/applications/
 sudo cp LICENSE /usr/share/google2ubuntu/
 sudo cp sound.wav /usr/share/google2ubuntu/
 sudo cp default.conf /usr/share/google2ubuntu/
-sudo cp -r locale/ /usr/share/google2ubuntu/
 cp -r modules/ $HOME/.config/google2ubuntu/
 
 exit 0

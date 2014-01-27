@@ -9,8 +9,6 @@ import os
 import sys
 import subprocess
 
-
-
 class MyWindow(Gtk.ApplicationWindow):
     def __init__(self,app):
         Gtk.Window.__init__(self, title="google2ubuntu-manager",application=app)
@@ -208,18 +206,26 @@ class MyWindow(Gtk.ApplicationWindow):
             mo = moduleSelection()
             module = mo.getModule()
             if module != '-1':
+                # ex: recup de weather.sh
                 name = module.split('/')[-1]
+                # ex: ~/.config/google2ubuntu/weather
                 module=module.strip(name)
+                # ex: recherche du fichier args
                 if os.path.exists(module+'/args'):
+                    # ex: récupération de weather
                     path = module.split('/')[-2]
                     store.append(['<phrase clé>','/modules/'+path+'/'+name])
+                    # si le dossier de modules n'existe pas
                     module_path=expanduser('~')+'/.config/google2ubuntu/modules/'
                     if not os.path.exists(module_path):
-                        os.makedirs(os.path.dirname(config))
-                        os.system('cp -r '+module+' '+module_path)
+                        os.makedirs(os.path.dirname(module_path))
+                    
+                    # on copie le dossier du module    
+                    os.system('cp -r '+module+' '+module_path)
                 else:
                     self.show_label('show')
                     self.labelState.set_text("Erreur, le fichier args n'existe pas")
+                    win = ArgsWindow(module,name,store)
             else:
                 self.show_label('show')
                 self.labelState.set_text("Erreur, vous n'avez choisi aucun fichier")
@@ -310,6 +316,67 @@ class MyWindow(Gtk.ApplicationWindow):
         except IOError:    
             print "Unable to write the file"
 
+class ArgsWindow():
+    def __init__(self,module,name,store):
+        self.w = Gtk.Window()
+        self.w.set_title("Paramétrage du module")
+        self.w.set_resizable(False)     
+        self.w.set_border_width(0)
+        self.w.get_focus()
+        self.w.set_position(Gtk.WindowPosition.CENTER)      
+        self.w.set_default_size(300,300)  
+        self.w.set_border_width(5)
+        
+        grid = Gtk.Grid()
+        label1 = Gtk.Label("Mot de liaison")
+        label1.set_justify(Gtk.Justification.LEFT) 
+        label1.set_halign(Gtk.Align.START) 
+        self.entry1 = Gtk.Entry()
+        self.checkbutton = Gtk.CheckButton()
+        self.checkbutton.set_label("Transformer les epaces en +")
+        button = Gtk.Button()
+        button.set_label("Continuer")
+        image = Gtk.Image()
+        image.set_from_stock(Gtk.STOCK_APPLY, Gtk.IconSize.BUTTON)
+        button.set_image(image)
+        button.connect("clicked",self.do_clicked,module,name,store)
+        
+        grid.attach(label1,0,0,4,1)
+        grid.attach(self.entry1,0,1,4,1)
+        grid.attach(self.checkbutton,0,2,4,1) 
+        grid.attach(button,3,3,1,1)                
+        self.w.add(grid)
+        self.w.show_all()
+        
+    def do_clicked(self,button,module,name,store):
+        linker = self.entry1.get_text()
+        if self.checkbutton.get_active():
+            spacebyplus='1' 
+        else:
+            spacebyplus='0'
+        
+        if linker is not '':
+            try:
+                folder = name.split('.')[0]
+                module_path=expanduser('~')+'/.config/google2ubuntu/modules/'+folder
+
+                if not os.path.exists(module_path):
+                    os.makedirs(module_path)    
+                                
+                f = open(module_path+'/args',"w")
+                f.write('linker='+linker+'\n')
+                f.write('spacebyplus='+spacebyplus+'\n')
+                f.close()
+                
+                os.system('cp '+module+name+' '+module_path)
+                store.append(['<phrase clé>','/modules/'+folder+'/'+name])    
+            except IOError:
+                "Unable to open the file"
+        
+        self.w.destroy()
+    
+    def getEtat(self):
+        return self.etat
 
 class HelpWindow():
     # constructor for a window (the parent window)
