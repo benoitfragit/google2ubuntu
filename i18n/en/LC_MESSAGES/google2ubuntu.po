@@ -1,0 +1,107 @@
+# English translations for google package.
+# Copyright (C) 2014 THE google'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the google package.
+# benoit <benoitfranquet@gmail.com>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: google 2ubuntu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-01-27 10:32+0100\n"
+"PO-Revision-Date: 2014-01-27 09:38+0100\n"
+"Last-Translator: benoit <benoitfranquet@gmail.com>\n"
+"Language-Team: English\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: google2ubuntu.py:57
+msgid "Enregistrement:"
+msgstr "Recording:"
+
+#: google2ubuntu.py:57
+msgid "En cours"
+msgstr "Processing"
+
+#: google2ubuntu.py:63
+msgid "Fin de l'enregistrement"
+msgstr "End of recording"
+
+#: google2ubuntu.py:63
+msgid "Envoi à Google"
+msgstr "Sending to Google"
+
+#: google2ubuntu.py:74
+msgid "fr-FR"
+msgstr "en-EN"
+
+#: google2ubuntu.py:84
+msgid "Recherche de l'action associee à:"
+msgstr "Searching associated action:"
+
+#: google2ubuntu.py:97 google2ubuntu.py:103 google2ubuntu.py:109
+#: google2ubuntu.py:174 google2ubuntu.py:243 google2ubuntu.py:248
+msgid "Erreur"
+msgstr "Error"
+
+#: google2ubuntu.py:97
+msgid "Je ne comprends pas ce que vous dites"
+msgstr "I don't understand what you are saying"
+
+#: google2ubuntu.py:103
+msgid "Traduction impossible"
+msgstr "Unable to translate"
+
+#: google2ubuntu.py:109
+msgid "Envoi à Google impossible"
+msgstr "Unable to send"
+
+#: google2ubuntu.py:174
+msgid "Lecture du fichier de config impossible"
+msgstr "Unable to read the setup file"
+
+#: google2ubuntu.py:243
+msgid "Vous avez appelez un module sans prononcer le mot de liaison\n"
+msgstr "you call a module without saying the linking word\n"
+
+#: google2ubuntu.py:248
+msgid "Le fichier args du module est absent"
+msgstr "args file missing"
+
+#: google2ubuntu.py:257
+msgid "heure"
+msgstr "time"
+
+#: google2ubuntu.py:259
+msgid "batterie"
+msgstr "power"
+
+#: google2ubuntu.py:278
+msgid "En charge: "
+msgstr "Charging: "
+
+#: google2ubuntu.py:278
+msgid " avant la fin de la charge"
+msgstr " before charging"
+
+#: google2ubuntu.py:280
+msgid "En décharge: "
+msgstr "Discharging: "
+
+#: google2ubuntu.py:280
+msgid " restant"
+msgstr " remaining"
+
+#: google2ubuntu.py:282
+msgid "La batterie n'est pas branchée"
+msgstr "battery missing"
+
+#: google2ubuntu.py:284
+msgid "Batterie"
+msgstr "Battery"
+
+#: google2ubuntu.py:288
+msgid "prêt..."
+msgstr "ready..."
