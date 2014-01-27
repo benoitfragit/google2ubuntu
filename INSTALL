@@ -11,12 +11,12 @@ else
 	sudo mkdir /usr/share/google2ubuntu/
 fi
 
+# création du dossier de config
 if [[ ! -d $HOME/.config/google2ubuntu/ ]]; then
 	mkdir $HOME/.config/google2ubuntu/	
 fi
 
-
-
+# suppression des anciens lanceurs
 if [[ -f /usr/share/applications/google2ubuntu.desktop ]]; then
 	sudo rm /usr/share/applications/google2ubuntu.desktop
 fi
@@ -25,7 +25,7 @@ if [[ -f /usr/share/applications/google2ubuntu-gui.desktop ]]; then
 	sudo rm /usr/share/applications/google2ubuntu-gui.desktop
 fi
 
-#copie des fichiers
+# copie des fichiers
 chmod +x google2ubuntu.py
 chmod +x google2ubuntu-manager.py 
 chmod +x record.sh
@@ -40,4 +40,13 @@ sudo cp LICENSE /usr/share/google2ubuntu/
 sudo cp sound.wav /usr/share/google2ubuntu/
 sudo cp default.conf /usr/share/google2ubuntu/
 cp -r modules/ $HOME/.config/google2ubuntu/
+
+# copie des locales
+for file in $(ls i18n/*/LC_MESSAGES/*.mo)
+do
+	lc=$(echo $file | cut -f2 -d"/")
+	name=$(basename $file)
+	sudo cp $file /usr/share/locale/$lc/LC_MESSAGES/$name
+done
+
 exit 0
