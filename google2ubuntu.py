@@ -83,6 +83,10 @@ class interface():
                     if os.path.exists(config):
                         config_file = config
                     else:
+                        if os.path.exists(expanduser('~') +'/.config/google2ubuntu') == False:
+                            os.makedirs(expanduser('~') +'/.config/google2ubuntu')
+                            os.system('cp -r /usr/share/google2ubuntu/modules '+expanduser('~') +'/.config/google2ubuntu')    
+                
                         config_file = default
                     
                     # parsing du résultat pour trouver l'action

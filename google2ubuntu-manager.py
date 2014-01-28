@@ -355,6 +355,10 @@ class MyWindow(Gtk.ApplicationWindow):
             if os.path.exists(config) :        
                 f = open(config,"r")
             else:
+                if os.path.exists(expanduser('~') +'/.config/google2ubuntu') == False:
+                    os.makedirs(expanduser('~') +'/.config/google2ubuntu')
+                    os.system('cp -r /usr/share/google2ubuntu/modules '+expanduser('~') +'/.config/google2ubuntu')    
+                
                 # utilisation du fichier de config par défaut
                 f = open(default,"r")
                 
