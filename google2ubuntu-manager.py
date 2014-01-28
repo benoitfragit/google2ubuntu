@@ -9,6 +9,9 @@ import os
 import sys
 import subprocess
 
+TARGET_TYPE_URI_LIST = 80
+dnd_list = [Gtk.TargetEntry.new('text/uri-list', 0, TARGET_TYPE_URI_LIST )]
+
 # Classe MyWindow gere l'apparition de la fenêtre principale
 class MyWindow(Gtk.ApplicationWindow):
     def __init__(self,app):
@@ -40,7 +43,9 @@ class MyWindow(Gtk.ApplicationWindow):
         treeview.set_hexpand(True)
         treeview.set_vexpand(True)
 
-        
+        # DND
+        #treeview.enable_model_drag_dest(dnd_list,Gdk.DragAction.COPY)
+
         # The first TreeView column displays the data from
         # the first ListStore column (text=0), which contains
         # file names
@@ -87,6 +92,10 @@ class MyWindow(Gtk.ApplicationWindow):
         scrolled_window.set_min_content_width(200)
         scrolled_window.set_min_content_height(200)
         
+        scrolled_window.connect('drag_data_received', self.on_drag_data_received,store)
+        scrolled_window.drag_dest_set( Gtk.DestDefaults.MOTION | Gtk.DestDefaults.HIGHLIGHT | Gtk.DestDefaults.DROP, dnd_list, Gdk.DragAction.COPY)
+        
+        
         # a toolbar created in the method create_toolbar (see below)
         toolbar = self.create_toolbar(store)
         toolbar.set_hexpand(True)
@@ -105,6 +114,16 @@ class MyWindow(Gtk.ApplicationWindow):
         # show
         self.add(self.grid)
         self.show_all()
+    
+    def on_drag_data_received(self,widget, context, x, y, Selection, target_type, timestamp,store):
+        if target_type == TARGET_TYPE_URI_LIST:
+            uri= Selection.get_uris()[0]
+            uri = uri.strip('\r\n\x00')
+            uris= uri.split('://')
+            if len(uris) >= 1:
+                path = uris[1]
+                print 'path', path
+                self.addModule(store,path)
 
     def show_label(self,action):
         etat = self.labelState.get_parent()
@@ -278,33 +297,35 @@ class MyWindow(Gtk.ApplicationWindow):
             mo = moduleSelection()
             module = mo.getModule()
             if module != '-1':
-                # ex: recup de weather.sh
-                name = module.split('/')[-1]
-                # ex: ~/.config/google2ubuntu/weather
-                module=module.strip(name)
-                # ex: recherche du fichier args
-                if os.path.exists(module+'/args'):
-                    # ex: récupération de weather
-                    path = module.split('/')[-2]
-                    store.append(['<phrase clé>','/modules/'+path+'/'+name])
-                    # si le dossier de modules n'existe pas
-                    module_path=expanduser('~')+'/.config/google2ubuntu/modules/'
-                    if not os.path.exists(module_path):
-                        os.makedirs(os.path.dirname(module_path))
-                    
-                    # on copie le dossier du module    
-                    os.system('cp -r '+module+' '+module_path)
-                else:
-                    self.show_label('show')
-                    self.labelState.set_text("Erreur, le fichier args n'existe pas")
-                    win = ArgsWindow(module,name,store)
+                self.addModule(store,module)
             else:
                 self.show_label('show')
                 self.labelState.set_text("Erreur, vous n'avez choisi aucun fichier")
                 
         self.selection.select_iter(store.get_iter(len(store)-1))
         
-
+    def addModule(self,store,module):
+        # ex: recup de weather.sh
+        name = module.split('/')[-1]
+        # ex: ~/.config/google2ubuntu/weather
+        module=module.strip(name)
+        print module+"args"
+        # ex: recherche du fichier args
+        if os.path.exists(module+'args'):
+            # ex: récupération de weather
+            path = module.split('/')[-2]
+            store.append(['<phrase clé>','/modules/'+path+'/'+name])
+            # si le dossier de modules n'existe pas
+            module_path=expanduser('~')+'/.config/google2ubuntu/modules/'
+            if not os.path.exists(module_path):
+                os.makedirs(os.path.dirname(module_path))
+                # on copie le dossier du module    
+                os.system('cp -r '+module+' '+module_path)
+        else:
+            self.show_label('show')
+            self.labelState.set_text("Erreur, le fichier args n'existe pas")
+            win = ArgsWindow(module,name,store)        
+    
     def remove_clicked(self,button,store):
         if len(store) != 0:
             (model, iters) = self.selection.get_selected()
