@@ -2,7 +2,7 @@
 
 createdeb.py
 *.tar.gz
-
+*.deb
 # sound files
 voix.flac
 
