@@ -1,5 +1,8 @@
 *.py[cod]
 
+# create deb 
+createdeb.py
+
 # sound files
 voix.flac
 

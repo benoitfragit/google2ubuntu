@@ -29,7 +29,8 @@ class MyWindow(Gtk.ApplicationWindow):
 
         # use a filter in order to filtering the data
         self.tree_filter = store.filter_new()
-        
+
+         
         # create the treeview
         treeview = Gtk.TreeView(self.tree_filter)
         treeview.set_tooltip_text('Liste des commandes')
@@ -38,6 +39,7 @@ class MyWindow(Gtk.ApplicationWindow):
         treeview.set_search_column(1)
         treeview.set_hexpand(True)
         treeview.set_vexpand(True)
+
         
         # The first TreeView column displays the data from
         # the first ListStore column (text=0), which contains
