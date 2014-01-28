@@ -1,7 +1,7 @@
 *.py[cod]
 
-# create deb 
 createdeb.py
+*.tar.gz
 
 # sound files
 voix.flac
