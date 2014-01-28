@@ -9,6 +9,7 @@ import os
 import sys
 import subprocess
 
+# Classe MyWindow gere l'apparition de la fenêtre principale
 class MyWindow(Gtk.ApplicationWindow):
     def __init__(self,app):
         Gtk.Window.__init__(self, title="google2ubuntu-manager",application=app)
@@ -25,8 +26,12 @@ class MyWindow(Gtk.ApplicationWindow):
         store = Gtk.ListStore(str, str)
         # Get the data - see below
         self.populate_store(store)
+
+        # use a filter in order to filtering the data
+        self.tree_filter = store.filter_new()
         
-        treeview = Gtk.TreeView(model=store)
+        # create the treeview
+        treeview = Gtk.TreeView(self.tree_filter)
         treeview.set_tooltip_text('Liste des commandes')
         treeview.set_headers_visible(False)
         treeview.set_enable_search(True)
@@ -82,19 +87,20 @@ class MyWindow(Gtk.ApplicationWindow):
         
         # a toolbar created in the method create_toolbar (see below)
         toolbar = self.create_toolbar(store)
-        # with extra horizontal space
         toolbar.set_hexpand(True)
-        # show the toolbar
         toolbar.show()
 
         # Use a grid to add all item
         self.grid = Gtk.Grid()
         self.grid.set_row_spacing(2);
-        scrolled_window.reparent(self)
         self.grid.attach(toolbar,0,0,2,1)
         self.grid.attach(scrolled_window, 0, 1, 2, 1)    
         self.grid.attach(self.labelState,0,2,2,1)
         
+        # define the visible func toolbar should be create
+        self.tree_filter.set_visible_func(self.match_func)
+        
+        # show
         self.add(self.grid)
         self.show_all()
 
@@ -106,10 +112,14 @@ class MyWindow(Gtk.ApplicationWindow):
             self.grid.remove(self.labelState)
 
     def command_edited(self, widget, path, text,store):
+        iters = self.tree_filter.get_iter(path)
+        path = self.tree_filter.convert_iter_to_child_iter(iters)
         store[path][1] = text
         self.saveTree(store)
 
     def key_edited(self, widget, path, text,store):
+        iters = self.tree_filter.get_iter(path)
+        path = self.tree_filter.convert_iter_to_child_iter(iters)        
         store[path][0] = text
         self.saveTree(store)
 
@@ -186,18 +196,77 @@ class MyWindow(Gtk.ApplicationWindow):
         all_button.set_tooltip_text('Supprimer toutes les commandes')
         all_button.show() 
         
+        # create a combobox to store user choice
+        self.combo = self.get_combobox()
+        toolcombo = Gtk.ToolItem()
+        toolcombo.add(self.combo)
+        toolcombo.show()
+        toolbar.insert(toolcombo,4)
+        
         # create a button for the "Help" action
         help_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_HELP)
         help_button.set_label("Aide")
         help_button.set_is_important(True)
-        toolbar.insert(help_button,4)
+        toolbar.insert(help_button,5)
         help_button.connect("clicked",self.help_clicked )
         help_button.set_tooltip_text("Afficher l'aide")
         help_button.show() 
 
         # return the complete toolbar
         return toolbar
+
+	# return a combobox to add to the toolbar
+    def get_combobox(self):
+        # the data in the model, of type string
+        listmodel = Gtk.ListStore(str)
+        # append the data in the model
+        listmodel.append(['Toutes'])
+        listmodel.append(['Externes'])
+        listmodel.append(['Internes'])
+        listmodel.append(['Modules'])
+                        
+        # a combobox to see the data stored in the model
+        combobox = Gtk.ComboBox(model=listmodel)
+        combobox.set_tooltip_text("Choisir quel type d'action afficher")
+
+        # a cellrenderer to render the text
+        cell = Gtk.CellRendererText()
+
+        # pack the cell into the beginning of the combobox, allocating
+        # no more space than needed
+        combobox.pack_start(cell, False)
+        # associate a property ("text") of the cellrenderer (cell) to a column (column 0)
+        # in the model used by the combobox
+        combobox.add_attribute(cell, "text", 0)
+
+        # the first row is the active one by default at the beginning
+        combobox.set_active(0)
+
+        # connect the signal emitted when a row is selected to the callback function
+        combobox.connect("changed", self.on_combochanged)
+        return combobox
     
+    # callback function attach to the combobox   
+    def on_combochanged(self,combo):
+		self.tree_filter.refilter()
+
+    # filter function
+    def match_func(self, model, iterr, data=None):
+        query = self.combo.get_active()
+        value = model.get_value(iterr, 1)
+        field=value.split('/')
+        
+        if query == 0:
+            return True
+        elif query == 1 and 'modules' not in field and 'interne' not in field:
+            return True
+        elif query == 2 and 'interne' in field:
+            return True
+        elif query == 3 and 'modules' in field:
+            return True
+        else:
+            return False
+
     def add_clicked(self,button,store,add_type):
         if add_type == 'externe':
             store.append(['<phrase clé>','<votre commande>'])
@@ -236,10 +305,11 @@ class MyWindow(Gtk.ApplicationWindow):
 
     def remove_clicked(self,button,store):
         if len(store) != 0:
-            (model, iter) = self.selection.get_selected()
+            (model, iters) = self.selection.get_selected()
+            iter = self.tree_filter.convert_iter_to_child_iter(iters)
             if iter is not None:
                 self.show_label('show')
-                self.labelState.set_text('Suppression: '+model[iter][0]+' '+model[iter][1]) 
+                self.labelState.set_text('Suppression: '+store[iter][0]+' '+store[iter][1]) 
                 store.remove(iter)
                 self.saveTree(store)
             else:
@@ -297,7 +367,7 @@ class MyWindow(Gtk.ApplicationWindow):
 
     def saveTree(self,store):
         # if there is still an entry in the model
-        (model, aa) = self.selection.get_selected()
+        model = self.tree_filter.get_model()
         config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.conf'          
         try:
             if not os.path.exists(os.path.dirname(config)):
@@ -317,6 +387,7 @@ class MyWindow(Gtk.ApplicationWindow):
         except IOError:    
             print "Unable to write the file"
 
+# gère l'apparition de la fenêtre d'assistance de création de module
 class ArgsWindow():
     def __init__(self,module,name,store):
         self.w = Gtk.Window()
@@ -382,6 +453,7 @@ class ArgsWindow():
     def getEtat(self):
         return self.etat
 
+# gère l'apparition de le fenêtre d'aide
 class HelpWindow():
     # constructor for a window (the parent window)
     def __init__(self):
@@ -397,7 +469,7 @@ class HelpWindow():
         self.aboutdialog.set_copyright("Copyright \xc2\xa9 2014 Franquet Benoit")
         self.aboutdialog.set_authors(authors)
         self.aboutdialog.set_documenters(documenters)
-        self.aboutdialog.set_website("https://github.com/benoitfragit/google2ubuntu")
+        self.aboutdialog.set_website("http://forum.ubuntu-fr.org/viewtopic.php?id=804211&p=1")
         self.aboutdialog.set_website_label("http://forum.ubuntu-fr.org/viewtopic.php?id=804211&p=1")
 
         # we do not want to show the title, which by default would be "About AboutDialog Example"
@@ -414,6 +486,7 @@ class HelpWindow():
     def on_close(self, action, parameter):
         action.destroy()
 
+# gère l'apparition de la fenêtre de choix du module
 class moduleSelection():
     def __init__(self):
         w=Gtk.Window()
@@ -432,7 +505,7 @@ class moduleSelection():
     def getModule(self):
         return self.module
 
-
+# application principale
 class MyApplication(Gtk.Application):
     def __init__(self):
         Gtk.Application.__init__(self)
