@@ -118,10 +118,13 @@ class MyWindow(Gtk.ApplicationWindow):
             uri= Selection.get_uris()[0]
             uri = uri.strip('\r\n\x00')
             uris= uri.split('://')
-            if len(uris) >= 1:
+            if len(uris) >= 1 :
                 path = uris[1]
                 print 'path', path
-                self.addModule(store,path)
+                if os.path.isfile(path):
+                    self.addModule(store,path)
+                elif os.path.isdir(path):
+                    store.append([_('key sentence'),'xdg-open '+path])
 
     def show_label(self,action):
         etat = self.labelState.get_parent()
@@ -359,10 +362,11 @@ class MyWindow(Gtk.ApplicationWindow):
         (model, iter) = self.selection.get_selected()
         if iter is not None:
             command = model[iter][1]
-            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-            output,error  = process.communicate() 
-            self.show_label('show')       
-            self.labelState.set_text(output+'\n'+error)
+            if _('internal') not in command and _('modules') not in command:
+                process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+                output,error  = process.communicate() 
+                self.show_label('show')       
+                self.labelState.set_text(output+'\n'+error)
     
     def help_clicked(self,button):
         win = HelpWindow()
