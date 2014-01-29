@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: google 2ubuntu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-29 11:05+0100\n"
-"PO-Revision-Date: 2014-01-29 11:06+0100\n"
+"POT-Creation-Date: 2014-01-29 13:47+0100\n"
+"PO-Revision-Date: 2014-01-29 13:47+0100\n"
 "Last-Translator: benoit <benoitfranquet@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -18,164 +18,152 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: google2ubuntu-manager.py:39
-msgid "Liste des commandes"
-msgstr "Liste des commandes"
-
-#: google2ubuntu-manager.py:52
-msgid "Clés"
-msgstr "Clés"
-
-#: google2ubuntu-manager.py:67
-msgid "Commandes"
+#: google2ubuntu-manager.py:42
+msgid "list of commands"
 msgstr "Commandes"
 
-#: google2ubuntu-manager.py:75
-msgid "Prêt"
-msgstr "Prêt"
+#: google2ubuntu-manager.py:55
+msgid "Keys"
+msgstr "Cles"
 
-#: google2ubuntu-manager.py:160
-msgid "Commande externe"
+#: google2ubuntu-manager.py:70
+msgid "Commands"
+msgstr "Commandes"
+
+#: google2ubuntu-manager.py:78
+msgid "Ready"
+msgstr "Pret"
+
+#: google2ubuntu-manager.py:163
+msgid "External commands"
 msgstr "Commande externe"
 
-#: google2ubuntu-manager.py:164
-msgid "Commande interne"
+#: google2ubuntu-manager.py:167
+msgid "Internal commands"
 msgstr "Commande interne"
 
-#: google2ubuntu-manager.py:168
+#: google2ubuntu-manager.py:171
 msgid "Module"
 msgstr "Module"
 
-#: google2ubuntu-manager.py:175
-msgid "Ajouter"
+#: google2ubuntu-manager.py:178
+msgid "Add"
 msgstr "Ajouter"
 
-#: google2ubuntu-manager.py:185
-msgid "Ajouter une nouvelle commande"
+#: google2ubuntu-manager.py:188
+msgid "Add a new command"
 msgstr "Ajouter une nouvelle commande"
 
-#: google2ubuntu-manager.py:190
-msgid "Essayer"
+#: google2ubuntu-manager.py:193
+msgid "Try"
 msgstr "Essayer"
 
-#: google2ubuntu-manager.py:194
-msgid "Tester la commande"
-msgstr "Tester la commande"
+#: google2ubuntu-manager.py:197
+msgid "Try this command"
+msgstr "Essayer cette commande"
 
-#: google2ubuntu-manager.py:199
-msgid "Supprimer"
+#: google2ubuntu-manager.py:202 google2ubuntu-manager.py:333
+msgid "Remove"
 msgstr "Supprimer"
 
-#: google2ubuntu-manager.py:203
-msgid "Supprimer la commande sélectionnée"
-msgstr "Supprimer la commande sélectionnée"
+#: google2ubuntu-manager.py:206
+msgid "Remove this command"
+msgstr "Supprimer cette commande"
 
-#: google2ubuntu-manager.py:208
-msgid "Nettoyer"
+#: google2ubuntu-manager.py:211
+msgid "Clean up"
 msgstr "Nettoyer"
 
-#: google2ubuntu-manager.py:212
-msgid "Supprimer toutes les commandes"
-msgstr "SUpprimer toues les commandes"
+#: google2ubuntu-manager.py:215 google2ubuntu-manager.py:350
+msgid "Remove all commands"
+msgstr "Supprimer toutes les commandes"
 
-#: google2ubuntu-manager.py:224
-msgid "Aide"
+#: google2ubuntu-manager.py:227
+msgid "Help"
 msgstr "Aide"
 
-#: google2ubuntu-manager.py:228
-msgid "Afficher l'aide"
+#: google2ubuntu-manager.py:231
+msgid "Display help message"
 msgstr "Afficher l'aide"
 
-#: google2ubuntu-manager.py:239
-msgid "Toutes"
+#: google2ubuntu-manager.py:242
+msgid "All"
 msgstr "Toutes"
 
-#: google2ubuntu-manager.py:240
-msgid "Externes"
+#: google2ubuntu-manager.py:243
+msgid "External"
 msgstr "Externes"
 
-#: google2ubuntu-manager.py:241
-msgid "Internes"
+#: google2ubuntu-manager.py:244
+msgid "Internal"
 msgstr "Internes"
 
-#: google2ubuntu-manager.py:242
+#: google2ubuntu-manager.py:245
 msgid "Modules"
 msgstr "Modules"
 
-#: google2ubuntu-manager.py:246
-msgid "Choisir quel type d'action afficher"
-msgstr "Choisir quel type d'action afficher"
+#: google2ubuntu-manager.py:249
+msgid "What type of command to add"
+msgstr "Quel type de commandes"
 
-#: google2ubuntu-manager.py:277 google2ubuntu-manager.py:281
+#: google2ubuntu-manager.py:280 google2ubuntu-manager.py:284
 msgid "modules"
 msgstr "modules"
 
-#: google2ubuntu-manager.py:277 google2ubuntu-manager.py:279
-#: google2ubuntu-manager.py:290
-msgid "interne"
+#: google2ubuntu-manager.py:280 google2ubuntu-manager.py:282
+#: google2ubuntu-manager.py:293
+msgid "internal"
 msgstr "interne"
 
-#: google2ubuntu-manager.py:288 google2ubuntu-manager.py:290
-#: google2ubuntu-manager.py:312
-msgid "<phrase clé>"
-msgstr "<phrase clé>"
+#: google2ubuntu-manager.py:291 google2ubuntu-manager.py:293
+#: google2ubuntu-manager.py:315
+msgid "key sentence"
+msgstr "phrase clé"
 
-#: google2ubuntu-manager.py:288
-msgid "<votre commande>"
-msgstr "<votre commande>"
+#: google2ubuntu-manager.py:291
+msgid "your command"
+msgstr "votre commande"
 
-#: google2ubuntu-manager.py:298
-msgid "Erreur, vous n'avez choisi aucun fichier"
-msgstr "Erreur, vous n'avez choisi aucun fichier"
+#: google2ubuntu-manager.py:293
+msgid "word"
+msgstr "mot"
 
-#: google2ubuntu-manager.py:321
-msgid "Erreur, le fichier args n'existe pas"
-msgstr "Erreur, le fichier args n'existe pas"
+#: google2ubuntu-manager.py:301
+msgid "Error, you must choose a file"
+msgstr "Erreur, vous devez choisir un fichier"
 
-#: google2ubuntu-manager.py:330
-msgid "Suppression: "
-msgstr "Suppression: "
+#: google2ubuntu-manager.py:324
+msgid "Error, args file missing"
+msgstr "Erreur, fichier args du module manquant"
 
-#: google2ubuntu-manager.py:347
-msgid "Suppression de toutes les commandes"
-msgstr "Suppression de toutes les commandes"
+#: google2ubuntu-manager.py:409
+msgid "Save commands"
+msgstr "Sauvegarder les commandes"
 
-#: google2ubuntu-manager.py:406
-msgid "Sauvegarde des commandes"
-msgstr "Sauvegarde des commandes"
+#: google2ubuntu-manager.py:419
+msgid "Module setup"
+msgstr "Configuration du module"
 
-#: google2ubuntu-manager.py:416
-msgid "Paramétrage du module"
-msgstr "Paramaétrage du module"
-
-#: google2ubuntu-manager.py:424
-msgid "Mot de liaison"
+#: google2ubuntu-manager.py:427
+msgid "Linking word"
 msgstr "Mot de liaison"
 
-#: google2ubuntu-manager.py:428
-msgid ""
-"Un mot de liaison permet de séparer l'appel du module des paramètes à lui "
-"envoyer"
-msgstr ""
-"Un mot de liaison permet de séparer l'appel du module des paramètres à lui "
-"envoyer"
-
-#: google2ubuntu-manager.py:430
-msgid "Transformer les epaces en +"
-msgstr "Transformer les espaces en +"
-
 #: google2ubuntu-manager.py:431
-msgid "Convertir les espaces en +"
-msgstr "Convertir les espaces en +"
+msgid "Word to separate call and parameter"
+msgstr "Mot pour separer appel et parametres"
 
 #: google2ubuntu-manager.py:433 google2ubuntu-manager.py:434
-msgid "Continuer"
+msgid "Replace space by plus"
+msgstr "Remplacer les espaces par des plus"
+
+#: google2ubuntu-manager.py:436 google2ubuntu-manager.py:437
+msgid "Go"
 msgstr "Continuer"
 
-#: google2ubuntu-manager.py:489
-msgid "Aide Google2Ubuntu"
+#: google2ubuntu-manager.py:492
+msgid "Help Google2Ubuntu"
 msgstr "Aide Google2Ubuntu"
 
-#: google2ubuntu-manager.py:514
-msgid "Choisissez un fichier"
-msgstr "Choisissez un fichier"
+#: google2ubuntu-manager.py:517
+msgid "Choose a file"
+msgstr "Choisir un fichier"

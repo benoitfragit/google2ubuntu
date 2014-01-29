@@ -53,13 +53,13 @@ class interface():
     def __init__(self):
         # on joue un son pour signaler le démarrage
         os.system('aplay '+os.path.dirname(os.path.abspath(__file__))+'/sound.wav')
-        notif.update(_('Enregistrement:'),_('En cours'),'RECORD')
+        notif.update(_('Recording')+':',_('Processing'),'RECORD')
         
         # On lance le script d'enregistrement pour acquérir la voix pdt 5s
         command =os.path.dirname(os.path.abspath(__file__))+'/record.sh'
         p = subprocess.check_call([command])  
         
-        notif.update(_("Fin de l'enregistrement"),_('Envoi à Google'),'NETWORK')
+        notif.update(_("End of recording"),_('Sending to Google'),'NETWORK')
         self.sendto()    
 
     def sendto(self):
@@ -80,7 +80,7 @@ class interface():
                 if len(result) != 0:
                     # si on a un résultat
                     text = result[0]['utterance']
-                    notif.update(_("Recherche de l'action associee à:"),text,'EXECUTE')
+                    notif.update(_("Searching action associated to")+':',text,'EXECUTE')
                     
                     # fichier de configuration
                     config = expanduser('~') + '/.config/google2ubuntu/google2ubuntu.conf'
@@ -97,19 +97,19 @@ class interface():
                     # parsing du résultat pour trouver l'action
                     sp = stringParser(text,config_file)
                 else:
-                    notif.update(_('Erreur'),_('Je ne comprends pas ce que vous dites'),'ERROR')
+                    notif.update(_('Error'),_("I don't understand what you are saying"),'ERROR')
                     time.sleep(3)
                     notif.close()
                     sys.exit(1)                
                     
             except ValueError, IndexError:
-                notif.update(_('Erreur'),_('Traduction impossible'),'ERROR')
+                notif.update(_('Error'),_('Unable to translate'),'ERROR')
                 time.sleep(3)
                 notif.close()
                 sys.exit(1)
                 
         except urllib2.URLError:
-            notif.update(_('Erreur'),_('Envoi à Google impossible'),'ERROR')    
+            notif.update(_('Error'),_('Unable to send to Google'),'ERROR')    
             time.sleep(3)
             notif.close()
             sys.exit(1)
@@ -162,7 +162,7 @@ class stringParser():
                 # si on trouve le mot "modules", on instancie une classe workWithModule et on lui passe
                 # le dossier ie weather, search,...; le nom du module ie weather.sh, search.sh et le texte prononcé
                 wm = workWithModule(check[2],check[3],text)
-            elif _('interne') in check:
+            elif _('internal') in check:
                 # on execute une commande intene, la commande est configurée
                 # ainsi interne/batterie, on envoie batterie à la fonction
                 b = basicCommands(check[1])
@@ -174,7 +174,7 @@ class stringParser():
             notif.close()
             
         except IOError:
-            notif.update(_('Erreur'),_('Lecture du fichier de config impossible'),'ERROR')
+            notif.update(_('Error'),_('Setup file missing'),'ERROR')
             time.sleep(3)
             notif.close()            
             sys.exit(1)   
@@ -243,12 +243,12 @@ class workWithModule():
                 execute = expanduser('~') +'/.config/google2ubuntu/modules/'+module_path+'/'+module_name+' '+param
                 os.system(execute)
             else:
-                notif.update(_('Erreur'),_("Vous avez appelez un module sans prononcer le mot de liaison")+'\n'+linker,'ERROR')    
+                notif.update(_('Error'),_("you didn't say the linking word")+'\n'+linker,'ERROR')    
                 time.sleep(3)
                 notif.close()        
             
         except IOError:
-            notif.update(_('Erreur'),_('Le fichier args du module est absent'),'ERROR')
+            notif.update(_('Error'),_('args file missing'),'ERROR')
             time.sleep(3)
             notif.close()
             sys.exit(1) 
@@ -257,16 +257,16 @@ class workWithModule():
 class basicCommands():
     def __init__(self,text):
         # suivant le paramètre reçu, on exécute une action
-        if text == _('heure'):
+        if text == _('time'):
             self.getTime()
-        elif text == _('batterie'):
+        elif text == _('power'):
             self.getPower()
         else:
             print "no action found"
         
     def getTime(self):
         var=time.strftime('%d/%m/%y %H:%M',time.localtime())
-        notif.update(_('Heure'),var,'INFO')
+        notif.update(_('time'),var,'INFO')
             		
     def getPower(self):
         command = "acpi -b"
@@ -278,15 +278,15 @@ class basicCommands():
             rtime = output.split(' ')[4]
             
             if output.count('Charging') > 0:
-                message = _('En charge: ')+pcent+'\n'+rtime+_(' avant la fin de la charge')
+                message = _('Charging')+': '+pcent+'\n'+rtime++' '+_('before charging')
             else:
-                message = _('En décharge: ')+pcent+'\n'+rtime+_(' restant')
+                message = _('Discharging')+': '+pcent+'\n'+rtime+' '+_('remaining')
         else:
-            message = _("La batterie n'est pas branchée")
+            message = _('battery is not plugged')
         
-        notif.update(_('Batterie'),message,'INFO')
+        notif.update(_('Power'),message,'INFO')
         time.sleep(3)
 
 # Initialisation des notifications
-notif = notification('Google2Ubuntu',_('prêt...'))
+notif = notification('Google2Ubuntu',_('Ready'))
 g2u = interface()

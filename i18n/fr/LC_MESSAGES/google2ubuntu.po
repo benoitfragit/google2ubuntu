@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: google 2ubuntu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-29 10:34+0100\n"
-"PO-Revision-Date: 2014-01-29 10:35+0100\n"
+"POT-Creation-Date: 2014-01-29 13:38+0100\n"
+"PO-Revision-Date: 2014-01-29 13:38+0100\n"
 "Last-Translator: benoit <benoitfranquet@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -18,99 +18,95 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: google2ubuntu.py:54
-msgid "Enregistrement:"
-msgstr "Enregistrement:"
+#: google2ubuntu.py:56
+msgid "Recording"
+msgstr "Enregistrement"
 
-#: google2ubuntu.py:54
-msgid "En cours"
+#: google2ubuntu.py:56
+msgid "Processing"
 msgstr "En cours"
 
-#: google2ubuntu.py:60
-msgid "Fin de l'enregistrement"
+#: google2ubuntu.py:62
+msgid "End of recording"
 msgstr "Fin de l'enregistrement"
 
-#: google2ubuntu.py:60
-msgid "Envoi à Google"
+#: google2ubuntu.py:62
+msgid "Sending to Google"
 msgstr "Envoi à Google"
 
-#: google2ubuntu.py:81
-msgid "Recherche de l'action associee à:"
-msgstr "Recherche de l'action associée à:"
+#: google2ubuntu.py:83
+msgid "Searching action associated to"
+msgstr "Recherche de l'action pour"
 
-#: google2ubuntu.py:98 google2ubuntu.py:104 google2ubuntu.py:110
-#: google2ubuntu.py:175 google2ubuntu.py:244 google2ubuntu.py:249
-msgid "Erreur"
+#: google2ubuntu.py:100 google2ubuntu.py:106 google2ubuntu.py:112
+#: google2ubuntu.py:177 google2ubuntu.py:246 google2ubuntu.py:251
+msgid "Error"
 msgstr "Erreur"
 
-#: google2ubuntu.py:98
-msgid "Je ne comprends pas ce que vous dites"
-msgstr "Je ne comprends pas ce que vous dites"
+#: google2ubuntu.py:100
+msgid "I don't understand what you are saying"
+msgstr "Je ne comprends pas"
 
-#: google2ubuntu.py:104
-msgid "Traduction impossible"
+#: google2ubuntu.py:106
+msgid "Unable to translate"
 msgstr "Traduction impossible"
 
-#: google2ubuntu.py:110
-msgid "Envoi à Google impossible"
+#: google2ubuntu.py:112
+msgid "Unable to send to Google"
 msgstr "Envoi à Google impossible"
 
-#: google2ubuntu.py:159
+#: google2ubuntu.py:161
 msgid "modules"
 msgstr "modules"
 
-#: google2ubuntu.py:163
-msgid "interne"
+#: google2ubuntu.py:165
+msgid "internal"
 msgstr "interne"
 
-#: google2ubuntu.py:175
-msgid "Lecture du fichier de config impossible"
-msgstr "Lecture du fichier de config impossible"
+#: google2ubuntu.py:177
+msgid "Setup file missing"
+msgstr "Fichier de configuration manquant"
 
-#: google2ubuntu.py:244
-msgid "Vous avez appelez un module sans prononcer le mot de liaison"
-msgstr "Vous avez appelez un module sans prononcer le mot de liaison"
+#: google2ubuntu.py:246
+msgid "you didn't say the linking word"
+msgstr "Pour appeler un module, prononcer le mot de liaison"
 
-#: google2ubuntu.py:249
-msgid "Le fichier args du module est absent"
-msgstr "Le fichier args du module est absent"
+#: google2ubuntu.py:251
+msgid "args file missing"
+msgstr "fichier de configuration du module absent"
 
-#: google2ubuntu.py:258
-msgid "heure"
+#: google2ubuntu.py:260 google2ubuntu.py:269
+msgid "time"
 msgstr "heure"
 
-#: google2ubuntu.py:260
-msgid "batterie"
+#: google2ubuntu.py:262
+msgid "power"
 msgstr "batterie"
 
-#: google2ubuntu.py:267
-msgid "Heure"
-msgstr "Heure"
-
-#: google2ubuntu.py:279
-msgid "En charge: "
-msgstr "En charge: "
-
-#: google2ubuntu.py:279
-msgid " avant la fin de la charge"
-msgstr " avant la fin de la charge"
+#: google2ubuntu.py:281
+msgid "Charging"
+msgstr "En charge"
 
 #: google2ubuntu.py:281
-msgid "En décharge: "
-msgstr "En décharge"
-
-#: google2ubuntu.py:281
-msgid " restant"
-msgstr " restant"
+msgid "before charging"
+msgstr "avant le chargement complet"
 
 #: google2ubuntu.py:283
-msgid "La batterie n'est pas branchée"
-msgstr "La batterie n'est pas branchée"
+msgid "Discharging"
+msgstr "En decharge"
+
+#: google2ubuntu.py:283
+msgid "remaining"
+msgstr "restant"
 
 #: google2ubuntu.py:285
-msgid "Batterie"
-msgstr "batterie"
+msgid "battery is not plugged"
+msgstr "La batterie est absente"
 
-#: google2ubuntu.py:289
-msgid "prêt..."
-msgstr "prêt..."
+#: google2ubuntu.py:287
+msgid "Power"
+msgstr "Batterie"
+
+#: google2ubuntu.py:291
+msgid "Ready"
+msgstr "Pret"
