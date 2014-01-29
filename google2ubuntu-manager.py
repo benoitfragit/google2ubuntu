@@ -102,9 +102,9 @@ class MyWindow(Gtk.ApplicationWindow):
         # Use a grid to add all item
         self.grid = Gtk.Grid()
         self.grid.set_row_spacing(2);
-        self.grid.attach(toolbar,0,0,2,1)
-        self.grid.attach(scrolled_window, 0, 1, 2, 1)    
-        self.grid.attach(self.labelState,0,2,2,1)
+        self.grid.attach(toolbar,0,0,1,1)
+        self.grid.attach(scrolled_window, 0, 1, 1, 1)    
+        self.grid.attach(self.labelState,0,2,1,1)
         
         # define the visible func toolbar should be create
         self.tree_filter.set_visible_func(self.match_func)
@@ -221,7 +221,6 @@ class MyWindow(Gtk.ApplicationWindow):
         # create a combobox to store user choice
         self.combo = self.get_combobox()
         toolcombo = Gtk.ToolItem()
-        toolcombo.set_expand(True)
         toolcombo.add(self.combo)
         toolcombo.show()
         toolbar.insert(toolcombo,4)
