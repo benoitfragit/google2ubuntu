@@ -10,6 +10,11 @@ import os
 import json
 import urllib2
 import time
+import gettext
+import locale
+lang = locale.getlocale()[0]
+gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
+
 
 # Cette classe utilis Notify pour alerter l'utilisateur
 class notification():
@@ -48,13 +53,13 @@ class interface():
     def __init__(self):
         # on joue un son pour signaler le démarrage
         os.system('aplay '+os.path.dirname(os.path.abspath(__file__))+'/sound.wav')
-        notif.update('Enregistrement:','En cours','RECORD')
+        notif.update(_('Enregistrement:'),_('En cours'),'RECORD')
         
         # On lance le script d'enregistrement pour acquérir la voix pdt 5s
         command =os.path.dirname(os.path.abspath(__file__))+'/record.sh'
         p = subprocess.check_call([command])  
         
-        notif.update("Fin de l'enregistrement",'Envoi à Google','NETWORK')
+        notif.update(_("Fin de l'enregistrement"),_('Envoi à Google'),'NETWORK')
         self.sendto()    
 
     def sendto(self):
@@ -65,7 +70,7 @@ class interface():
         f.close()
         
         # envoi d'une requête à Google
-        req = urllib2.Request('https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=fr-FR', data=data, headers={'Content-type': 'audio/x-flac; rate=16000'})
+        req = urllib2.Request('https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang='+lang, data=data, headers={'Content-type': 'audio/x-flac; rate=16000'})
         try:
             # retour de la requête
             ret = urllib2.urlopen(req)
@@ -75,7 +80,7 @@ class interface():
                 if len(result) != 0:
                     # si on a un résultat
                     text = result[0]['utterance']
-                    notif.update("Recherche de l'action associee à:",text,'EXECUTE')
+                    notif.update(_("Recherche de l'action associee à:"),text,'EXECUTE')
                     
                     # fichier de configuration
                     config = expanduser('~') + '/.config/google2ubuntu/google2ubuntu.conf'
@@ -92,19 +97,19 @@ class interface():
                     # parsing du résultat pour trouver l'action
                     sp = stringParser(text,config_file)
                 else:
-                    notif.update('Erreur','Je ne comprends pas ce que vous dites','ERROR')
+                    notif.update(_('Erreur'),_('Je ne comprends pas ce que vous dites'),'ERROR')
                     time.sleep(3)
                     notif.close()
                     sys.exit(1)                
                     
             except ValueError, IndexError:
-                notif.update('Erreur','Traduction impossible','ERROR')
+                notif.update(_('Erreur'),_('Traduction impossible'),'ERROR')
                 time.sleep(3)
                 notif.close()
                 sys.exit(1)
                 
         except urllib2.URLError:
-            notif.update('Erreur','Envoi à Google impossible','ERROR')    
+            notif.update(_('Erreur'),_('Envoi à Google impossible'),'ERROR')    
             time.sleep(3)
             notif.close()
             sys.exit(1)
@@ -153,11 +158,11 @@ class stringParser():
             # la ligne de configuration dans le fichier est: [q/Q]uelle*météo=/modules/weather/weather.sh
             # on coupe donc l'action suivant '/'
             check = do.split('/')
-            if 'modules' in check:
+            if _('modules') in check:
                 # si on trouve le mot "modules", on instancie une classe workWithModule et on lui passe
                 # le dossier ie weather, search,...; le nom du module ie weather.sh, search.sh et le texte prononcé
                 wm = workWithModule(check[2],check[3],text)
-            elif 'interne' in check:
+            elif _('interne') in check:
                 # on execute une commande intene, la commande est configurée
                 # ainsi interne/batterie, on envoie batterie à la fonction
                 b = basicCommands(check[1])
@@ -169,7 +174,7 @@ class stringParser():
             notif.close()
             
         except IOError:
-            notif.update('Erreur','Lecture du fichier de config impossible','ERROR')
+            notif.update(_('Erreur'),_('Lecture du fichier de config impossible'),'ERROR')
             time.sleep(3)
             notif.close()            
             sys.exit(1)   
@@ -238,12 +243,12 @@ class workWithModule():
                 execute = expanduser('~') +'/.config/google2ubuntu/modules/'+module_path+'/'+module_name+' '+param
                 os.system(execute)
             else:
-                notif.update('Erreur',"Vous avez appelez un module sans prononcer le mot de liaison\n"+linker,'ERROR')    
+                notif.update(_('Erreur'),_("Vous avez appelez un module sans prononcer le mot de liaison")+'\n'+linker,'ERROR')    
                 time.sleep(3)
                 notif.close()        
             
         except IOError:
-            notif.update('Erreur','Le fichier args du module est absent','ERROR')
+            notif.update(_('Erreur'),_('Le fichier args du module est absent'),'ERROR')
             time.sleep(3)
             notif.close()
             sys.exit(1) 
@@ -252,16 +257,16 @@ class workWithModule():
 class basicCommands():
     def __init__(self,text):
         # suivant le paramètre reçu, on exécute une action
-        if text == 'heure':
+        if text == _('heure'):
             self.getTime()
-        elif text == 'batterie':
+        elif text == _('batterie'):
             self.getPower()
         else:
             print "no action found"
         
     def getTime(self):
         var=time.strftime('%d/%m/%y %H:%M',time.localtime())
-        notif.update('Heure',var,'INFO')
+        notif.update(_('Heure'),var,'INFO')
             		
     def getPower(self):
         command = "acpi -b"
@@ -273,15 +278,15 @@ class basicCommands():
             rtime = output.split(' ')[4]
             
             if output.count('Charging') > 0:
-                message = 'En charge: '+pcent+'\n'+rtime+' avant la fin de la charge'
+                message = _('En charge: ')+pcent+'\n'+rtime+_(' avant la fin de la charge')
             else:
-                message = 'En décharge: '+pcent+'\n'+rtime+' restant'
+                message = _('En décharge: ')+pcent+'\n'+rtime+_(' restant')
         else:
-            message = "La batterie n'est pas branchée"
+            message = _("La batterie n'est pas branchée")
         
-        notif.update('Batterie',message,'INFO')
+        notif.update(_('Batterie'),message,'INFO')
         time.sleep(3)
 
 # Initialisation des notifications
-notif = notification('Google2Ubuntu','prêt...')
+notif = notification('Google2Ubuntu',_('prêt...'))
 g2u = interface()

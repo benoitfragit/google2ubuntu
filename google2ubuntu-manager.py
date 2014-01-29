@@ -8,6 +8,9 @@ from os.path import expanduser
 import os
 import sys
 import subprocess
+import gettext
+
+gettext.install('google2ubuntu-manager',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
 
 TARGET_TYPE_URI_LIST = 80
 dnd_list = [Gtk.TargetEntry.new('text/uri-list', 0, TARGET_TYPE_URI_LIST )]
@@ -36,15 +39,12 @@ class MyWindow(Gtk.ApplicationWindow):
          
         # create the treeview
         treeview = Gtk.TreeView(self.tree_filter)
-        treeview.set_tooltip_text('Liste des commandes')
+        treeview.set_tooltip_text(_('Liste des commandes'))
         treeview.set_headers_visible(False)
         treeview.set_enable_search(True)
         treeview.set_search_column(1)
         treeview.set_hexpand(True)
         treeview.set_vexpand(True)
-
-        # DND
-        #treeview.enable_model_drag_dest(dnd_list,Gdk.DragAction.COPY)
 
         # The first TreeView column displays the data from
         # the first ListStore column (text=0), which contains
@@ -52,7 +52,7 @@ class MyWindow(Gtk.ApplicationWindow):
         renderer_1 = Gtk.CellRendererText()        
         renderer_1.set_property("editable", True)
         renderer_1.connect("edited", self.key_edited,store)
-        column_1 = Gtk.TreeViewColumn('Clés', renderer_1, text=0)
+        column_1 = Gtk.TreeViewColumn(_('Clés'), renderer_1, text=0)
         # Calling set_sort_column_id makes the treeViewColumn sortable
         # by clicking on its header. The column is sorted by
         # the ListStore column index passed to it 
@@ -67,7 +67,7 @@ class MyWindow(Gtk.ApplicationWindow):
         # text=1 pulls the data from the second ListStore column
         # which contains filesizes in bytes formatted as strings
         # with thousand separators
-        column_2 = Gtk.TreeViewColumn('Commandes', renderer_2, text=1)
+        column_2 = Gtk.TreeViewColumn(_('Commandes'), renderer_2, text=1)
         # Mak the Treeview column sortable by the third ListStore column
         # which contains the actual file sizes
         column_2.set_sort_column_id(1)
@@ -75,7 +75,7 @@ class MyWindow(Gtk.ApplicationWindow):
         
         # the label we use to show the selection
         self.labelState = Gtk.Label()
-        self.labelState.set_text("Prêt")
+        self.labelState.set_text(_("Prêt"))
         self.labelState.set_justify(Gtk.Justification.LEFT) 
         self.labelState.set_halign(Gtk.Align.START) 
 
@@ -90,11 +90,9 @@ class MyWindow(Gtk.ApplicationWindow):
         scrolled_window.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.add(treeview)
         scrolled_window.set_min_content_width(200)
-        scrolled_window.set_min_content_height(200)
-        
+        scrolled_window.set_min_content_height(200)        
         scrolled_window.connect('drag_data_received', self.on_drag_data_received,store)
         scrolled_window.drag_dest_set( Gtk.DestDefaults.MOTION | Gtk.DestDefaults.HIGHLIGHT | Gtk.DestDefaults.DROP, dnd_list, Gdk.DragAction.COPY)
-        
         
         # a toolbar created in the method create_toolbar (see below)
         toolbar = self.create_toolbar(store)
@@ -162,22 +160,22 @@ class MyWindow(Gtk.ApplicationWindow):
 
         # create a menu
         menu = Gtk.Menu()
-        externe = Gtk.MenuItem(label="Commande externe")
+        externe = Gtk.MenuItem(label=_("Commande externe"))
         externe.connect("activate",self.add_clicked,store,'externe')
         externe.show()
         menu.append(externe)
-        interne = Gtk.MenuItem(label="Commande interne")
+        interne = Gtk.MenuItem(label=_("Commande interne"))
         interne.connect("activate",self.add_clicked,store,'interne')
         interne.show()
         menu.append(interne)        
-        module = Gtk.MenuItem(label="Module")
+        module = Gtk.MenuItem(label=_("Module"))
         module.connect("activate",self.add_clicked,store,'module')
         module.show()
         menu.append(module)
 
         # create a button for the "add" action, with a stock image
         add_button = Gtk.MenuToolButton.new_from_stock(Gtk.STOCK_ADD)
-        add_button.set_label("Ajouter")
+        add_button.set_label(_("Ajouter"))
         add_button.set_menu(menu)
         image = Gtk.Image()
         image.set_from_stock(Gtk.STOCK_ADD, Gtk.IconSize.BUTTON)
@@ -187,34 +185,34 @@ class MyWindow(Gtk.ApplicationWindow):
         toolbar.insert(add_button, 0)
         # show the button
         add_button.connect("clicked", self.add_clicked,store,'externe')
-        add_button.set_tooltip_text('Ajouter une nouvelle commande')
+        add_button.set_tooltip_text(_('Ajouter une nouvelle commande'))
         add_button.show()
  
         # create a button for the "try" action
         try_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_MEDIA_PLAY)
-        try_button.set_label("Essayer")
+        try_button.set_label(_("Essayer"))
         try_button.set_is_important(True)
         toolbar.insert(try_button,1)
         try_button.connect("clicked",self.try_command,store)
-        try_button.set_tooltip_text('Tester la commande')
+        try_button.set_tooltip_text(_('Tester la commande'))
         try_button.show() 
          
         # create a button for the "remove" action
         remove_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_REMOVE)
-        remove_button.set_label("Supprimer")
+        remove_button.set_label(_("Supprimer"))
         remove_button.set_is_important(True)
         toolbar.insert(remove_button,2)
         remove_button.connect("clicked",self.remove_clicked,store)
-        remove_button.set_tooltip_text('Supprimer la commande sélectionnée')
+        remove_button.set_tooltip_text(_('Supprimer la commande sélectionnée'))
         remove_button.show()
         
         # create a button for the "remove all" action
         all_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_STOP)
-        all_button.set_label("Nettoyer")
+        all_button.set_label(_("Nettoyer"))
         all_button.set_is_important(True)
         toolbar.insert(all_button,3)
         all_button.connect("clicked",self.removeall_clicked,store)
-        all_button.set_tooltip_text('Supprimer toutes les commandes')
+        all_button.set_tooltip_text(_('Supprimer toutes les commandes'))
         all_button.show() 
         
         # create a combobox to store user choice
@@ -226,11 +224,11 @@ class MyWindow(Gtk.ApplicationWindow):
         
         # create a button for the "Help" action
         help_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_HELP)
-        help_button.set_label("Aide")
+        help_button.set_label(_("Aide"))
         help_button.set_is_important(True)
         toolbar.insert(help_button,5)
         help_button.connect("clicked",self.help_clicked )
-        help_button.set_tooltip_text("Afficher l'aide")
+        help_button.set_tooltip_text(_("Afficher l'aide"))
         help_button.show() 
 
         # return the complete toolbar
@@ -241,14 +239,14 @@ class MyWindow(Gtk.ApplicationWindow):
         # the data in the model, of type string
         listmodel = Gtk.ListStore(str)
         # append the data in the model
-        listmodel.append(['Toutes'])
-        listmodel.append(['Externes'])
-        listmodel.append(['Internes'])
-        listmodel.append(['Modules'])
+        listmodel.append([_('Toutes')])
+        listmodel.append([_('Externes')])
+        listmodel.append([_('Internes')])
+        listmodel.append([_('Modules')])
                         
         # a combobox to see the data stored in the model
         combobox = Gtk.ComboBox(model=listmodel)
-        combobox.set_tooltip_text("Choisir quel type d'action afficher")
+        combobox.set_tooltip_text(_("Choisir quel type d'action afficher"))
 
         # a cellrenderer to render the text
         cell = Gtk.CellRendererText()
@@ -279,20 +277,20 @@ class MyWindow(Gtk.ApplicationWindow):
         
         if query == 0:
             return True
-        elif query == 1 and 'modules' not in field and 'interne' not in field:
+        elif query == 1 and _('modules') not in field and _('interne') not in field:
             return True
-        elif query == 2 and 'interne' in field:
+        elif query == 2 and _('interne') in field:
             return True
-        elif query == 3 and 'modules' in field:
+        elif query == 3 and _('modules') in field:
             return True
         else:
             return False
 
     def add_clicked(self,button,store,add_type):
         if add_type == 'externe':
-            store.append(['<phrase clé>','<votre commande>'])
+            store.append([_('<phrase clé>'),_('<votre commande>')])
         elif add_type == 'interne':
-            store.append(['<phrase clé>','interne/<mot>'])
+            store.append([_('<phrase clé>'),_('interne')+'/<mot>'])
         elif add_type == 'module':
             mo = moduleSelection()
             module = mo.getModule()
@@ -300,7 +298,7 @@ class MyWindow(Gtk.ApplicationWindow):
                 self.addModule(store,module)
             else:
                 self.show_label('show')
-                self.labelState.set_text("Erreur, vous n'avez choisi aucun fichier")
+                self.labelState.set_text(_("Erreur, vous n'avez choisi aucun fichier"))
                 
         self.selection.select_iter(store.get_iter(len(store)-1))
         
@@ -314,7 +312,7 @@ class MyWindow(Gtk.ApplicationWindow):
         if os.path.exists(module+'args'):
             # ex: récupération de weather
             path = module.split('/')[-2]
-            store.append(['<phrase clé>','/modules/'+path+'/'+name])
+            store.append([_('<phrase clé>'),'/modules/'+path+'/'+name])
             # si le dossier de modules n'existe pas
             module_path=expanduser('~')+'/.config/google2ubuntu/modules/'
             if not os.path.exists(module_path):
@@ -323,7 +321,7 @@ class MyWindow(Gtk.ApplicationWindow):
                 os.system('cp -r '+module+' '+module_path)
         else:
             self.show_label('show')
-            self.labelState.set_text("Erreur, le fichier args n'existe pas")
+            self.labelState.set_text(_("Erreur, le fichier args n'existe pas"))
             win = ArgsWindow(module,name,store)        
     
     def remove_clicked(self,button,store):
@@ -332,7 +330,7 @@ class MyWindow(Gtk.ApplicationWindow):
             iter = self.tree_filter.convert_iter_to_child_iter(iters)
             if iter is not None:
                 self.show_label('show')
-                self.labelState.set_text('Suppression: '+store[iter][0]+' '+store[iter][1]) 
+                self.labelState.set_text(_('Suppression: ')+store[iter][0]+' '+store[iter][1]) 
                 store.remove(iter)
                 self.saveTree(store)
             else:
@@ -349,7 +347,7 @@ class MyWindow(Gtk.ApplicationWindow):
 
         if len(store) != 0:
             # remove all the entries in the model
-            self.labelState.set_text('Suppression de toutes les commandes')               
+            self.labelState.set_text(_('Suppression de toutes les commandes'))               
             for i in range(len(store)):   
                 iter = store.get_iter(0)
                 store.remove(iter)
@@ -408,7 +406,7 @@ class MyWindow(Gtk.ApplicationWindow):
                         f.write(model[iter][0]+'='+model[iter][1]+'\n')
                 
                 self.show_label('show')
-                self.labelState.set_text('Sauvegarde des commandes')            
+                self.labelState.set_text(_('Sauvegarde des commandes'))            
 
             f.close()
         except IOError:    
@@ -418,26 +416,25 @@ class MyWindow(Gtk.ApplicationWindow):
 class ArgsWindow():
     def __init__(self,module,name,store):
         self.w = Gtk.Window()
-        self.w.set_title("Paramétrage du module")
+        self.w.set_title(_("Paramétrage du module"))
         self.w.set_resizable(False)     
-        self.w.set_border_width(0)
         self.w.get_focus()
         self.w.set_position(Gtk.WindowPosition.CENTER)      
         self.w.set_default_size(300,300)  
         self.w.set_border_width(5)
         
         grid = Gtk.Grid()
-        label1 = Gtk.Label("Mot de liaison")
+        label1 = Gtk.Label(_("Mot de liaison"))
         label1.set_justify(Gtk.Justification.LEFT) 
         label1.set_halign(Gtk.Align.START) 
         self.entry1 = Gtk.Entry()
-        self.entry1.set_tooltip_text("Un mot de liaison permet de séparer l'appel du module des paramètes à lui envoyer")
+        self.entry1.set_tooltip_text(_("Un mot de liaison permet de séparer l'appel du module des paramètes à lui envoyer"))
         self.checkbutton = Gtk.CheckButton()
-        self.checkbutton.set_label("Transformer les epaces en +")
-        self.checkbutton.set_tooltip_text("Convertir les espaces en +")
+        self.checkbutton.set_label(_("Transformer les epaces en +"))
+        self.checkbutton.set_tooltip_text(_("Convertir les espaces en +"))
         button = Gtk.Button()
-        button.set_label("Continuer")
-        button.set_tooltip_text("Continuer")
+        button.set_label(_("Continuer"))
+        button.set_tooltip_text(_("Continuer"))
         image = Gtk.Image()
         image.set_from_stock(Gtk.STOCK_APPLY, Gtk.IconSize.BUTTON)
         button.set_image(image)
@@ -492,7 +489,7 @@ class HelpWindow():
         documenters = ["Franquet Benoit"]
 
         # we fill in the aboutdialog
-        self.aboutdialog.set_program_name("Aide Google2Ubuntu")
+        self.aboutdialog.set_program_name(_("Aide Google2Ubuntu"))
         self.aboutdialog.set_copyright("Copyright \xc2\xa9 2014 Franquet Benoit")
         self.aboutdialog.set_authors(authors)
         self.aboutdialog.set_documenters(documenters)
@@ -517,7 +514,7 @@ class HelpWindow():
 class moduleSelection():
     def __init__(self):
         w=Gtk.Window()
-        dialog = Gtk.FileChooserDialog("Choisissez un fichier", w,Gtk.FileChooserAction.OPEN,(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,Gtk.STOCK_OPEN, Gtk.ResponseType.OK))        
+        dialog = Gtk.FileChooserDialog(_("Choisissez un fichier"), w,Gtk.FileChooserAction.OPEN,(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,Gtk.STOCK_OPEN, Gtk.ResponseType.OK))        
         dialog.set_default_size(800, 400)
 
         response = dialog.run()

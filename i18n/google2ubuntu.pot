@@ -1,0 +1,115 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-01-29 10:34+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: google2ubuntu.py:54
+msgid "Enregistrement:"
+msgstr ""
+
+#: google2ubuntu.py:54
+msgid "En cours"
+msgstr ""
+
+#: google2ubuntu.py:60
+msgid "Fin de l'enregistrement"
+msgstr ""
+
+#: google2ubuntu.py:60
+msgid "Envoi à Google"
+msgstr ""
+
+#: google2ubuntu.py:81
+msgid "Recherche de l'action associee à:"
+msgstr ""
+
+#: google2ubuntu.py:98 google2ubuntu.py:104 google2ubuntu.py:110
+#: google2ubuntu.py:175 google2ubuntu.py:244 google2ubuntu.py:249
+msgid "Erreur"
+msgstr ""
+
+#: google2ubuntu.py:98
+msgid "Je ne comprends pas ce que vous dites"
+msgstr ""
+
+#: google2ubuntu.py:104
+msgid "Traduction impossible"
+msgstr ""
+
+#: google2ubuntu.py:110
+msgid "Envoi à Google impossible"
+msgstr ""
+
+#: google2ubuntu.py:159
+msgid "modules"
+msgstr ""
+
+#: google2ubuntu.py:163
+msgid "interne"
+msgstr ""
+
+#: google2ubuntu.py:175
+msgid "Lecture du fichier de config impossible"
+msgstr ""
+
+#: google2ubuntu.py:244
+msgid "Vous avez appelez un module sans prononcer le mot de liaison"
+msgstr ""
+
+#: google2ubuntu.py:249
+msgid "Le fichier args du module est absent"
+msgstr ""
+
+#: google2ubuntu.py:258
+msgid "heure"
+msgstr ""
+
+#: google2ubuntu.py:260
+msgid "batterie"
+msgstr ""
+
+#: google2ubuntu.py:267
+msgid "Heure"
+msgstr ""
+
+#: google2ubuntu.py:279
+msgid "En charge: "
+msgstr ""
+
+#: google2ubuntu.py:279
+msgid " avant la fin de la charge"
+msgstr ""
+
+#: google2ubuntu.py:281
+msgid "En décharge: "
+msgstr ""
+
+#: google2ubuntu.py:281
+msgid " restant"
+msgstr ""
+
+#: google2ubuntu.py:283
+msgid "La batterie n'est pas branchée"
+msgstr ""
+
+#: google2ubuntu.py:285
+msgid "Batterie"
+msgstr ""
+
+#: google2ubuntu.py:289
+msgid "prêt..."
+msgstr ""

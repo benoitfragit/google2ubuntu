@@ -1,0 +1,181 @@
+# French translations for google package
+# Traductions françaises du paquet google.
+# Copyright (C) 2014 THE google'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the google package.
+# benoit <benoitfranquet@gmail.com>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: google 2ubuntu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-01-29 11:05+0100\n"
+"PO-Revision-Date: 2014-01-29 11:06+0100\n"
+"Last-Translator: benoit <benoitfranquet@gmail.com>\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: google2ubuntu-manager.py:39
+msgid "Liste des commandes"
+msgstr "Command list"
+
+#: google2ubuntu-manager.py:52
+msgid "Clés"
+msgstr "Keys"
+
+#: google2ubuntu-manager.py:67
+msgid "Commandes"
+msgstr "Commands"
+
+#: google2ubuntu-manager.py:75
+msgid "Prêt"
+msgstr "Ready"
+
+#: google2ubuntu-manager.py:160
+msgid "Commande externe"
+msgstr "external commands"
+
+#: google2ubuntu-manager.py:164
+msgid "Commande interne"
+msgstr "Internal command"
+
+#: google2ubuntu-manager.py:168
+msgid "Module"
+msgstr "Module"
+
+#: google2ubuntu-manager.py:175
+msgid "Ajouter"
+msgstr "Add"
+
+#: google2ubuntu-manager.py:185
+msgid "Ajouter une nouvelle commande"
+msgstr "Add a new command"
+
+#: google2ubuntu-manager.py:190
+msgid "Essayer"
+msgstr "Try"
+
+#: google2ubuntu-manager.py:194
+msgid "Tester la commande"
+msgstr "Try this command"
+
+#: google2ubuntu-manager.py:199
+msgid "Supprimer"
+msgstr "Remove"
+
+#: google2ubuntu-manager.py:203
+msgid "Supprimer la commande sélectionnée"
+msgstr "Remove selected command"
+
+#: google2ubuntu-manager.py:208
+msgid "Nettoyer"
+msgstr "Clear"
+
+#: google2ubuntu-manager.py:212
+msgid "Supprimer toutes les commandes"
+msgstr "Remove all commands"
+
+#: google2ubuntu-manager.py:224
+msgid "Aide"
+msgstr "Help"
+
+#: google2ubuntu-manager.py:228
+msgid "Afficher l'aide"
+msgstr "Display Help"
+
+#: google2ubuntu-manager.py:239
+msgid "Toutes"
+msgstr "All"
+
+#: google2ubuntu-manager.py:240
+msgid "Externes"
+msgstr "External"
+
+#: google2ubuntu-manager.py:241
+msgid "Internes"
+msgstr "Internal"
+
+#: google2ubuntu-manager.py:242
+msgid "Modules"
+msgstr "Modules"
+
+#: google2ubuntu-manager.py:246
+msgid "Choisir quel type d'action afficher"
+msgstr "Choose what type of action to display"
+
+#: google2ubuntu-manager.py:277 google2ubuntu-manager.py:281
+msgid "modules"
+msgstr "modules"
+
+#: google2ubuntu-manager.py:277 google2ubuntu-manager.py:279
+#: google2ubuntu-manager.py:290
+msgid "interne"
+msgstr "internal"
+
+#: google2ubuntu-manager.py:288 google2ubuntu-manager.py:290
+#: google2ubuntu-manager.py:312
+msgid "<phrase clé>"
+msgstr "<key sentence>"
+
+#: google2ubuntu-manager.py:288
+msgid "<votre commande>"
+msgstr "<your command>"
+
+#: google2ubuntu-manager.py:298
+msgid "Erreur, vous n'avez choisi aucun fichier"
+msgstr "Error, you didn't choose a file"
+
+#: google2ubuntu-manager.py:321
+msgid "Erreur, le fichier args n'existe pas"
+msgstr "Error, args file missing"
+
+#: google2ubuntu-manager.py:330
+msgid "Suppression: "
+msgstr "Removing"
+
+#: google2ubuntu-manager.py:347
+msgid "Suppression de toutes les commandes"
+msgstr "Removing all commands"
+
+#: google2ubuntu-manager.py:406
+msgid "Sauvegarde des commandes"
+msgstr "Save commands"
+
+#: google2ubuntu-manager.py:416
+msgid "Paramétrage du module"
+msgstr "Module setup"
+
+#: google2ubuntu-manager.py:424
+msgid "Mot de liaison"
+msgstr "Linking word"
+
+#: google2ubuntu-manager.py:428
+msgid ""
+"Un mot de liaison permet de séparer l'appel du module des paramètes à lui "
+"envoyer"
+msgstr ""
+"You need to tell the linking word when you call a module"
+" "
+
+#: google2ubuntu-manager.py:430
+msgid "Transformer les epaces en +"
+msgstr "Replace space by +"
+
+#: google2ubuntu-manager.py:431
+msgid "Convertir les espaces en +"
+msgstr "Replace space by +"
+
+#: google2ubuntu-manager.py:433 google2ubuntu-manager.py:434
+msgid "Continuer"
+msgstr "Go"
+
+#: google2ubuntu-manager.py:489
+msgid "Aide Google2Ubuntu"
+msgstr "Help"
+
+#: google2ubuntu-manager.py:514
+msgid "Choisissez un fichier"
+msgstr "Choose a file"
