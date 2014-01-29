@@ -221,6 +221,7 @@ class MyWindow(Gtk.ApplicationWindow):
         # create a combobox to store user choice
         self.combo = self.get_combobox()
         toolcombo = Gtk.ToolItem()
+        toolcombo.set_expand(True)
         toolcombo.add(self.combo)
         toolcombo.show()
         toolbar.insert(toolcombo,4)

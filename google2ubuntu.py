@@ -263,6 +263,26 @@ class basicCommands():
             self.getPower()
         else:
             print "no action found"
+    
+    # en cours ...
+    #def repeat(self, text):
+        #path = '/tmp/previoux_command.txt'
+        #if os.path.isfile(path):
+            #try:
+                #f = open(path,"r")
+                #command_type = f.readline().rstrip('\n\r')  
+                #if command_type == _('module'):
+                    #name = f.readline().rstrip('\n\r') 
+                    #lword = f.readline().rstrip('\n\r') 
+                    #if lword in text:
+                        
+                    
+                #command_args =
+                #f.close()
+                
+                
+            #except IOError:
+                #print _('An error occured when I try to load previous commande')
         
     def getTime(self):
         var=time.strftime('%d/%m/%y %H:%M',time.localtime())
