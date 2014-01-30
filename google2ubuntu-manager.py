@@ -217,22 +217,27 @@ class MyWindow(Gtk.ApplicationWindow):
         all_button.connect("clicked",self.removeall_clicked,store)
         all_button.set_tooltip_text(_('Remove all commands'))
         all_button.show() 
+
+        # create a button for the "Help" action
+        help_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_HELP)
+        help_button.set_label(_("Help"))
+        help_button.set_is_important(True)
+        toolbar.insert(help_button,4)
+        help_button.connect("clicked",self.help_clicked )
+        help_button.set_tooltip_text(_("Display help message"))
+        help_button.show() 
+        
+        # add a separator
+        separator = Gtk.ToolItem()
+        separator.set_expand(True)
+        toolbar.insert(separator,5)
         
         # create a combobox to store user choice
         self.combo = self.get_combobox()
         toolcombo = Gtk.ToolItem()
         toolcombo.add(self.combo)
         toolcombo.show()
-        toolbar.insert(toolcombo,4)
-        
-        # create a button for the "Help" action
-        help_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_HELP)
-        help_button.set_label(_("Help"))
-        help_button.set_is_important(True)
-        toolbar.insert(help_button,5)
-        help_button.connect("clicked",self.help_clicked )
-        help_button.set_tooltip_text(_("Display help message"))
-        help_button.show() 
+        toolbar.insert(toolcombo,6)
 
         # return the complete toolbar
         return toolbar

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-29 13:38+0100\n"
+"POT-Creation-Date: 2014-01-30 17:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,95 +17,109 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: google2ubuntu.py:56
+#: google2ubuntu.py:85
 msgid "Recording"
 msgstr ""
 
-#: google2ubuntu.py:56
+#: google2ubuntu.py:85 google2ubuntu.py:208
 msgid "Processing"
 msgstr ""
 
-#: google2ubuntu.py:62
+#: google2ubuntu.py:91
 msgid "End of recording"
 msgstr ""
 
-#: google2ubuntu.py:62
+#: google2ubuntu.py:91
 msgid "Sending to Google"
 msgstr ""
 
-#: google2ubuntu.py:83
+#: google2ubuntu.py:112
 msgid "Searching action associated to"
 msgstr ""
 
-#: google2ubuntu.py:100 google2ubuntu.py:106 google2ubuntu.py:112
-#: google2ubuntu.py:177 google2ubuntu.py:246 google2ubuntu.py:251
+#: google2ubuntu.py:129 google2ubuntu.py:130 google2ubuntu.py:136
+#: google2ubuntu.py:137 google2ubuntu.py:143 google2ubuntu.py:144
+#: google2ubuntu.py:215 google2ubuntu.py:216 google2ubuntu.py:287
+#: google2ubuntu.py:288 google2ubuntu.py:293 google2ubuntu.py:294
 msgid "Error"
 msgstr ""
 
-#: google2ubuntu.py:100
+#: google2ubuntu.py:129 google2ubuntu.py:130
 msgid "I don't understand what you are saying"
 msgstr ""
 
-#: google2ubuntu.py:106
+#: google2ubuntu.py:136 google2ubuntu.py:137
 msgid "Unable to translate"
 msgstr ""
 
-#: google2ubuntu.py:112
+#: google2ubuntu.py:143 google2ubuntu.py:144
 msgid "Unable to send to Google"
 msgstr ""
 
-#: google2ubuntu.py:161
+#: google2ubuntu.py:198
 msgid "modules"
 msgstr ""
 
-#: google2ubuntu.py:165
+#: google2ubuntu.py:202
 msgid "internal"
 msgstr ""
 
-#: google2ubuntu.py:177
+#: google2ubuntu.py:215 google2ubuntu.py:216
 msgid "Setup file missing"
 msgstr ""
 
-#: google2ubuntu.py:246
+#: google2ubuntu.py:283
+msgid "Search results for"
+msgstr ""
+
+#: google2ubuntu.py:287 google2ubuntu.py:288
 msgid "you didn't say the linking word"
 msgstr ""
 
-#: google2ubuntu.py:251
+#: google2ubuntu.py:293
 msgid "args file missing"
 msgstr ""
 
-#: google2ubuntu.py:260 google2ubuntu.py:269
+#: google2ubuntu.py:303 google2ubuntu.py:323
 msgid "time"
 msgstr ""
 
-#: google2ubuntu.py:262
+#: google2ubuntu.py:305
 msgid "power"
 msgstr ""
 
-#: google2ubuntu.py:281
+#: google2ubuntu.py:307
+msgid "clipboard"
+msgstr ""
+
+#: google2ubuntu.py:319
+msgid "Nothing in the clipboard"
+msgstr ""
+
+#: google2ubuntu.py:335
 msgid "Charging"
 msgstr ""
 
-#: google2ubuntu.py:281
+#: google2ubuntu.py:335
 msgid "before charging"
 msgstr ""
 
-#: google2ubuntu.py:283
+#: google2ubuntu.py:337
 msgid "Discharging"
 msgstr ""
 
-#: google2ubuntu.py:283
+#: google2ubuntu.py:337
 msgid "remaining"
 msgstr ""
 
-#: google2ubuntu.py:285
+#: google2ubuntu.py:339
 msgid "battery is not plugged"
 msgstr ""
 
-#: google2ubuntu.py:287
+#: google2ubuntu.py:341
 msgid "Power"
 msgstr ""
 
-#: google2ubuntu.py:291
+#: google2ubuntu.py:346
 msgid "Ready"
 msgstr ""

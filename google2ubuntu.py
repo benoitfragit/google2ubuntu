@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from subprocess import *
 from gi.repository import Gtk
+from gi.repository import Gdk
 from gi.repository import Notify
 from os.path import expanduser
 import sys
@@ -9,11 +10,67 @@ import subprocess
 import os
 import json
 import urllib2
+import urllib
+import unicodedata
 import time
 import gettext
 import locale
+import re
+
+PID = os.getpid()
 lang = locale.getlocale()[0]
 gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
+
+class tts():
+    def __init__(self,text):
+        text = unicodedata.normalize('NFKD', unicode(text,"utf-8")).encode('ASCII', 'ignore')
+        text = text.replace('\n','')
+        text_list = re.split('(\,|\.)', text)
+        combined_text = []
+        output=open('/tmp/tts.mp3',"w")
+        lc = lang.split('_')[0]
+        
+        for idx, val in enumerate(text_list):
+            if idx % 2 == 0:
+                combined_text.append(val)
+            else:
+                joined_text = ''.join((combined_text.pop(),val))
+                if len(joined_text) < 100:
+                    combined_text.append(joined_text)
+                else:
+                    subparts = re.split('( )', joined_text)
+                    temp_string = ""
+                    temp_array = []
+                    for part in subparts:
+                        temp_string = temp_string + part
+                        if len(temp_string) > 80:
+                            temp_array.append(temp_string)
+                            temp_string = ""
+                    #append final part
+                    temp_array.append(temp_string)
+                    combined_text.extend(temp_array)
+        #download chunks and write them to the output file
+        for idx, val in enumerate(combined_text):
+            mp3url = "http://translate.google.com/translate_tts?tl=%s&q=%s&total=%s&idx=%s" % (lc, urllib.quote(val), len(combined_text), idx)
+            headers = {"Host":"translate.google.com",
+            "Referer":"http://www.gstatic.com/translate/sound_player2.swf",
+            "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.163 Safari/535.19"}
+            req = urllib2.Request(mp3url, '', headers)
+            sys.stdout.write('.')
+            sys.stdout.flush()
+            if len(val) > 0:
+                try:
+                    response = urllib2.urlopen(req)
+                    output.write(response.read())
+                    time.sleep(.5)
+                except urllib2.HTTPError as e:
+                    print ('%s' % e)
+        output.close()
+
+
+        os.system("play /tmp/tts.mp3 &")
+        
+
 
 
 # Cette classe utilis Notify pour alerter l'utilisateur
@@ -52,22 +109,26 @@ class notification():
 class interface():
     def __init__(self):
         # on joue un son pour signaler le démarrage
-        os.system('aplay '+os.path.dirname(os.path.abspath(__file__))+'/sound.wav')
+        os.system('aplay '+os.path.dirname(os.path.abspath(__file__))+'/sound.wav &')
         notif.update(_('Recording')+':',_('Processing'),'RECORD')
-        
         # On lance le script d'enregistrement pour acquérir la voix pdt 5s
-        command =os.path.dirname(os.path.abspath(__file__))+'/record.sh'
-        p = subprocess.check_call([command])  
-        
+        command =os.path.dirname(os.path.abspath(__file__))+'/record.sh ' + str(PID)
+        #p = subprocess.check_call([command])  
+        p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        output,error  = p.communicate()
         notif.update(_("End of recording"),_('Sending to Google'),'NETWORK')
         self.sendto()    
 
     def sendto(self):
         # lecture du fichier audio
-        filename='/tmp/voix.flac'
+        filename='/tmp/voix_'+str(PID)+'.flac'
         f = open(filename)
         data = f.read()
         f.close()
+        
+        # suppression du fichier audio
+        if os.path.isfile('/tmp/voix_'+str(PID)+'.flac'):
+            os.system('rm /tmp/voix_'+str(PID)+'.flac')
         
         # envoi d'une requête à Google
         req = urllib2.Request('https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang='+lang, data=data, headers={'Content-type': 'audio/x-flac; rate=16000'})
@@ -98,21 +159,25 @@ class interface():
                     sp = stringParser(text,config_file)
                 else:
                     notif.update(_('Error'),_("I don't understand what you are saying"),'ERROR')
+                    tts(_('Error')+' '+_("I don't understand what you are saying"))
                     time.sleep(3)
                     notif.close()
                     sys.exit(1)                
                     
             except ValueError, IndexError:
                 notif.update(_('Error'),_('Unable to translate'),'ERROR')
+                tts(_('Error')+' '+_('Unable to translate'))
                 time.sleep(3)
                 notif.close()
                 sys.exit(1)
                 
         except urllib2.URLError:
-            notif.update(_('Error'),_('Unable to send to Google'),'ERROR')    
+            notif.update(_('Error'),_('Unable to send to Google'),'ERROR') 
+            tts(_('Error')+' '+_('Unable to send to Google'))  
             time.sleep(3)
             notif.close()
             sys.exit(1)
+
 
 # Permet d'exécuter la commande associée à un mot prononcé
 class stringParser():
@@ -168,6 +233,7 @@ class stringParser():
                 b = basicCommands(check[1])
             else:
                 # on exécute directement l'action
+                tts(_('Processing'))
                 os.system(do)
             
             time.sleep(1)
@@ -175,6 +241,7 @@ class stringParser():
             
         except IOError:
             notif.update(_('Error'),_('Setup file missing'),'ERROR')
+            tts(_('Error')+' '+_('Setup file missing'))
             time.sleep(3)
             notif.close()            
             sys.exit(1)   
@@ -234,21 +301,25 @@ class workWithModule():
             print text
             if text.count(linker) > 0:
                 param =(text.split(linker)[1]).encode("utf-8")
-
+                
                 # on regarde si l'utilisateur veut transformer les ' ' en +
                 if plus == 1:
                     param=param.replace(' ','+')
                 
                 # commande qui sera exécutée    
+                
+                tts (_('Search results for')+' '+param)
                 execute = expanduser('~') +'/.config/google2ubuntu/modules/'+module_path+'/'+module_name+' '+param
                 os.system(execute)
             else:
                 notif.update(_('Error'),_("you didn't say the linking word")+'\n'+linker,'ERROR')    
+                tts(_('Error')+' '+_("you didn't say the linking word"))
                 time.sleep(3)
                 notif.close()        
             
         except IOError:
             notif.update(_('Error'),_('args file missing'),'ERROR')
+            tts(_('Error')+' '+-('args file missing'))
             time.sleep(3)
             notif.close()
             sys.exit(1) 
@@ -261,29 +332,22 @@ class basicCommands():
             self.getTime()
         elif text == _('power'):
             self.getPower()
+        elif text == _('clipboard'):
+            self.read_clipboard()
         else:
             print "no action found"
     
-    # en cours ...
-    #def repeat(self, text):
-        #path = '/tmp/previoux_command.txt'
-        #if os.path.isfile(path):
-            #try:
-                #f = open(path,"r")
-                #command_type = f.readline().rstrip('\n\r')  
-                #if command_type == _('module'):
-                    #name = f.readline().rstrip('\n\r') 
-                    #lword = f.readline().rstrip('\n\r') 
-                    #if lword in text:
-                        
-                    
-                #command_args =
-                #f.close()
-                
-                
-            #except IOError:
-                #print _('An error occured when I try to load previous commande')
-        
+    def read_clipboard(self):
+        clipboard = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY)
+
+        text = clipboard.wait_for_text()
+        if text != None:
+            text=text.replace("'",' ')
+            print text
+            tts(text)
+        else:
+            tts(_('Nothing in the clipboard'))
+    
     def getTime(self):
         var=time.strftime('%d/%m/%y %H:%M',time.localtime())
         notif.update(_('time'),var,'INFO')
@@ -298,13 +362,14 @@ class basicCommands():
             rtime = output.split(' ')[4]
             
             if output.count('Charging') > 0:
-                message = _('Charging')+': '+pcent+'\n'+rtime++' '+_('before charging')
+                message = _('Charging')+': '+pcent+'\n'+rtime+' '+_('before charging')
             else:
                 message = _('Discharging')+': '+pcent+'\n'+rtime+' '+_('remaining')
         else:
             message = _('battery is not plugged')
         
         notif.update(_('Power'),message,'INFO')
+        tts(message)
         time.sleep(3)
 
 # Initialisation des notifications
