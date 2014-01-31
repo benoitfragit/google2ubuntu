@@ -63,7 +63,6 @@ class stringParser():
             else:
                 # on exécute directement l'action
                 os.system(do)
-                tts(_('Processing'))
             
             time.sleep(1)
             notif.close()

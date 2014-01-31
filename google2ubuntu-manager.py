@@ -9,6 +9,7 @@ import os
 import sys
 import subprocess
 import gettext
+import xml.etree.ElementTree as ET
 
 gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
 
@@ -29,7 +30,7 @@ class MyWindow(Gtk.ApplicationWindow):
         # Gtk.ListStore will hold data for the TreeView
         # Only the first two columns will be displayed
         # The third one is for sorting file sizes as numbers
-        store = Gtk.ListStore(str, str)
+        store = Gtk.ListStore(str, str, str)
         # Get the data - see below
         self.populate_store(store)
 
@@ -107,6 +108,7 @@ class MyWindow(Gtk.ApplicationWindow):
         
         # define the visible func toolbar should be create
         self.tree_filter.set_visible_func(self.match_func)
+        
         
         # show
         self.add(self.grid)
@@ -295,9 +297,9 @@ class MyWindow(Gtk.ApplicationWindow):
 
     def add_clicked(self,button,store,add_type):
         if add_type == 'externe':
-            store.append([_('key sentence'),_('your command')])
+            store.append([_('key sentence'),_('your command'),_('external')])
         elif add_type == 'interne':
-            store.append([_('key sentence'),_('internal')+'/'+_('word')])
+            store.append([_('key sentence'),_('word'),_('internal')])
         elif add_type == 'module':
             mo = moduleSelection()
             module = mo.getModule()
@@ -318,7 +320,7 @@ class MyWindow(Gtk.ApplicationWindow):
         if os.path.exists(module+'args'):
             # ex: récupération de weather
             path = module.split('/')[-2]
-            store.append([_('key sentence'),'/modules/'+path+'/'+name])
+            store.append([_('key sentence'),path+'/'+name,'modules'])
             # si le dossier de modules n'existe pas
             module_path=expanduser('~')+'/.config/google2ubuntu/modules/'
             if not os.path.exists(module_path):
@@ -346,7 +348,7 @@ class MyWindow(Gtk.ApplicationWindow):
 
     def removeall_clicked(self,button,store):
         # if there is still an entry in the model
-        old = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.conf'
+        old = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.xml'
         new = expanduser('~') +'/.config/google2ubuntu/.google2ubuntu.bak'
         if os.path.exists(old):
             os.rename(old,new)
@@ -365,7 +367,8 @@ class MyWindow(Gtk.ApplicationWindow):
         (model, iter) = self.selection.get_selected()
         if iter is not None:
             command = model[iter][1]
-            if _('internal') not in command and _('modules') not in command:
+            Type = model[iter][2]
+            if _('internal') != Type and _('modules') != Type:
                 process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
                 output,error  = process.communicate() 
                 self.show_label('show')       
@@ -375,49 +378,98 @@ class MyWindow(Gtk.ApplicationWindow):
         win = HelpWindow()
 
     def populate_store(self, store):
-        config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.conf'
-        default = os.path.dirname(os.path.abspath(__file__))+'/default.conf'
+        config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.xml'
+        default = os.path.dirname(os.path.abspath(__file__))+'/default.xml'        
         try:
-            if os.path.exists(config) :        
-                f = open(config,"r")
+            if os.path.isfile(config):
+                tree = ET.parse(config)
             else:
                 if os.path.exists(expanduser('~') +'/.config/google2ubuntu') == False:
                     os.makedirs(expanduser('~') +'/.config/google2ubuntu')
                     os.system('cp -r /usr/share/google2ubuntu/modules '+expanduser('~') +'/.config/google2ubuntu')    
                 
-                # utilisation du fichier de config par défaut
-                f = open(default,"r")
+                tree = ET.parse(default)
+            
+            root = tree.getroot()
+            for entry in root.findall('entry'):
+                Type=entry.get('name')
+                Key=entry.find('key').text
+                Command=entry.find('command').text
+                store.append([Key, Command, Type])  
+        except Exception:
+            print 'Error while reading config file'
+
+    #def populate_store(self, store):
+        #config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.conf'
+        #default = os.path.dirname(os.path.abspath(__file__))+'/default.conf'
+        #try:
+            #if os.path.exists(config) :        
+                #f = open(config,"r")
+            #else:
+                #if os.path.exists(expanduser('~') +'/.config/google2ubuntu') == False:
+                    #os.makedirs(expanduser('~') +'/.config/google2ubuntu')
+                    #os.system('cp -r /usr/share/google2ubuntu/modules '+expanduser('~') +'/.config/google2ubuntu')    
                 
-            for line in f:
-                if len(line.split('=')) == 2:
-                    line = line.rstrip('\n\r') 
-                    store.append([line.split('=')[0], line.split('=')[1]])       
+                ## utilisation du fichier de config par défaut
+                #f = open(default,"r")
+                
+            #for line in f:
+                #if len(line.split('=')) == 2:
+                    #line = line.rstrip('\n\r') 
+                    #store.append([line.split('=')[0], line.split('=')[1],''])       
                     
-            f.close()
-        except IOError:
-            print "Le fichier de config et le fichier default n'existent pas"
+            #f.close()
+        #except IOError:
+            #print "Le fichier de config et le fichier default n'existent pas"
 
     def saveTree(self,store):
         # if there is still an entry in the model
         model = self.tree_filter.get_model()
-        config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.conf'          
+        config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.xml'     
         try:
             if not os.path.exists(os.path.dirname(config)):
-                os.makedirs(os.path.dirname(config))
+                os.makedirs(os.path.dirname(config))            
             
-            f = open(config,"w") 
+            root = ET.Element("data")
             if len(store) != 0:
                 for i in range(len(store)):
                     iter = store.get_iter(i)
                     if model[iter][0] != '' and model[iter][1] != '':
-                        f.write(model[iter][0]+'='+model[iter][1]+'\n')
+                        Type = ET.SubElement(root, "entry")
+                        Type.set("name",model[iter][2])
+                        Key = ET.SubElement(Type, "key")
+                        Key.text = unicode(model[iter][0],"utf-8")
+                        Command = ET.SubElement(Type, "command")
+                        Command.text = unicode(model[iter][1],"utf-8")
                 
-                self.show_label('show')
-                self.labelState.set_text(_('Save commands'))            
+            tree = ET.ElementTree(root).write(config,encoding="utf-8",xml_declaration=True)
 
-            f.close()
-        except IOError:    
-            print "Unable to write the file"
+            self.show_label('show')
+            self.labelState.set_text(_('Save commands'))   
+        except IOError:
+            print "Unable to write the file"    
+            
+    #def saveTree(self,store):
+        ## if there is still an entry in the model
+        #model = self.tree_filter.get_model()
+        #config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.conf'          
+        #try:
+            #if not os.path.exists(os.path.dirname(config)):
+                #os.makedirs(os.path.dirname(config))
+            
+            #f = open(config,"w") 
+            #if len(store) != 0:
+                #for i in range(len(store)):
+                    #iter = store.get_iter(i)
+                    #if model[iter][0] != '' and model[iter][1] != '':
+                        #f.write(model[iter][0]+'='+model[iter][1]+'\n')
+                
+                #self.show_label('show')
+                #self.labelState.set_text(_('Save commands'))            
+
+            #f.close()
+        #except IOError:    
+            #print "Unable to write the file"
 
 # gère l'apparition de la fenêtre d'assistance de création de module
 class ArgsWindow():
@@ -475,7 +527,7 @@ class ArgsWindow():
                 f.close()
                 
                 os.system('cp '+module+name+' '+module_path)
-                store.append(['<phrase clé>','/modules/'+folder+'/'+name])    
+                store.append(['<phrase clé>',folder+'/'+name,'modules'])    
             except IOError:
                 "Unable to open the file"
         

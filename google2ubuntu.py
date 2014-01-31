@@ -60,8 +60,8 @@ class interface():
                     notif.update(_("Searching action associated to")+':',text,'EXECUTE')
                     
                     # fichier de configuration
-                    config = expanduser('~') + '/.config/google2ubuntu/google2ubuntu.conf'
-                    default = os.path.dirname(os.path.abspath(__file__))+'/default.conf'
+                    config = expanduser('~') + '/.config/google2ubuntu/google2ubuntu.xml'
+                    default = os.path.dirname(os.path.abspath(__file__))+'/default.xml'
                     if os.path.exists(config):
                         config_file = config
                     else:
@@ -75,21 +75,18 @@ class interface():
                     sp = stringParser(text,config_file,notif)
                 else:
                     notif.update(_('Error'),_("I don't understand what you are saying"),'ERROR')
-                    tts(_('Error')+' '+_("I don't understand what you are saying"))
                     time.sleep(3)
                     notif.close()
                     sys.exit(1)                
                     
             except ValueError, IndexError:
                 notif.update(_('Error'),_('Unable to translate'),'ERROR')
-                tts(_('Error')+' '+_('Unable to translate'))
                 time.sleep(3)
                 notif.close()
                 sys.exit(1)
                 
         except urllib2.URLError:
             notif.update(_('Error'),_('Unable to send to Google'),'ERROR') 
-            tts(_('Error')+' '+_('Unable to send to Google'))  
             time.sleep(3)
             notif.close()
             sys.exit(1)

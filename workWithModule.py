@@ -4,7 +4,7 @@ from os.path import expanduser
 from subprocess import *
 from Notification import notification
 from Googletts import tts
-import os, gettext, time, subprocess
+import os, gettext, time, subprocess, unicodedata
 
 gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
 
@@ -14,7 +14,6 @@ class workWithModule():
         try:
             # Lecture du fichier de configuration du module
             argsfile=expanduser('~')+'/.config/google2ubuntu/modules/'+module_path+'/args';
-            print argsfile
             f = open(argsfile,'r')
             ligne=(f.readline()).rstrip('\n\r')  
             linker=unicode(ligne.split('=')[1],"utf-8")
@@ -28,9 +27,11 @@ class workWithModule():
             #     Quelle est la météo à Issy les moulineaux
             #
             # Le mot de liaison peut être " à "
-            print text
-            if text.count(linker) > 0:
-                param =(text.split(linker)[1]).encode("utf-8")
+            sentence=text.lower()
+            sentence=unicodedata.normalize('NFKD', text).encode('ASCII', 'ignore')
+            sentence=sentence.lower()           
+            if sentence.count(linker) > 0:
+                param =(sentence.split(linker)[1]).encode("utf-8")
                 
                 # on regarde si l'utilisateur veut transformer les ' ' en +
                 if plus == 1:
@@ -38,18 +39,15 @@ class workWithModule():
                 
                 # commande qui sera exécutée    
                 
-                execute = expanduser('~') +'/.config/google2ubuntu/modules/'+module_path+'/'+module_name+' '+param
+                execute = expanduser('~') +'/.config/google2ubuntu/modules/'+module_path+'/'+module_name+' '+'"'+param+'"'
                 os.system(execute)
-                tts (_('Search results for')+' '+param)
             else:
                 notif.update(_('Error'),_("you didn't say the linking word")+'\n'+linker,'ERROR')    
-                tts(_('Error')+' '+_("you didn't say the linking word"))
                 time.sleep(3)
                 notif.close()        
             
         except IOError:
             notif.update(_('Error'),_('args file missing'),'ERROR')
-            tts(_('Error')+' '+-('args file missing'))
             time.sleep(3)
             notif.close()
             sys.exit(1) 
