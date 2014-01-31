@@ -53,6 +53,7 @@ class MyWindow(Gtk.ApplicationWindow):
         renderer_1.set_property("editable", True)
         renderer_1.connect("edited", self.key_edited,store)
         column_1 = Gtk.TreeViewColumn(_('Keys'), renderer_1, text=0)
+        column_1.set_min_width(200)
         # Calling set_sort_column_id makes the treeViewColumn sortable
         # by clicking on its header. The column is sorted by
         # the ListStore column index passed to it 
@@ -109,7 +110,6 @@ class MyWindow(Gtk.ApplicationWindow):
         # define the visible func toolbar should be create
         self.tree_filter.set_visible_func(self.match_func)
         
-        
         # show
         self.add(self.grid)
         self.show_all()
@@ -125,7 +125,7 @@ class MyWindow(Gtk.ApplicationWindow):
                 if os.path.isfile(path):
                     self.addModule(store,path)
                 elif os.path.isdir(path):
-                    store.append([_('key sentence'),'xdg-open '+path])
+                    store.append([_('key sentence'),'xdg-open '+path],_('external'))
 
     def show_label(self,action):
         etat = self.labelState.get_parent()
@@ -282,7 +282,7 @@ class MyWindow(Gtk.ApplicationWindow):
     def match_func(self, model, iterr, data=None):
         query = self.combo.get_active()
         value = model.get_value(iterr, 1)
-        field=value.split('/')
+        field = model.get_value(iterr, 2)
         
         if query == 0:
             return True
@@ -370,7 +370,7 @@ class MyWindow(Gtk.ApplicationWindow):
             Type = model[iter][2]
             if _('internal') != Type and _('modules') != Type:
                 process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-                output,error  = process.communicate() 
+                output,error = process.communicate() 
                 self.show_label('show')       
                 self.labelState.set_text(output+'\n'+error)
     
@@ -399,29 +399,6 @@ class MyWindow(Gtk.ApplicationWindow):
         except Exception:
             print 'Error while reading config file'
 
-    #def populate_store(self, store):
-        #config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.conf'
-        #default = os.path.dirname(os.path.abspath(__file__))+'/default.conf'
-        #try:
-            #if os.path.exists(config) :        
-                #f = open(config,"r")
-            #else:
-                #if os.path.exists(expanduser('~') +'/.config/google2ubuntu') == False:
-                    #os.makedirs(expanduser('~') +'/.config/google2ubuntu')
-                    #os.system('cp -r /usr/share/google2ubuntu/modules '+expanduser('~') +'/.config/google2ubuntu')    
-                
-                ## utilisation du fichier de config par défaut
-                #f = open(default,"r")
-                
-            #for line in f:
-                #if len(line.split('=')) == 2:
-                    #line = line.rstrip('\n\r') 
-                    #store.append([line.split('=')[0], line.split('=')[1],''])       
-                    
-            #f.close()
-        #except IOError:
-            #print "Le fichier de config et le fichier default n'existent pas"
-
     def saveTree(self,store):
         # if there is still an entry in the model
         model = self.tree_filter.get_model()
@@ -435,12 +412,15 @@ class MyWindow(Gtk.ApplicationWindow):
                 for i in range(len(store)):
                     iter = store.get_iter(i)
                     if model[iter][0] != '' and model[iter][1] != '':
-                        Type = ET.SubElement(root, "entry")
-                        Type.set("name",model[iter][2])
-                        Key = ET.SubElement(Type, "key")
-                        Key.text = unicode(model[iter][0],"utf-8")
-                        Command = ET.SubElement(Type, "command")
-                        Command.text = unicode(model[iter][1],"utf-8")
+                        for s in model[iter][0].split('|'):
+                            s = s.lower()
+                            s = s.replace('*',' ')
+                            Type = ET.SubElement(root, "entry")
+                            Type.set("name",model[iter][2])
+                            Key = ET.SubElement(Type, "key")
+                            Key.text = unicode(s,"utf-8")
+                            Command = ET.SubElement(Type, "command")
+                            Command.text = unicode(model[iter][1],"utf-8")
                 
             tree = ET.ElementTree(root).write(config,encoding="utf-8",xml_declaration=True)
 
@@ -449,28 +429,6 @@ class MyWindow(Gtk.ApplicationWindow):
         except IOError:
             print "Unable to write the file"    
             
-    #def saveTree(self,store):
-        ## if there is still an entry in the model
-        #model = self.tree_filter.get_model()
-        #config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.conf'          
-        #try:
-            #if not os.path.exists(os.path.dirname(config)):
-                #os.makedirs(os.path.dirname(config))
-            
-            #f = open(config,"w") 
-            #if len(store) != 0:
-                #for i in range(len(store)):
-                    #iter = store.get_iter(i)
-                    #if model[iter][0] != '' and model[iter][1] != '':
-                        #f.write(model[iter][0]+'='+model[iter][1]+'\n')
-                
-                #self.show_label('show')
-                #self.labelState.set_text(_('Save commands'))            
-
-            #f.close()
-        #except IOError:    
-            #print "Unable to write the file"
-
 # gère l'apparition de la fenêtre d'assistance de création de module
 class ArgsWindow():
     def __init__(self,module,name,store):
