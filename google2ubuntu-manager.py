@@ -10,7 +10,7 @@ import sys
 import subprocess
 import gettext
 
-gettext.install('google2ubuntu-manager',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
+gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
 
 TARGET_TYPE_URI_LIST = 80
 dnd_list = [Gtk.TargetEntry.new('text/uri-list', 0, TARGET_TYPE_URI_LIST )]
@@ -36,7 +36,6 @@ class MyWindow(Gtk.ApplicationWindow):
         # use a filter in order to filtering the data
         self.tree_filter = store.filter_new()
 
-         
         # create the treeview
         treeview = Gtk.TreeView(self.tree_filter)
         treeview.set_tooltip_text(_('list of commands'))
@@ -242,7 +241,7 @@ class MyWindow(Gtk.ApplicationWindow):
         # return the complete toolbar
         return toolbar
 
-	# return a combobox to add to the toolbar
+    # return a combobox to add to the toolbar
     def get_combobox(self):
         # the data in the model, of type string
         listmodel = Gtk.ListStore(str)
@@ -275,7 +274,7 @@ class MyWindow(Gtk.ApplicationWindow):
     
     # callback function attach to the combobox   
     def on_combochanged(self,combo):
-		self.tree_filter.refilter()
+        self.tree_filter.refilter()
 
     # filter function
     def match_func(self, model, iterr, data=None):
@@ -307,9 +306,8 @@ class MyWindow(Gtk.ApplicationWindow):
             else:
                 self.show_label('show')
                 self.labelState.set_text(_("Error, you must choose a file"))
-                
-        self.selection.select_iter(store.get_iter(len(store)-1))
-        
+
+
     def addModule(self,store,module):
         # ex: recup de weather.sh
         name = module.split('/')[-1]

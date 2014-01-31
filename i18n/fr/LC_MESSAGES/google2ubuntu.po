@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: google 2ubuntu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-30 17:09+0100\n"
-"PO-Revision-Date: 2014-01-29 13:38+0100\n"
+"POT-Creation-Date: 2014-01-31 09:20+0100\n"
+"PO-Revision-Date: 2014-01-31 09:21+0100\n"
 "Last-Translator: benoit <benoitfranquet@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -18,109 +18,249 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: google2ubuntu.py:85
-msgid "Recording"
-msgstr "Enregistrement"
-
-#: google2ubuntu.py:85 google2ubuntu.py:208
-msgid "Processing"
-msgstr "En cours"
-
-#: google2ubuntu.py:91
-msgid "End of recording"
-msgstr "Fin de l'enregistrement"
-
-#: google2ubuntu.py:91
-msgid "Sending to Google"
-msgstr "Envoi à Google"
-
-#: google2ubuntu.py:112
-msgid "Searching action associated to"
-msgstr "Recherche de l'action pour"
-
-#: google2ubuntu.py:129 google2ubuntu.py:130 google2ubuntu.py:136
-#: google2ubuntu.py:137 google2ubuntu.py:143 google2ubuntu.py:144
-#: google2ubuntu.py:215 google2ubuntu.py:216 google2ubuntu.py:287
-#: google2ubuntu.py:288 google2ubuntu.py:293 google2ubuntu.py:294
-msgid "Error"
-msgstr "Erreur"
-
-#: google2ubuntu.py:129 google2ubuntu.py:130
-msgid "I don't understand what you are saying"
-msgstr "Je ne comprends pas"
-
-#: google2ubuntu.py:136 google2ubuntu.py:137
-msgid "Unable to translate"
-msgstr "Traduction impossible"
-
-#: google2ubuntu.py:143 google2ubuntu.py:144
-msgid "Unable to send to Google"
-msgstr "Envoi à Google impossible"
-
-#: google2ubuntu.py:198
-msgid "modules"
-msgstr "modules"
-
-#: google2ubuntu.py:202
-msgid "internal"
-msgstr "interne"
-
-#: google2ubuntu.py:215 google2ubuntu.py:216
-msgid "Setup file missing"
-msgstr "Fichier de configuration manquant"
-
-#: google2ubuntu.py:283
-msgid "Search results for"
-msgstr "Résultats pour"
-
-#: google2ubuntu.py:287 google2ubuntu.py:288
-msgid "you didn't say the linking word"
-msgstr "Pour appeler un module, prononcer le mot de liaison"
-
-#: google2ubuntu.py:293
-msgid "args file missing"
-msgstr "fichier de configuration du module absent"
-
-#: google2ubuntu.py:303 google2ubuntu.py:323
+#: basicCommands.py:16 basicCommands.py:38
 msgid "time"
 msgstr "heure"
 
-#: google2ubuntu.py:305
+#: basicCommands.py:18
 msgid "power"
 msgstr "batterie"
 
-#: google2ubuntu.py:307
+#: basicCommands.py:20
 msgid "clipboard"
 msgstr "presse-papier"
 
-#: google2ubuntu.py:319
+#: basicCommands.py:34
 msgid "Nothing in the clipboard"
-msgstr "Le presse-papier est vide"
+msgstr "Le presse papier est vide"
 
-#: google2ubuntu.py:335
+#: basicCommands.py:50
 msgid "Charging"
-msgstr "En charge"
+msgstr "Chargement"
 
-#: google2ubuntu.py:335
+#: basicCommands.py:50
 msgid "before charging"
-msgstr "avant le chargement complet"
+msgstr "avant chargement"
 
-#: google2ubuntu.py:337
+#: basicCommands.py:52
 msgid "Discharging"
-msgstr "En decharge"
+msgstr "déchargement"
 
-#: google2ubuntu.py:337
+#: basicCommands.py:52
 msgid "remaining"
 msgstr "restant"
 
-#: google2ubuntu.py:339
+#: basicCommands.py:54
 msgid "battery is not plugged"
-msgstr "La batterie est absente"
+msgstr "la batterie n'est pas branchée"
 
-#: google2ubuntu.py:341
+#: basicCommands.py:56
 msgid "Power"
 msgstr "Batterie"
 
-#: google2ubuntu.py:346
+#: google2ubuntu-manager.py:41
+msgid "list of commands"
+msgstr "commandes"
+
+#: google2ubuntu-manager.py:54
+msgid "Keys"
+msgstr "clés"
+
+#: google2ubuntu-manager.py:69
+msgid "Commands"
+msgstr "Commandes"
+
+#: google2ubuntu-manager.py:77 google2ubuntu.py:26
 msgid "Ready"
 msgstr "Pret"
+
+#: google2ubuntu-manager.py:126 google2ubuntu-manager.py:298
+#: google2ubuntu-manager.py:300 google2ubuntu-manager.py:321
+msgid "key sentence"
+msgstr "phrase clé"
+
+#: google2ubuntu-manager.py:165
+msgid "External commands"
+msgstr "Commandes externes"
+
+#: google2ubuntu-manager.py:169
+msgid "Internal commands"
+msgstr "Commandes internes"
+
+#: google2ubuntu-manager.py:173
+msgid "Module"
+msgstr "Module"
+
+#: google2ubuntu-manager.py:180
+msgid "Add"
+msgstr "Ajouter"
+
+#: google2ubuntu-manager.py:190
+msgid "Add a new command"
+msgstr "Ajouter une nouvelle commande"
+
+#: google2ubuntu-manager.py:195
+msgid "Try"
+msgstr "Essayer"
+
+#: google2ubuntu-manager.py:199
+msgid "Try this command"
+msgstr "Essayer cette commande"
+
+#: google2ubuntu-manager.py:204 google2ubuntu-manager.py:339
+msgid "Remove"
+msgstr "Supprimer"
+
+#: google2ubuntu-manager.py:208
+msgid "Remove this command"
+msgstr "Supprimer cette commande"
+
+#: google2ubuntu-manager.py:213
+msgid "Clean up"
+msgstr "Nettoyer"
+
+#: google2ubuntu-manager.py:217 google2ubuntu-manager.py:356
+msgid "Remove all commands"
+msgstr "SUpprimer toutes les commandes"
+
+#: google2ubuntu-manager.py:222
+msgid "Help"
+msgstr "Aide"
+
+#: google2ubuntu-manager.py:226
+msgid "Display help message"
+msgstr "Afficher l'aide"
+
+#: google2ubuntu-manager.py:249
+msgid "All"
+msgstr "Toutes"
+
+#: google2ubuntu-manager.py:250
+msgid "External"
+msgstr "Externes"
+
+#: google2ubuntu-manager.py:251
+msgid "Internal"
+msgstr "Internes"
+
+#: google2ubuntu-manager.py:252
+msgid "Modules"
+msgstr "Modules"
+
+#: google2ubuntu-manager.py:256
+msgid "What type of command to add"
+msgstr "Quel type de commande ajouter ?"
+
+#: google2ubuntu-manager.py:287 google2ubuntu-manager.py:291
+#: google2ubuntu-manager.py:368 stringParser.py:55
+msgid "modules"
+msgstr "modules"
+
+#: google2ubuntu-manager.py:287 google2ubuntu-manager.py:289
+#: google2ubuntu-manager.py:300 google2ubuntu-manager.py:368
+#: stringParser.py:59
+msgid "internal"
+msgstr "interne"
+
+#: google2ubuntu-manager.py:298
+msgid "your command"
+msgstr "votre commande"
+
+#: google2ubuntu-manager.py:300
+msgid "word"
+msgstr "mot"
+
+#: google2ubuntu-manager.py:308
+msgid "Error, you must choose a file"
+msgstr "Erreur, vous devez choisir un fichier"
+
+#: google2ubuntu-manager.py:330
+msgid "Error, args file missing"
+msgstr "Error, le fichier de config du module est absent"
+
+#: google2ubuntu-manager.py:416
+msgid "Save commands"
+msgstr "Sauvegarder les commandes"
+
+#: google2ubuntu-manager.py:426
+msgid "Module setup"
+msgstr "Configuration du module"
+
+#: google2ubuntu-manager.py:434
+msgid "Linking word"
+msgstr "Mot de liaison"
+
+#: google2ubuntu-manager.py:438
+msgid "Word to separate call and parameter"
+msgstr "Mot pour séparer l'appel du module et les paramètres à lui envoyer"
+
+#: google2ubuntu-manager.py:440 google2ubuntu-manager.py:441
+msgid "Replace space by plus"
+msgstr "Remplacer les espaces par des plus"
+
+#: google2ubuntu-manager.py:443 google2ubuntu-manager.py:444
+msgid "Go"
+msgstr "Continuer"
+
+#: google2ubuntu-manager.py:499
+msgid "Help Google2Ubuntu"
+msgstr "Aide Google2Ubuntu"
+
+#: google2ubuntu-manager.py:524
+msgid "Choose a file"
+msgstr "Choisir un fichier"
+
+#: google2ubuntu.py:29
+msgid "Recording"
+msgstr "Enregistrement"
+
+#: google2ubuntu.py:29 stringParser.py:66
+msgid "Processing"
+msgstr "En cours"
+
+#: google2ubuntu.py:35
+msgid "End of recording"
+msgstr "Fin de l'enregistrement"
+
+#: google2ubuntu.py:35
+msgid "Sending to Google"
+msgstr "Envoi à Google"
+
+#: google2ubuntu.py:60
+msgid "Searching action associated to"
+msgstr "Recherche de l'action associée à"
+
+#: google2ubuntu.py:77 google2ubuntu.py:78 google2ubuntu.py:84
+#: google2ubuntu.py:85 google2ubuntu.py:91 google2ubuntu.py:92
+#: stringParser.py:72 stringParser.py:73 workWithModule.py:45
+#: workWithModule.py:46 workWithModule.py:51 workWithModule.py:52
+msgid "Error"
+msgstr "Erreur"
+
+#: google2ubuntu.py:77 google2ubuntu.py:78
+msgid "I don't understand what you are saying"
+msgstr "Je ne comprends pas ce que vous dites"
+
+#: google2ubuntu.py:84 google2ubuntu.py:85
+msgid "Unable to translate"
+msgstr "Impossible de traduire"
+
+#: google2ubuntu.py:91 google2ubuntu.py:92
+msgid "Unable to send to Google"
+msgstr "Impossible d'envoyer à Google"
+
+#: stringParser.py:72 stringParser.py:73
+msgid "Setup file missing"
+msgstr "Fichier de configuration manquant"
+
+#: workWithModule.py:43
+msgid "Search results for"
+msgstr "Résultats de recherche pour"
+
+#: workWithModule.py:45 workWithModule.py:46
+msgid "you didn't say the linking word"
+msgstr "Vous n'avez pas prononcé le mot de liaison"
+
+#: workWithModule.py:51
+msgid "args file missing"
+msgstr "fichier args manquant"
