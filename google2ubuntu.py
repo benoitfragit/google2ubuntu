@@ -25,7 +25,7 @@ class interface():
     def __init__(self):
         notif = notification('Google2Ubuntu',_('Ready'))
         # on joue un son pour signaler le démarrage
-        os.system('aplay '+os.path.dirname(os.path.abspath(__file__))+'/sound.wav &')
+        os.system('play '+os.path.dirname(os.path.abspath(__file__))+'/sound.wav &')
         notif.update(_('Recording')+':',_('Processing'),'RECORD')
         # On lance le script d'enregistrement pour acquérir la voix pdt 5s
         command =os.path.dirname(os.path.abspath(__file__))+'/record.sh ' + str(PID)
@@ -46,47 +46,35 @@ class interface():
         if os.path.isfile('/tmp/voix_'+str(PID)+'.flac'):
             os.system('rm /tmp/voix_'+str(PID)+'.flac')
         
-        # envoi d'une requête à Google
-        req = urllib2.Request('https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang='+lang, data=data, headers={'Content-type': 'audio/x-flac; rate=16000'})
+        # fichier de configuration
+        config = expanduser('~') + '/.config/google2ubuntu/google2ubuntu.xml'
+        default = os.path.dirname(os.path.abspath(__file__))+'/default.xml'
+        if os.path.exists(config):
+            config_file = config
+        else:
+            if os.path.exists(expanduser('~') +'/.config/google2ubuntu') == False:
+                os.makedirs(expanduser('~') +'/.config/google2ubuntu')
+                os.system('cp -r /usr/share/google2ubuntu/modules '+expanduser('~') +'/.config/google2ubuntu')    
+                
+            config_file = default
+        
         try:
+            # envoi d'une requête à Google
+            req = urllib2.Request('https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang='+lang, data=data, headers={'Content-type': 'audio/x-flac; rate=16000'})  
             # retour de la requête
             ret = urllib2.urlopen(req)
-            try:
-                # parsing du retour
-                result=json.loads(ret.read())['hypotheses']
-                if len(result) != 0:
-                    # si on a un résultat
-                    text = result[0]['utterance']
-                    notif.update(_("Searching action associated to")+':',text,'EXECUTE')
+            
+            # parsing du retour
+            result=json.loads(ret.read())['hypotheses']
+
+            # si on a un résultat
+            text = result[0]['utterance']
+            notif.update(_("Searching action associated to")+':',text,'EXECUTE')
                     
-                    # fichier de configuration
-                    config = expanduser('~') + '/.config/google2ubuntu/google2ubuntu.xml'
-                    default = os.path.dirname(os.path.abspath(__file__))+'/default.xml'
-                    if os.path.exists(config):
-                        config_file = config
-                    else:
-                        if os.path.exists(expanduser('~') +'/.config/google2ubuntu') == False:
-                            os.makedirs(expanduser('~') +'/.config/google2ubuntu')
-                            os.system('cp -r /usr/share/google2ubuntu/modules '+expanduser('~') +'/.config/google2ubuntu')    
-                
-                        config_file = default
-                    
-                    # parsing du résultat pour trouver l'action
-                    sp = stringParser(text,config_file,notif)
-                else:
-                    notif.update(_('Error'),_("I don't understand what you are saying"),'ERROR')
-                    time.sleep(3)
-                    notif.close()
-                    sys.exit(1)                
-                    
-            except ValueError, IndexError:
-                notif.update(_('Error'),_('Unable to translate'),'ERROR')
-                time.sleep(3)
-                notif.close()
-                sys.exit(1)
-                
-        except urllib2.URLError:
-            notif.update(_('Error'),_('Unable to send to Google'),'ERROR') 
+            # parsing du résultat pour trouver l'action
+            sp = stringParser(text,config_file,notif)    
+        except Exception:
+            notif.update(_('Error'),_('Unable to translate'),'ERROR') 
             time.sleep(3)
             notif.close()
             sys.exit(1)

@@ -16,11 +16,10 @@ class stringParser():
         try:
             max = 0
             text=text.lower()
-            print File
             tree = ET.parse(File)
             root = tree.getroot()
         
-
+            tp = ''
             for entry in root.findall('entry'):
                 score = 0
                 Type=entry.get('name')
@@ -29,10 +28,8 @@ class stringParser():
                 key=Key.split(' ')
                 for j in range(len(key)):
                     score += text.count(key[j])
-                    # j'ai déjà eu des problèmes ici d'ou le unicode
                         
                 if max < score:
-                    print Key, str(score)
                     max = score
                     do = Command
                     tp = Type
@@ -51,11 +48,10 @@ class stringParser():
                 # on execute une commande intene, la commande est configurée
                 # ainsi interne/batterie, on envoie batterie à la fonction
                 b = basicCommands(do,notif)
-            else:
+            elif _('external') in tp:
                 # on exécute directement l'action
                 os.system(do)
             
-            time.sleep(1)
             notif.close()
             
         except IOError:

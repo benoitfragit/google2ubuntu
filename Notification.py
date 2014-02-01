@@ -14,7 +14,6 @@ class notification():
         self.n.set_urgency(Notify.Urgency.CRITICAL)    
         self.n.set_icon_from_pixbuf(Gtk.Label().render_icon(Gtk.STOCK_MEDIA_PLAY, Gtk.IconSize.DIALOG))
         self.n.show()
-        time.sleep(0.5)
 
     # on mets à jours la notification
     def update(self,titre,text,typeicon):
@@ -22,7 +21,7 @@ class notification():
         if typeicon == 'RECORD':
             self.n.set_icon_from_pixbuf(Gtk.Label().render_icon(Gtk.STOCK_MEDIA_RECORD, Gtk.IconSize.DIALOG))
         elif typeicon == 'NETWORK':
-            self.n.set_icon_from_pixbuf(Gtk.Label().render_icon(Gtk.STOCK_MEDIA_RECORD, Gtk.IconSize.DIALOG))
+            self.n.set_icon_from_pixbuf(Gtk.Label().render_icon(Gtk.STOCK_REFRESH, Gtk.IconSize.DIALOG))
         elif typeicon == 'EXECUTE':
             self.n.set_icon_from_pixbuf(Gtk.Label().render_icon(Gtk.STOCK_EXECUTE, Gtk.IconSize.DIALOG))
         elif typeicon == 'ERROR':
