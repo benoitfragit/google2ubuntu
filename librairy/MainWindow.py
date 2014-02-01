@@ -23,7 +23,7 @@ class MainWindow(Gtk.ApplicationWindow):
         self.get_focus()
         self.set_position(Gtk.WindowPosition.CENTER)
         path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
-        self.set_default_icon_from_file(path+'/icons.png')
+        self.set_default_icon_from_file(path+'/resources/icons.png')
         
         content = add_window()
                 

@@ -20,7 +20,7 @@ class interface():
     def __init__(self):
         notif = notification('Google2Ubuntu',_('Ready'))
         # on joue un son pour signaler le démarrage
-        os.system('play '+os.path.dirname(os.path.abspath(__file__))+'/sound.wav &')
+        os.system('play '+os.path.dirname(os.path.abspath(__file__))+'/resources/sound.wav &')
         notif.update(_('Recording')+':',_('Processing'),'RECORD')
         # On lance le script d'enregistrement pour acquérir la voix pdt 5s
         command =os.path.dirname(os.path.abspath(__file__))+'/record.sh ' + str(PID)
@@ -43,7 +43,8 @@ class interface():
         
         # fichier de configuration
         config = expanduser('~') + '/.config/google2ubuntu/google2ubuntu.xml'
-        default = os.path.dirname(os.path.abspath(__file__))+'/default.xml'
+        default = os.path.dirname(os.path.abspath(__file__))+'/config/default.xml'
+        
         if os.path.exists(config):
             config_file = config
         else:

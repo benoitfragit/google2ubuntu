@@ -372,7 +372,9 @@ class add_window():
 
     def populate_store(self, store):
         config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.xml'
-        default = os.path.dirname(os.path.abspath(__file__))+'/default.xml'        
+        path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
+        default = path +'config/default.xml'        
+
         try:
             if os.path.isfile(config):
                 tree = ET.parse(config)

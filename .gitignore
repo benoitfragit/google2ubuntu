@@ -1,5 +1,6 @@
 *.py[cod]
 
+archive/
 createdeb.py
 *.tar.gz
 *.deb
