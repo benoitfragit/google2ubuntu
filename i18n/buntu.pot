@@ -1,0 +1,256 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-02-01 18:33+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: google2ubuntu-manager.py:42
+msgid "list of commands"
+msgstr ""
+
+#: google2ubuntu-manager.py:55
+msgid "Keys"
+msgstr ""
+
+#: google2ubuntu-manager.py:71
+msgid "Commands"
+msgstr ""
+
+#: google2ubuntu-manager.py:79 google2ubuntu.py:21
+msgid "Ready"
+msgstr ""
+
+#: google2ubuntu-manager.py:128 google2ubuntu-manager.py:300
+#: google2ubuntu-manager.py:302 google2ubuntu-manager.py:323
+msgid "key sentence"
+msgstr ""
+
+#: google2ubuntu-manager.py:128 google2ubuntu-manager.py:300
+#: librairy/stringParser.py:51
+msgid "external"
+msgstr ""
+
+#: google2ubuntu-manager.py:167
+msgid "External commands"
+msgstr ""
+
+#: google2ubuntu-manager.py:171
+msgid "Internal commands"
+msgstr ""
+
+#: google2ubuntu-manager.py:175
+msgid "Module"
+msgstr ""
+
+#: google2ubuntu-manager.py:182
+msgid "Add"
+msgstr ""
+
+#: google2ubuntu-manager.py:192
+msgid "Add a new command"
+msgstr ""
+
+#: google2ubuntu-manager.py:197
+msgid "Try"
+msgstr ""
+
+#: google2ubuntu-manager.py:201
+msgid "Try this command"
+msgstr ""
+
+#: google2ubuntu-manager.py:206 google2ubuntu-manager.py:341
+msgid "Remove"
+msgstr ""
+
+#: google2ubuntu-manager.py:210
+msgid "Remove this command"
+msgstr ""
+
+#: google2ubuntu-manager.py:215
+msgid "Clean up"
+msgstr ""
+
+#: google2ubuntu-manager.py:219 google2ubuntu-manager.py:358
+msgid "Remove all commands"
+msgstr ""
+
+#: google2ubuntu-manager.py:224
+msgid "Help"
+msgstr ""
+
+#: google2ubuntu-manager.py:228
+msgid "Display help message"
+msgstr ""
+
+#: google2ubuntu-manager.py:251
+msgid "All"
+msgstr ""
+
+#: google2ubuntu-manager.py:252
+msgid "External"
+msgstr ""
+
+#: google2ubuntu-manager.py:253
+msgid "Internal"
+msgstr ""
+
+#: google2ubuntu-manager.py:254
+msgid "Modules"
+msgstr ""
+
+#: google2ubuntu-manager.py:258
+msgid "What type of command to add"
+msgstr ""
+
+#: google2ubuntu-manager.py:289 google2ubuntu-manager.py:293
+#: google2ubuntu-manager.py:371 librairy/stringParser.py:42
+msgid "modules"
+msgstr ""
+
+#: google2ubuntu-manager.py:289 google2ubuntu-manager.py:291
+#: google2ubuntu-manager.py:302 google2ubuntu-manager.py:371
+#: librairy/stringParser.py:47
+msgid "internal"
+msgstr ""
+
+#: google2ubuntu-manager.py:300
+msgid "your command"
+msgstr ""
+
+#: google2ubuntu-manager.py:302
+msgid "word"
+msgstr ""
+
+#: google2ubuntu-manager.py:310
+msgid "Error, you must choose a file"
+msgstr ""
+
+#: google2ubuntu-manager.py:332
+msgid "Error, args file missing"
+msgstr ""
+
+#: google2ubuntu-manager.py:428
+msgid "Save commands"
+msgstr ""
+
+#: google2ubuntu-manager.py:436
+msgid "Module setup"
+msgstr ""
+
+#: google2ubuntu-manager.py:444
+msgid "Linking word"
+msgstr ""
+
+#: google2ubuntu-manager.py:448
+msgid "Word to separate call and parameter"
+msgstr ""
+
+#: google2ubuntu-manager.py:450 google2ubuntu-manager.py:451
+msgid "Replace space by plus"
+msgstr ""
+
+#: google2ubuntu-manager.py:453 google2ubuntu-manager.py:454
+msgid "Go"
+msgstr ""
+
+#: google2ubuntu-manager.py:509
+msgid "Help Google2Ubuntu"
+msgstr ""
+
+#: google2ubuntu-manager.py:534
+msgid "Choose a file"
+msgstr ""
+
+#: google2ubuntu.py:24
+msgid "Recording"
+msgstr ""
+
+#: google2ubuntu.py:24
+msgid "Processing"
+msgstr ""
+
+#: google2ubuntu.py:30
+msgid "End of recording"
+msgstr ""
+
+#: google2ubuntu.py:30
+msgid "Sending to Google"
+msgstr ""
+
+#: google2ubuntu.py:67
+msgid "Searching action associated to"
+msgstr ""
+
+#: google2ubuntu.py:72 librairy/stringParser.py:58 librairy/stringParser.py:59
+#: librairy/workWithModule.py:45 librairy/workWithModule.py:50
+msgid "Error"
+msgstr ""
+
+#: google2ubuntu.py:72
+msgid "Unable to translate"
+msgstr ""
+
+#: librairy/basicCommands.py:16 librairy/basicCommands.py:38
+msgid "time"
+msgstr ""
+
+#: librairy/basicCommands.py:18
+msgid "power"
+msgstr ""
+
+#: librairy/basicCommands.py:20
+msgid "clipboard"
+msgstr ""
+
+#: librairy/basicCommands.py:34
+msgid "Nothing in the clipboard"
+msgstr ""
+
+#: librairy/basicCommands.py:50
+msgid "Charging"
+msgstr ""
+
+#: librairy/basicCommands.py:50
+msgid "before charging"
+msgstr ""
+
+#: librairy/basicCommands.py:52
+msgid "Discharging"
+msgstr ""
+
+#: librairy/basicCommands.py:52
+msgid "remaining"
+msgstr ""
+
+#: librairy/basicCommands.py:54
+msgid "battery is not plugged"
+msgstr ""
+
+#: librairy/basicCommands.py:56
+msgid "Power"
+msgstr ""
+
+#: librairy/stringParser.py:58 librairy/stringParser.py:59
+msgid "Setup file missing"
+msgstr ""
+
+#: librairy/workWithModule.py:45
+msgid "you didn't say the linking word"
+msgstr ""
+
+#: librairy/workWithModule.py:50
+msgid "args file missing"
+msgstr ""

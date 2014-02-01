@@ -2,18 +2,13 @@
 # -*- coding: utf-8 -*-
 from subprocess import *
 from os.path import expanduser
+import sys, subprocess, os, json, urllib2, unicodedata, time, gettext, locale
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__))+'/librairy')
+
 from Googletts import tts
 from Notification import notification
 from stringParser import stringParser
-import sys
-import subprocess 
-import os
-import json
-import urllib2
-import unicodedata
-import time
-import gettext
-import locale
 
 PID = os.getpid()
 lang = locale.getlocale()[0]
