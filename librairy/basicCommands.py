@@ -3,7 +3,6 @@
 from gi.repository import Gtk
 from gi.repository import Gdk
 from subprocess import *
-from Notification import notification
 from Googletts import tts
 import os, gettext, time, subprocess
 
@@ -11,12 +10,13 @@ gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18
 
 # Permet de faire appel aux fonctions basiques
 class basicCommands():
-    def __init__(self,text,notif):
+    def __init__(self,text,PID):
         # suivant le paramètre reçu, on exécute une action
+        self.pid = PID
         if text == _('time'):
-            self.getTime(notif)
+            self.getTime()
         elif text == _('power'):
-            self.getPower(notif)
+            self.getPower()
         elif text == _('clipboard'):
             self.read_clipboard()
         else:
@@ -33,11 +33,12 @@ class basicCommands():
         else:
             tts(_('Nothing in the clipboard'))
     
-    def getTime(self,notif):
+    def getTime(self):
         var=time.strftime('%d/%m/%y %H:%M',time.localtime())
-        notif.update(_('time'),var,'INFO')
+        print var
+        os.system('echo "'+var+'" > /tmp/g2u_display_'+self.pid)
                     
-    def getPower(self,notif):
+    def getPower(self):
         command = "acpi -b"
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         output,error  = process.communicate()
@@ -53,6 +54,5 @@ class basicCommands():
         else:
             message = _('battery is not plugged')
         
-        notif.update(_('Power'),message,'INFO')
+        os.system('echo "'+message+'" > /tmp/g2u_display_'+self.pid)
         tts(message)
-        time.sleep(3)

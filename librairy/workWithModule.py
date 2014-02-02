@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from os.path import expanduser
 from subprocess import *
-from Notification import notification
 from Googletts import tts
 import os, gettext, time, subprocess, unicodedata
 
@@ -10,7 +9,9 @@ gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18
 
 # Permet de faire appel aux modules    
 class workWithModule():
-    def __init__(self,module_path,module_name,text,notif):
+    def __init__(self,module_path,module_name,text,PID):
+        self.pid = PID
+        
         try:
             # Lecture du fichier de configuration du module
             argsfile=expanduser('~')+'/.config/google2ubuntu/modules/'+module_path+'/args';
@@ -29,7 +30,8 @@ class workWithModule():
             # Le mot de liaison peut être " à "
             sentence=text.lower()
             sentence=unicodedata.normalize('NFKD', text).encode('ASCII', 'ignore')
-            sentence=sentence.lower()           
+            sentence=sentence.lower()  
+       
             if sentence.count(linker) > 0:
                 param =(sentence.split(linker)[1]).encode("utf-8")
                 
@@ -42,12 +44,10 @@ class workWithModule():
                 execute = expanduser('~') +'/.config/google2ubuntu/modules/'+module_path+'/'+module_name+' '+'"'+param+'"'
                 os.system(execute)
             else:
-                notif.update(_('Error'),_("you didn't say the linking word")+'\n'+linker,'ERROR')    
-                time.sleep(3)
-                notif.close()        
+                message=_("you didn't say the linking word")   
+                os.system('echo "'+message+'" > /tmp/g2u_error_'+self.pid)      
             
         except IOError:
-            notif.update(_('Error'),_('args file missing'),'ERROR')
-            time.sleep(3)
-            notif.close()
+            message = _('args file missing')
+            os.system('echo "'+message+'" > /tmp/g2u_error_'+self.pid)
             sys.exit(1) 

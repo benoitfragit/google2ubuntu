@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from os.path import expanduser
-from Notification import notification
 from workWithModule import workWithModule
 from basicCommands import basicCommands
 from Googletts import tts
@@ -11,14 +10,14 @@ gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18
 
 # Permet d'exécuter la commande associée à un mot prononcé
 class stringParser():
-    def __init__(self,text,File,notif):
+    def __init__(self,text,File,PID):
         # read configuration files
+        self.pid=PID
         try:
             max = 0
             text=text.lower()
             tree = ET.parse(File)
             root = tree.getroot()
-        
             tp = ''
             for entry in root.findall('entry'):
                 score = 0
@@ -39,24 +38,23 @@ class stringParser():
             # ex: si on prononce "quelle est la météo à Paris"
             # la ligne de configuration dans le fichier est: [q/Q]uelle*météo=/modules/weather/weather.sh
             # on coupe donc l'action suivant '/'
+            os.system('echo "'+do+'" > /tmp/g2u_cmd_'+self.pid)
             if _('modules') in tp:
                 check = do.split('/')
                 # si on trouve le mot "modules", on instancie une classe workWithModule et on lui passe
                 # le dossier ie weather, search,...; le nom du module ie weather.sh, search.sh et le texte prononcé
-                wm = workWithModule(check[0],check[1],text,notif)
+                wm = workWithModule(check[0],check[1],text,self.pid)
             elif _('internal') in tp:
                 # on execute une commande intene, la commande est configurée
                 # ainsi interne/batterie, on envoie batterie à la fonction
-                b = basicCommands(do,notif)
+                b = basicCommands(do,self.pid)
             elif _('external') in tp:
                 # on exécute directement l'action
                 os.system(do)
             
-            notif.close()
+            os.system('> /tmp/g2u_stop_'+self.pid)
             
         except IOError:
-            notif.update(_('Error'),_('Setup file missing'),'ERROR')
-            tts(_('Error')+' '+_('Setup file missing'))
-            time.sleep(3)
-            notif.close()            
+            message = _('Setup file missing')
+            os.system('echo "'+message+'" > /tmp/g2u_error_'+self.pid)
             sys.exit(1)   
