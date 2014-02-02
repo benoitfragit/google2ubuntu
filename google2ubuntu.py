@@ -74,6 +74,6 @@ class interface():
             sys.exit(1)
 
 # Initialisation des notifications
-os.system('rm /tmp/g2u* 2>/dev/null')
+os.system('rm /tmp/g2u_*_'+PID+' 2>/dev/null')
 os.system('python '+os.path.dirname(os.path.abspath(__file__))+'/librairy/osd.py '+PID+' &')
 g2u = interface()

@@ -45,7 +45,7 @@ if len(sys.argv) >= 2:
             n.show()
             time.sleep(2)
             n.close()
-            os.system('rm /tmp/g2u_* 2>/dev/null')
+            os.system('rm /tmp/g2u_*_'+PID+' 2>/dev/null')
             sys.exit(1)
             
         if os.path.exists(result) and RESULT == False:
@@ -88,4 +88,4 @@ if len(sys.argv) >= 2:
     n.show()
     time.sleep(1)
     n.close()
-    os.system('rm /tmp/g2u_* 2>/dev/null')
+    os.system('rm /tmp/g2u_*_'+PID+' 2>/dev/null')

@@ -2,6 +2,6 @@
 CONTENU="$1"
 CONTENU=$(echo $CONTENU | sed "s/ /+/g")
 echo $CONTENU
-xdg-open http://www.google.com/search?q="$CONTENU" &
+xdg-open http://www.youtube.com/results?search_query="$CONTENU" &
 
 exit 0
