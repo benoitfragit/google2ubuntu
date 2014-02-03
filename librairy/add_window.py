@@ -319,7 +319,7 @@ class add_window():
             if not os.path.exists(module_path):
                 os.makedirs(os.path.dirname(module_path))
                 # on copie le dossier du module    
-                os.system('cp -r '+module+' '+module_path)
+            os.system('cp -r '+module+' '+module_path)
         else:
             self.show_label('show')
             self.labelState.set_text(_("Error, args file missing"))

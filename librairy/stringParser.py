@@ -5,7 +5,7 @@ from workWithModule import workWithModule
 from basicCommands import basicCommands
 from Googletts import tts
 import xml.etree.ElementTree as ET
-import os, gettext, time, sys
+import os, gettext, time, sys, subprocess
 gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
 
 # Permet d'exécuter la commande associée à un mot prononcé
@@ -19,6 +19,7 @@ class stringParser():
             tree = ET.parse(File)
             root = tree.getroot()
             tp = ''
+
             for entry in root.findall('entry'):
                 score = 0
                 Type=entry.get('name')
@@ -38,6 +39,7 @@ class stringParser():
             # ex: si on prononce "quelle est la météo à Paris"
             # la ligne de configuration dans le fichier est: [q/Q]uelle*météo=/modules/weather/weather.sh
             # on coupe donc l'action suivant '/'
+            do=do.encode('utf8') 
             os.system('echo "'+do+'" > /tmp/g2u_cmd_'+self.pid)
             if _('modules') in tp:
                 check = do.split('/')
@@ -49,12 +51,13 @@ class stringParser():
                 # ainsi interne/batterie, on envoie batterie à la fonction
                 b = basicCommands(do,self.pid)
             elif _('external') in tp:
-                # on exécute directement l'action
                 os.system(do)
-            
+             
+                
             os.system('> /tmp/g2u_stop_'+self.pid)
             
-        except IOError:
+            
+        except Exception as e:
             message = _('Setup file missing')
             os.system('echo "'+message+'" > /tmp/g2u_error_'+self.pid)
             sys.exit(1)   

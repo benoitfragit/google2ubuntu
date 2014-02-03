@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-02 12:41+0100\n"
+"POT-Creation-Date: 2014-02-03 16:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Commands"
 msgstr ""
 
-#: librairy/add_window.py:73 librairy/osd.py:25 librairy/osd.py:30
+#: librairy/add_window.py:73 librairy/osd.py:27 librairy/osd.py:32
 msgid "Ready"
 msgstr ""
 
@@ -43,7 +43,7 @@ msgid "key sentence"
 msgstr ""
 
 #: librairy/add_window.py:121 librairy/add_window.py:293
-#: librairy/stringParser.py:50
+#: librairy/stringParser.py:53
 msgid "external"
 msgstr ""
 
@@ -120,13 +120,13 @@ msgid "What type of command to add"
 msgstr ""
 
 #: librairy/add_window.py:282 librairy/add_window.py:286
-#: librairy/add_window.py:364 librairy/stringParser.py:41
+#: librairy/add_window.py:364 librairy/stringParser.py:44
 msgid "modules"
 msgstr ""
 
 #: librairy/add_window.py:282 librairy/add_window.py:284
 #: librairy/add_window.py:295 librairy/add_window.py:364
-#: librairy/stringParser.py:46
+#: librairy/stringParser.py:49
 msgid "internal"
 msgstr ""
 
@@ -170,39 +170,39 @@ msgstr ""
 msgid "Go"
 msgstr ""
 
-#: librairy/basicCommands.py:15
+#: librairy/basicCommands.py:16
 msgid "time"
 msgstr ""
 
-#: librairy/basicCommands.py:17
+#: librairy/basicCommands.py:18
 msgid "power"
 msgstr ""
 
-#: librairy/basicCommands.py:19
+#: librairy/basicCommands.py:20
 msgid "clipboard"
 msgstr ""
 
-#: librairy/basicCommands.py:33
+#: librairy/basicCommands.py:34
 msgid "Nothing in the clipboard"
 msgstr ""
 
-#: librairy/basicCommands.py:50
+#: librairy/basicCommands.py:51
 msgid "Charging"
 msgstr ""
 
-#: librairy/basicCommands.py:50
+#: librairy/basicCommands.py:51
 msgid "before charging"
 msgstr ""
 
-#: librairy/basicCommands.py:52
+#: librairy/basicCommands.py:53
 msgid "Discharging"
 msgstr ""
 
-#: librairy/basicCommands.py:52
+#: librairy/basicCommands.py:53
 msgid "remaining"
 msgstr ""
 
-#: librairy/basicCommands.py:54
+#: librairy/basicCommands.py:55
 msgid "battery is not plugged"
 msgstr ""
 
@@ -214,42 +214,50 @@ msgstr ""
 msgid "Choose a file"
 msgstr ""
 
-#: librairy/osd.py:39
+#: librairy/osd.py:41
 msgid "Error"
 msgstr ""
 
-#: librairy/osd.py:51
+#: librairy/osd.py:53
 msgid "Recognition result"
 msgstr ""
 
-#: librairy/osd.py:61
+#: librairy/osd.py:63
 msgid "Calling command"
 msgstr ""
 
-#: librairy/osd.py:68
+#: librairy/osd.py:70
 msgid "Information"
 msgstr ""
 
-#: librairy/osd.py:74
+#: librairy/osd.py:76
 msgid "Performing recording"
 msgstr ""
 
-#: librairy/osd.py:75
+#: librairy/osd.py:77
 msgid "Please speak"
 msgstr ""
 
-#: librairy/osd.py:85
+#: librairy/osd.py:87
 msgid "Done"
 msgstr ""
 
-#: librairy/stringParser.py:57
+#: librairy/stringParser.py:61
 msgid "Setup file missing"
 msgstr ""
 
-#: librairy/workWithModule.py:45
+#: librairy/workWithModule.py:47
 msgid "you didn't say the linking word"
 msgstr ""
 
-#: librairy/workWithModule.py:49
+#: librairy/workWithModule.py:51
 msgid "args file missing"
+msgstr ""
+
+#: modules/way/way.py:11
+msgid "between"
+msgstr ""
+
+#: modules/way/way.py:12
+msgid "and"
 msgstr ""

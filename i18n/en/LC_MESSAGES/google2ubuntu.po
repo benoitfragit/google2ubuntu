@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: google 2ubuntu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-02 12:41+0100\n"
+"POT-Creation-Date: 2014-02-03 16:45+0100\n"
 "PO-Revision-Date: 2014-02-02 09:47+0100\n"
 "Last-Translator: benoit <benoitfranquet@gmail.com>\n"
 "Language-Team: French\n"
@@ -34,7 +34,7 @@ msgstr "Keys"
 msgid "Commands"
 msgstr "Commands"
 
-#: librairy/add_window.py:73 librairy/osd.py:25 librairy/osd.py:30
+#: librairy/add_window.py:73 librairy/osd.py:27 librairy/osd.py:32
 msgid "Ready"
 msgstr "Ready"
 
@@ -44,7 +44,7 @@ msgid "key sentence"
 msgstr "key sentence"
 
 #: librairy/add_window.py:121 librairy/add_window.py:293
-#: librairy/stringParser.py:50
+#: librairy/stringParser.py:53
 msgid "external"
 msgstr "external"
 
@@ -121,13 +121,13 @@ msgid "What type of command to add"
 msgstr "What type of command to add"
 
 #: librairy/add_window.py:282 librairy/add_window.py:286
-#: librairy/add_window.py:364 librairy/stringParser.py:41
+#: librairy/add_window.py:364 librairy/stringParser.py:44
 msgid "modules"
 msgstr "modules"
 
 #: librairy/add_window.py:282 librairy/add_window.py:284
 #: librairy/add_window.py:295 librairy/add_window.py:364
-#: librairy/stringParser.py:46
+#: librairy/stringParser.py:49
 msgid "internal"
 msgstr "internal"
 
@@ -171,39 +171,39 @@ msgstr "Replace space by plus"
 msgid "Go"
 msgstr "Go"
 
-#: librairy/basicCommands.py:15
+#: librairy/basicCommands.py:16
 msgid "time"
 msgstr "time"
 
-#: librairy/basicCommands.py:17
+#: librairy/basicCommands.py:18
 msgid "power"
 msgstr "power"
 
-#: librairy/basicCommands.py:19
+#: librairy/basicCommands.py:20
 msgid "clipboard"
 msgstr "clipboard"
 
-#: librairy/basicCommands.py:33
+#: librairy/basicCommands.py:34
 msgid "Nothing in the clipboard"
 msgstr "Nothing in the clipboard"
 
-#: librairy/basicCommands.py:50
+#: librairy/basicCommands.py:51
 msgid "Charging"
 msgstr "Charging"
 
-#: librairy/basicCommands.py:50
+#: librairy/basicCommands.py:51
 msgid "before charging"
 msgstr "before charging"
 
-#: librairy/basicCommands.py:52
+#: librairy/basicCommands.py:53
 msgid "Discharging"
 msgstr "Discharging"
 
-#: librairy/basicCommands.py:52
+#: librairy/basicCommands.py:53
 msgid "remaining"
 msgstr "remaining"
 
-#: librairy/basicCommands.py:54
+#: librairy/basicCommands.py:55
 msgid "battery is not plugged"
 msgstr "battery is not plugged"
 
@@ -215,45 +215,53 @@ msgstr "Help Google2Ubuntu"
 msgid "Choose a file"
 msgstr "Choose a file"
 
-#: librairy/osd.py:39
+#: librairy/osd.py:41
 msgid "Error"
 msgstr "Error"
 
-#: librairy/osd.py:51
+#: librairy/osd.py:53
 msgid "Recognition result"
 msgstr "Recognition result"
 
-#: librairy/osd.py:61
+#: librairy/osd.py:63
 msgid "Calling command"
 msgstr "Calling command"
 
-#: librairy/osd.py:68
+#: librairy/osd.py:70
 msgid "Information"
 msgstr "Information"
 
-#: librairy/osd.py:74
+#: librairy/osd.py:76
 msgid "Performing recording"
 msgstr "Performing recording"
 
-#: librairy/osd.py:75
+#: librairy/osd.py:77
 msgid "Please speak"
 msgstr "Please speak"
 
-#: librairy/osd.py:85
+#: librairy/osd.py:87
 msgid "Done"
 msgstr "Done"
 
-#: librairy/stringParser.py:57
+#: librairy/stringParser.py:61
 msgid "Setup file missing"
 msgstr "Setup file missing"
 
-#: librairy/workWithModule.py:45
+#: librairy/workWithModule.py:47
 msgid "you didn't say the linking word"
 msgstr "you didn't say th linking word"
 
-#: librairy/workWithModule.py:49
+#: librairy/workWithModule.py:51
 msgid "args file missing"
 msgstr "args file missing"
+
+#: modules/way/way.py:11
+msgid "between"
+msgstr "between"
+
+#: modules/way/way.py:12
+msgid "and"
+msgstr "and"
 
 #~ msgid "Performing recognition"
 #~ msgstr "Performing recognition"

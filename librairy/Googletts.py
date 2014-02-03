@@ -8,7 +8,8 @@ class tts():
         lang = locale.getlocale()[0]
         lc = lang.split('_')[0]
         text = unicodedata.normalize('NFKD', unicode(text,"utf-8")).encode('ASCII', 'ignore')
-        text = text.replace('\n','')
+        #text=unicode(text,"utf-8")
+        text = text.replace('\n',' ')
         text_list = re.split('(\,|\.)', text)
         combined_text = []
         output=open('/tmp/tts.mp3',"w")
@@ -34,7 +35,7 @@ class tts():
                     combined_text.extend(temp_array)
         #download chunks and write them to the output file
         for idx, val in enumerate(combined_text):
-            mp3url = "http://translate.google.com/translate_tts?tl=%s&q=%s&total=%s&idx=%s" % (lc, urllib.quote(val), len(combined_text), idx)
+            mp3url = "http://translate.google.com/translate_tts?ie=UTF-8&tl=%s&q=%s&total=%s&idx=%s" % (lc, urllib.quote(val), len(combined_text), idx)
             headers = {"Host":"translate.google.com",
             "Referer":"http://www.gstatic.com/translate/sound_player2.swf",
             "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.163 Safari/535.19"}
