@@ -88,9 +88,9 @@ Don't care about capital letter, because the program automatically put the text 
 
 I've implemented different types of command:
 
-* external commands
-* internal commands
-* modules
+* **external commands**
+* **internal commands**
+* **modules**
 
 ###External commands
 External commands are basically commands that you can run in your terminal:
