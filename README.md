@@ -137,21 +137,21 @@ Yu can also simply drag&drop this executable on the treeview and the module will
 ####Already available
 google2ubuntu already comes with 6 modules:
 
-* google
+* **google**
 This plugin allows you to make search on Google and open the web browser on the search page you ask for.
-* wikipedia
+* **wikipedia**
 This plugin allows you to make search on Wikipedia
-* youtube
+* **youtube**
 This plugin allows you to make search on YouTube
-* way
+* **way**
 This plugin allows you to find a way between to place on Google map. You have to pronounce your place like this:
 ```
 way between Pars and Marseille
 ```
 So your locations need to be between the word "between" and "and"
-* weather
+* **weather**
 This plugin allows you to ask Google to show you the weather for a city
-* meaning
+* **meaning**
 This plugin allows you to ask to the meaning of a word, for exemple if I ask:
 ```
 meaning barack obama
