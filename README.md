@@ -111,7 +111,7 @@ If you want to add an internal command, open the little menu near the "Add" butt
 ###Modules
 In order to extand google2ubuntu very easily I've implemented a system of menu that let developers adds their own scripts in google2ubuntu. Besides, all modules will receive the text tha you pronouce in parameter
 
-#####Module's description
+####Module's description
 A module is composed of 2 files, an executable file and a config file named "args" placed both in the same folder.
 The args file contains 2 fields:
 
@@ -133,6 +133,8 @@ If you want to add a script, but this script doesn't have an args file don't wor
 You can add a module by opening the menu near to the "Add" button then selecting the executable files of the module. 
 Yu can also simply drag&drop this executable on the treeview and the module will be automatically added. When you add a new module you don't have to modify the `action` field in the newline. You just have to modify the `key` field in the gui.
 
+
+####Already available
 google2ubuntu already comes with 6 modules:
 
 * google
@@ -156,8 +158,7 @@ meaning barack obama
 ```
 The plugin will tell me that he is the actual president of the US
 
-
-
+####Note for the user
 Perhaps, you will have to modify the linker field of those module by modifying the corresponding args file in :
 ```
 ~/.config/google2ubuntu/modules/<name>/args
