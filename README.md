@@ -133,19 +133,35 @@ If you want to add a script, but this script doesn't have an args file don't wor
 You can add a module by opening the menu near to the "Add" button then selecting the executable files of the module. 
 Yu can also simply drag&drop this executable on the treeview and the module will be automatically added. When you add a new module you don't have to modify the `action` field in the newline. You just have to modify the `key` field in the gui.
 
-google2ubuntu comes with 5 modules:
+google2ubuntu already comes with 6 modules:
 
 * google
+This plugin allows you to make search on Google and open the web browser on the search page you ask for.
 * wikipedia
+This plugin allows you to make search on Wikipedia
 * youtube
+This plugin allows you to make search on YouTube
 * way
+This plugin allows you to find a way between to place on Google map. You have to pronounce your place like this:
+```
+way between Pars and Marseille
+```
+So your locations need to be between the word "between" and "and"
 * weather
+This plugin allows you to ask Google to show you the weather for a city
+* meaning
+This plugin allows you to ask to the meaning of a word, for exemple if I ask:
+```
+meaning barack obama
+```
+The plugin will tell me that he is the actual president of the US
+
+
 
 Perhaps, you will have to modify the linker field of those module by modifying the corresponding args file in :
 ```
 ~/.config/google2ubuntu/modules/<name>/args
 ```
-
 #Go Linux automation
 Once you have personalized and take care about the commands already included in google2ubuntu, you can launch the recognition by launching `google2ubuntu.py`
 
