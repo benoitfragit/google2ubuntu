@@ -12,6 +12,7 @@ import os
 import sys
 import subprocess
 import gettext
+import locale
 import xml.etree.ElementTree as ET
 
 gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
@@ -370,10 +371,14 @@ class add_window():
     def help_clicked(self,button):
         win = HelpWindow()
 
-    def populate_store(self, store):
+    def populate_store(self, store):        
         config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.xml'
         path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
-        default = path +'config/default.xml'        
+        lang = locale.getlocale()[0]
+        if os.path.isdir(path+'config/'+lang) == False:
+            lang='en_EN'        
+            
+        default = path +'config/'+lang+'/default.xml'        
 
         try:
             if os.path.isfile(config):

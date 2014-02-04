@@ -44,7 +44,7 @@ class interface():
         
         # fichier de configuration
         config = expanduser('~') + '/.config/google2ubuntu/google2ubuntu.xml'
-        default = os.path.dirname(os.path.abspath(__file__))+'/config/default.xml'
+        default = os.path.dirname(os.path.abspath(__file__))+'/config/'+lang+'/default.xml'
         
         if os.path.exists(config):
             config_file = config
@@ -52,6 +52,8 @@ class interface():
             if os.path.exists(expanduser('~') +'/.config/google2ubuntu') == False:
                 os.makedirs(expanduser('~') +'/.config/google2ubuntu')
                 os.system('cp -r /usr/share/google2ubuntu/modules '+expanduser('~') +'/.config/google2ubuntu')    
+            if os.path.exists(default) == False:
+                default = os.path.dirname(os.path.abspath(__file__))+'/config/en_EN/default.xml'
                 
             config_file = default
         

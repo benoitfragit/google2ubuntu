@@ -19,7 +19,7 @@ class stringParser():
             tree = ET.parse(File)
             root = tree.getroot()
             tp = ''
-
+            
             for entry in root.findall('entry'):
                 score = 0
                 Type=entry.get('name')
@@ -40,6 +40,7 @@ class stringParser():
             # la ligne de configuration dans le fichier est: [q/Q]uelle*météo=/modules/weather/weather.sh
             # on coupe donc l'action suivant '/'
             do=do.encode('utf8') 
+            print tp, do
             os.system('echo "'+do+'" > /tmp/g2u_cmd_'+self.pid)
             if _('modules') in tp:
                 check = do.split('/')
