@@ -15,6 +15,19 @@ The first one lets you sends commands to Google and then execute some actions. T
 I've done huge efforts to make the program easy to install and easy to use. Besides, the program can be internationalize, for the moment, it is already available in French and English.
 
 #Installation
+## Dependancies
+
+For the moment, dependancies are:
+
+* bash
+* python
+* python-gi
+* libnotify-dev
+* sox
+* alsa-utils
+* xdotool
+* wget
+
 
 ##Find the package
 google2ubuntu is available on Github on the [release](https://github.com/benoitfragit/google2ubuntu/releases) page and in my [ppa](https://launchpad.net/~benoitfra/+archive/google2ubuntu). To install google2ubuntu 
@@ -38,7 +51,7 @@ Moreover, if you search in the application's menu you will find two launchers, o
 After that, you can launch google2ubuntu-manager.py in order to manage all commands.
 ![google2ubuntu-manager](http://pix.toile-libre.org/upload/original/1391509665.png)
 
-As you can see, google2ubuntu coms with sevral default commands. I will explain you how to manage and add commands.
+As you can see, google2ubuntu coms with several default commands. I will explain you how to manage and add commands.
 
 #Manage commands
 ##Commands' storage
@@ -70,7 +83,7 @@ The word `my` is not usefull so, I will put:
 key: open documents
 action: xdg-open ~/Documents
 ```
-Don't care about capital letter, because the programme automatically put the texte in lowercase.
+Don't care about capital letter, because the program automatically put the text in lowercase.
 
 
 I've implemented different types of command:
@@ -179,3 +192,6 @@ Then translate new line and compile the `.po`:
 ```
 msgfmt ./i18n/<current_language>/LC_MESSAGES/google2ubuntu.po --output-file ./i18n/<current_language>/LC_MESSAGES/google2ubuntu.mo
 ```
+## Share ideas
+You can share ideas and contact me on the google+ comunauty:
+[google2ubuntu](https://plus.google.com/u/0/communities/103854623082229435165)
