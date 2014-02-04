@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: google 2ubuntu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-03 16:45+0100\n"
+"POT-Creation-Date: 2014-02-04 16:39+0100\n"
 "PO-Revision-Date: 2014-02-02 09:47+0100\n"
 "Last-Translator: benoit <benoitfranquet@gmail.com>\n"
 "Language-Team: French\n"
@@ -18,136 +18,136 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: google2ubuntu.py:72
+#: google2ubuntu.py:74
 msgid "unable to translate"
 msgstr "unable to translate"
 
-#: librairy/add_window.py:36
+#: librairy/add_window.py:37
 msgid "list of commands"
 msgstr "list of commands"
 
-#: librairy/add_window.py:49
+#: librairy/add_window.py:50
 msgid "Keys"
 msgstr "Keys"
 
-#: librairy/add_window.py:65
+#: librairy/add_window.py:66
 msgid "Commands"
 msgstr "Commands"
 
-#: librairy/add_window.py:73 librairy/osd.py:27 librairy/osd.py:32
+#: librairy/add_window.py:74 librairy/osd.py:27 librairy/osd.py:32
 msgid "Ready"
 msgstr "Ready"
 
-#: librairy/add_window.py:121 librairy/add_window.py:293
-#: librairy/add_window.py:295 librairy/add_window.py:316
+#: librairy/add_window.py:122 librairy/add_window.py:294
+#: librairy/add_window.py:296 librairy/add_window.py:317
 msgid "key sentence"
 msgstr "key sentence"
 
-#: librairy/add_window.py:121 librairy/add_window.py:293
-#: librairy/stringParser.py:53
+#: librairy/add_window.py:122 librairy/add_window.py:294
+#: librairy/stringParser.py:54
 msgid "external"
 msgstr "external"
 
-#: librairy/add_window.py:160
+#: librairy/add_window.py:161
 msgid "External commands"
 msgstr "External commands"
 
-#: librairy/add_window.py:164
+#: librairy/add_window.py:165
 msgid "Internal commands"
 msgstr "Internal commands"
 
-#: librairy/add_window.py:168
+#: librairy/add_window.py:169
 msgid "Module"
 msgstr "Module"
 
-#: librairy/add_window.py:175
+#: librairy/add_window.py:176
 msgid "Add"
 msgstr "Add"
 
-#: librairy/add_window.py:185
+#: librairy/add_window.py:186
 msgid "Add a new command"
 msgstr "Add a new command"
 
-#: librairy/add_window.py:190
+#: librairy/add_window.py:191
 msgid "Try"
 msgstr "Try"
 
-#: librairy/add_window.py:194
+#: librairy/add_window.py:195
 msgid "Try this command"
 msgstr "Try this command"
 
-#: librairy/add_window.py:199 librairy/add_window.py:334
+#: librairy/add_window.py:200 librairy/add_window.py:335
 msgid "Remove"
 msgstr "Remove"
 
-#: librairy/add_window.py:203
+#: librairy/add_window.py:204
 msgid "Remove this command"
 msgstr "Remove this command"
 
-#: librairy/add_window.py:208
+#: librairy/add_window.py:209
 msgid "Clean up"
 msgstr "Clean up"
 
-#: librairy/add_window.py:212 librairy/add_window.py:351
+#: librairy/add_window.py:213 librairy/add_window.py:352
 msgid "Remove all commands"
 msgstr "Remove all commands"
 
-#: librairy/add_window.py:217
+#: librairy/add_window.py:218
 msgid "Help"
 msgstr "Help"
 
-#: librairy/add_window.py:221
+#: librairy/add_window.py:222
 msgid "Display help message"
 msgstr "Display help message"
 
-#: librairy/add_window.py:244
+#: librairy/add_window.py:245
 msgid "All"
 msgstr "All"
 
-#: librairy/add_window.py:245
+#: librairy/add_window.py:246
 msgid "External"
 msgstr "External"
 
-#: librairy/add_window.py:246
+#: librairy/add_window.py:247
 msgid "Internal"
 msgstr "Internal"
 
-#: librairy/add_window.py:247
+#: librairy/add_window.py:248
 msgid "Modules"
 msgstr "Modules"
 
-#: librairy/add_window.py:251
+#: librairy/add_window.py:252
 msgid "What type of command to add"
 msgstr "What type of command to add"
 
-#: librairy/add_window.py:282 librairy/add_window.py:286
-#: librairy/add_window.py:364 librairy/stringParser.py:44
+#: librairy/add_window.py:283 librairy/add_window.py:287
+#: librairy/add_window.py:365 librairy/stringParser.py:45
 msgid "modules"
 msgstr "modules"
 
-#: librairy/add_window.py:282 librairy/add_window.py:284
-#: librairy/add_window.py:295 librairy/add_window.py:364
-#: librairy/stringParser.py:49
+#: librairy/add_window.py:283 librairy/add_window.py:285
+#: librairy/add_window.py:296 librairy/add_window.py:365
+#: librairy/stringParser.py:50
 msgid "internal"
 msgstr "internal"
 
-#: librairy/add_window.py:293
+#: librairy/add_window.py:294
 msgid "your command"
 msgstr "your command"
 
-#: librairy/add_window.py:295
+#: librairy/add_window.py:296
 msgid "word"
 msgstr "word"
 
-#: librairy/add_window.py:303
+#: librairy/add_window.py:304
 msgid "Error, you must choose a file"
 msgstr "Error, you must choose a file"
 
-#: librairy/add_window.py:325
+#: librairy/add_window.py:326
 msgid "Error, args file missing"
 msgstr "Error, args file missing"
 
-#: librairy/add_window.py:423
+#: librairy/add_window.py:428
 msgid "Save commands"
 msgstr "Save commands"
 
@@ -187,23 +187,35 @@ msgstr "clipboard"
 msgid "Nothing in the clipboard"
 msgstr "Nothing in the clipboard"
 
-#: librairy/basicCommands.py:51
+#: librairy/basicCommands.py:41
+msgid "it is"
+msgstr "it is"
+
+#: librairy/basicCommands.py:41
+msgid "hour"
+msgstr "hour"
+
+#: librairy/basicCommands.py:41
+msgid "minute"
+msgstr "minute"
+
+#: librairy/basicCommands.py:55
 msgid "Charging"
 msgstr "Charging"
 
-#: librairy/basicCommands.py:51
+#: librairy/basicCommands.py:55
 msgid "before charging"
 msgstr "before charging"
 
-#: librairy/basicCommands.py:53
+#: librairy/basicCommands.py:57
 msgid "Discharging"
 msgstr "Discharging"
 
-#: librairy/basicCommands.py:53
+#: librairy/basicCommands.py:57
 msgid "remaining"
 msgstr "remaining"
 
-#: librairy/basicCommands.py:55
+#: librairy/basicCommands.py:59
 msgid "battery is not plugged"
 msgstr "battery is not plugged"
 
@@ -243,25 +255,23 @@ msgstr "Please speak"
 msgid "Done"
 msgstr "Done"
 
-#: librairy/stringParser.py:61
+#: librairy/stringParser.py:62
 msgid "Setup file missing"
 msgstr "Setup file missing"
 
-#: librairy/workWithModule.py:47
+#: librairy/workWithModule.py:48
 msgid "you didn't say the linking word"
 msgstr "you didn't say th linking word"
 
-#: librairy/workWithModule.py:51
+#: librairy/workWithModule.py:52
 msgid "args file missing"
 msgstr "args file missing"
 
-#: modules/way/way.py:11
-msgid "between"
-msgstr "between"
+#~ msgid "between"
+#~ msgstr "between"
 
-#: modules/way/way.py:12
-msgid "and"
-msgstr "and"
+#~ msgid "and"
+#~ msgstr "and"
 
 #~ msgid "Performing recognition"
 #~ msgstr "Performing recognition"

@@ -36,7 +36,8 @@ class workWithModule():
                 param =(sentence.split(linker)[1]).encode("utf-8")
                 
                 # on regarde si l'utilisateur veut transformer les ' ' en +
-                if plus == 1:
+                
+                if plus == '1':
                     param=param.replace(' ','+')
                 
                 # commande qui sera exécutée    

@@ -5,10 +5,11 @@ import urllib, urllib2, time, re, unicodedata, os, sys, locale
 
 class tts():
     def __init__(self,text):
+        locale.setlocale(locale.LC_ALL, '')
         lang = locale.getlocale()[0]
         lc = lang.split('_')[0]
-        text = unicodedata.normalize('NFKD', unicode(text,"utf-8")).encode('ASCII', 'ignore')
-        #text=unicode(text,"utf-8")
+        #text = unicodedata.normalize('NFKD', unicode(text,"utf-8")).encode('ASCII', 'ignore')
+        text=text.encode("utf8")
         text = text.replace('\n',' ')
         text_list = re.split('(\,|\.)', text)
         combined_text = []

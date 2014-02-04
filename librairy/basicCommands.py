@@ -34,9 +34,13 @@ class basicCommands():
             tts(_('Nothing in the clipboard'))
     
     def getTime(self):
-        var=time.strftime('%d/%m/%y %H:%M',time.localtime())
-        print var
+        var=time.strftime('%H:%M',time.localtime())
+        hour=var.split(':')[0]
+        minute=var.split(':')[1]
+        
+        message = _('it is')+' '+hour+' '+_('hour')+' '+minute+' '+_('minute')
         os.system('echo "'+var+'" > /tmp/g2u_display_'+self.pid)
+        tts(message)
                     
     def getPower(self):
         command = "acpi -b"
