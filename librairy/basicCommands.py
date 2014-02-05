@@ -10,7 +10,20 @@ gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18
 
 # Permet de faire appel aux fonctions basiques
 class basicCommands():
-    def __init__(self,text,PID):
+    """
+    @author: Benoit Franquet
+    
+    @description:
+    This class embed basic commands. For the moment, it embeds time, power
+    and clipboard function
+    
+    @param: text
+        name of the action to launch
+        
+    @param: PID
+        pid of the current running program
+    """
+    def __init__(self,text,PID):        
         # suivant le paramètre reçu, on exécute une action
         self.pid = PID
         if text == _('time'):
@@ -23,6 +36,9 @@ class basicCommands():
             print "no action found"
     
     def read_clipboard(self):
+        """
+        @function: read the selected text
+        """
         clipboard = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY)
 
         text = clipboard.wait_for_text()
@@ -34,6 +50,9 @@ class basicCommands():
             tts(_('Nothing in the clipboard'))
     
     def getTime(self):
+        """
+        @function: read and display the current time
+        """
         var=time.strftime('%H:%M',time.localtime())
         hour=var.split(':')[0]
         minute=var.split(':')[1]
@@ -43,6 +62,9 @@ class basicCommands():
         tts(message)
                     
     def getPower(self):
+        """
+        @function: read and display the battery state
+        """
         command = "acpi -b"
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         output,error  = process.communicate()

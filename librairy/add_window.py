@@ -21,6 +21,11 @@ TARGET_TYPE_URI_LIST = 80
 dnd_list = [Gtk.TargetEntry.new('text/uri-list', 0, TARGET_TYPE_URI_LIST )]
 
 class add_window():
+    """
+    @author: Benoit Franquet
+    
+    @description: create and manage user commands with a Gtk.Treeview
+    """
     def __init__(self):
         # Gtk.ListStore will hold data for the TreeView
         # Only the first two columns will be displayed
@@ -106,9 +111,33 @@ class add_window():
         self.grid.attach(self.labelState,0,2,1,1)        
 
     def get_grid(self):
+        """
+        @function: access to the grid, in order to add it to the main view
+        
+        @return: Gtk.Grid member of the class
+        """
         return self.grid
 
     def on_drag_data_received(self,widget, context, x, y, Selection, target_type, timestamp,store):
+        """
+        @function: allow the GUI to support the drag&drop, if you select a file
+        then it is automatically added as a module. If you drag a folder then
+        a new entry is automatically added to the treeview with a pre-determinec
+        command that let the user open this folder
+        
+        @param: widget
+            The widget that will accept the drag&drop
+        
+        @param: Selection
+            item selected for the drag&drop
+        
+        @param: target_type
+            Type of item that could be drag&drop
+        
+        @param: store
+            The Gtk.Listore that will receive the drag&drop element
+        
+        """
         if target_type == TARGET_TYPE_URI_LIST:
             uri= Selection.get_uris()[0]
             uri = uri.strip('\r\n\x00')

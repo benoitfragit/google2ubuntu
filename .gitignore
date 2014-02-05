@@ -1,5 +1,9 @@
 *.py[cod]
 
+doc
+_*
+conf.py
+*.rst
 archive/
 createdeb.py
 *.tar.gz

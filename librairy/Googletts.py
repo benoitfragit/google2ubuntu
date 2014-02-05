@@ -4,6 +4,15 @@
 import urllib, urllib2, time, re, unicodedata, os, sys, locale
 
 class tts():
+    """
+    @author: Benoit Franquet
+    
+    @description: Let google2ubuntu speaks to the user by using the Google
+    tts API
+    
+    @param: text
+        the text that should be read to the user
+    """
     def __init__(self,text):
         locale.setlocale(locale.LC_ALL, '')
         lang = locale.getlocale()[0]

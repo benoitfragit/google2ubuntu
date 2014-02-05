@@ -15,6 +15,14 @@ gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18
 
 # Classe MyWindow gere l'apparition de la fenêtre principale
 class MainWindow(Gtk.ApplicationWindow):
+    """
+    @author: Benoit Franquet
+    
+    @description: display the window
+    
+    @param: app
+        a Gtk.Appliction.Window that will be display
+    """    
     def __init__(self,app):
         Gtk.Window.__init__(self, title="google2ubuntu-manager",application=app)
         self.set_default_size(700, 500)  
