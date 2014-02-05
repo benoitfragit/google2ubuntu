@@ -11,19 +11,20 @@ gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18
 # Permet de faire appel aux fonctions basiques
 class basicCommands():
     """
-    @author: Benoit Franquet
+    @description: Called when the user wants to start an internal command
+    for the moment there is 3 internal commands:
     
-    @description:
-    This class embed basic commands. For the moment, it embeds time, power
-    and clipboard function
+    * time 
+    * clipboard
+    * hour
     
-    @param: text
-        name of the action to launch
+    @param text
+        name of the function to launch
         
-    @param: PID
-        pid of the current running program
+    @param PID
+        the program's pid to synchronize osd notification
     """
-    def __init__(self,text,PID):        
+    def __init__(self,text,PID):
         # suivant le paramètre reçu, on exécute une action
         self.pid = PID
         if text == _('time'):
@@ -37,7 +38,8 @@ class basicCommands():
     
     def read_clipboard(self):
         """
-        @function: read the selected text
+        @description: A function to make google2ubuntu reads the selected
+        text
         """
         clipboard = Gtk.Clipboard.get(Gdk.SELECTION_PRIMARY)
 
@@ -51,7 +53,8 @@ class basicCommands():
     
     def getTime(self):
         """
-        @function: read and display the current time
+        @description: a function that let google2ubuntu read and display
+        the current timme
         """
         var=time.strftime('%H:%M',time.localtime())
         hour=var.split(':')[0]
@@ -63,7 +66,8 @@ class basicCommands():
                     
     def getPower(self):
         """
-        @function: read and display the battery state
+        @description: a function that let google2ubuntu read and display
+        the current power state
         """
         command = "acpi -b"
         process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)

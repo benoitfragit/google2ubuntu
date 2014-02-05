@@ -12,9 +12,8 @@ gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18
 # gère l'apparition de la fenêtre de choix du module
 class moduleSelection():
     """
-    @author: Benoit Franquet
-    
-    @description: let the user choose a module by displaying a fileChooserDialog
+    @description: This class display an fileChooserDialog when the user 
+    wants to add a new module from the menu of the main window
     """
     def __init__(self):
         w=Gtk.Window()
@@ -30,10 +29,10 @@ class moduleSelection():
 
         dialog.destroy()
     
-    """
-    @function: give the selected file
-    
-    @return: the file selected by the user
-    """
     def getModule(self):
+        """
+        @description: return the module selected
+        
+        @return: return the path to the executable of the module
+        """
         return self.module

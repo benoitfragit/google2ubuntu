@@ -10,25 +10,10 @@ gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18
 # Permet de faire appel aux modules    
 class workWithModule():
     """
-    @author: Benoit Franquet
-    
-    @description: This class let developer include their own module in
-    google2ubuntu. This class will read the module configuration file and
-    parse the pronounced text in order to sent to the module only the required
-    text
-    
-    @param: module_path
-        the path of the module, ex: weather
-    
-    @param: module_name
-        the name of the module, ex: weather
-    
-    @param: text
-        the pronounced text before parsing and splitting
-    
-    @param PID
-        the pid of the current running program, will be usefull to display
-        message in notification
+    @description: This class allows you to call external modules. If a call
+    for an external module is detected by the parser then this class check
+    the module's config file before extracting modules's parameter from the
+    text you have pronounced
     """
     def __init__(self,module_path,module_name,text,PID):
         self.pid = PID

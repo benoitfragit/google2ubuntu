@@ -12,9 +12,7 @@ gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18
 # gère l'apparition de le fenêtre d'aide
 class HelpWindow():
     """
-    @author: Benoit Franquet
-    
-    @description: create and display en help window
+    @description: Diaplay an help window
     """
     def __init__(self):
         #a  Gtk.AboutDialog
@@ -45,7 +43,7 @@ class HelpWindow():
     # destroy the aboutdialog
     def on_close(self, action, parameter):
         """
-       @function: method to close the HelpWindow
+        @description: function called when the user wants to close the window
         
         @param: action
             the window to close

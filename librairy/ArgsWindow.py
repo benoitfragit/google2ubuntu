@@ -12,20 +12,17 @@ gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18
 # gère l'apparition de la fenêtre d'assistance de création de module
 class ArgsWindow():
     """
-    @author: Benoit Franquet
+    @description: Display a window to help the user create a config for a
+    module
     
-    @description: This class is calling when the user want to add a new
-    module, if this module hasn't got an configuration file then this class
-    create a winddow to help the user configurating his new module
+    @param module
+        module's folder
     
-    @param: module
-        the folder containing module's files
+    @param name
+        module's name
     
-    @param: name
-        the name of the module
-    
-    @param: store
-        the Gtk.Listore en which we will add the new module
+    @param store
+        a Gtk.Listore in which we will append a new line for this module
     """
     def __init__(self,module,name,store):
         self.w = Gtk.Window()
@@ -59,23 +56,12 @@ class ArgsWindow():
         grid.attach(button,3,3,1,1)                
         self.w.add(grid)
         self.w.show_all()
-    
+        
     def do_clicked(self,button,module,name,store):
         """
-            @function: callback function activated when the user click on the
-            button Go
-            
-            @param: button
-                the button that has to be clicked
-            
-            @param: module
-                the module's folder
-            
-            @param: name
-                the module's name
-            
-            @param: store
-                the Gtk.Listore in which a new line will be added
+        @description: callback function called when the user want to finish
+        the configuration of the module. If everything is ok then the config
+        file is written at the right place
         """
         linker = self.entry1.get_text()
         if self.checkbutton.get_active():

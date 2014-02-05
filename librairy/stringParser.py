@@ -11,12 +11,8 @@ gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18
 # Permet d'exécuter la commande associée à un mot prononcé
 class stringParser():
     """
-    @author: Benoit Franquet
-    
-    @description: This class parse the text pronounced by the user
-    it looking for the key sentence stored in the xml config file
-    We choose the command associated to the key sentence that share the 
-    maximum of words with the text pronounced
+    @description: This class parses the text retrieve by Google in order 
+    to distinguish external commands, internal commands and modules
     """
     def __init__(self,text,File,PID):
         # read configuration files
@@ -66,7 +62,7 @@ class stringParser():
             os.system('> /tmp/g2u_stop_'+self.pid)
             
             
-        except Exception:
+        except Exception as e:
             message = _('Setup file missing')
             os.system('echo "'+message+'" > /tmp/g2u_error_'+self.pid)
             sys.exit(1)   

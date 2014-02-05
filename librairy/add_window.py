@@ -22,9 +22,8 @@ dnd_list = [Gtk.TargetEntry.new('text/uri-list', 0, TARGET_TYPE_URI_LIST )]
 
 class add_window():
     """
-    @author: Benoit Franquet
-    
-    @description: create and manage user commands with a Gtk.Treeview
+    @description: This class allow the user to manage all his commands thanks
+    to a treeview. The grid generated will be added to the window
     """
     def __init__(self):
         # Gtk.ListStore will hold data for the TreeView
@@ -112,31 +111,26 @@ class add_window():
 
     def get_grid(self):
         """
-        @function: access to the grid, in order to add it to the main view
+        @description: get the grid
         
-        @return: Gtk.Grid member of the class
+        @return a Gtk.Grid
         """
         return self.grid
 
     def on_drag_data_received(self,widget, context, x, y, Selection, target_type, timestamp,store):
         """
-        @function: allow the GUI to support the drag&drop, if you select a file
-        then it is automatically added as a module. If you drag a folder then
-        a new entry is automatically added to the treeview with a pre-determinec
-        command that let the user open this folder
+        @description: The treeview allows dnd so, if the user select a file then the process to 
+        add a module start and finally a new line is added to the treeview. If the user select a 
+        folder then a new line is added to the treeview with a command to open this folder
         
         @param: widget
-            The widget that will accept the drag&drop
+            the widget that support dnd
         
         @param: Selection
-            item selected for the drag&drop
-        
-        @param: target_type
-            Type of item that could be drag&drop
+            the item selected
         
         @param: store
-            The Gtk.Listore that will receive the drag&drop element
-        
+            the listStore to append the new entry
         """
         if target_type == TARGET_TYPE_URI_LIST:
             uri= Selection.get_uris()[0]
@@ -151,6 +145,12 @@ class add_window():
                     store.append([_('key sentence'),'xdg-open '+path],_('external'))
 
     def show_label(self,action):
+        """
+        @description: Show or hide the bottom label
+        
+        @param: action
+            a string 'show' or 'hide'
+        """
         etat = self.labelState.get_parent()
         if action == 'show' and etat == None:
             self.grid.attach(self.labelState,0,2,2,1)
@@ -158,18 +158,45 @@ class add_window():
             self.grid.remove(self.labelState)
 
     def command_edited(self, widget, path, text,store):
+        """
+        @description: callback function called when the user edited the command
+        field of the treeview, we need to modify the liststore
+        
+        @param: widget
+            a Gtk.Widget
+        
+        @param: path
+            the way to find the modifiyed item
+        
+        @param: text
+            the new text
+        
+        @param: store
+            the listStore to modify
+        """
         iters = self.tree_filter.get_iter(path)
         path = self.tree_filter.convert_iter_to_child_iter(iters)
         store[path][1] = text
         self.saveTree(store)
 
     def key_edited(self, widget, path, text,store):
+        """
+        @description: same thing that the previous function
+        """
         iters = self.tree_filter.get_iter(path)
         path = self.tree_filter.convert_iter_to_child_iter(iters)        
         store[path][0] = text
         self.saveTree(store)
 
     def on_changed(self, selection):
+        """
+        @description: hide the bottom label when the selection change
+        
+        @param: selection
+            the selection from the treeview
+            
+        @return: a boolean 
+        """
         # get the model and the iterator that points at the data in the model
         (model, iter) = selection.get_selected()
         if iter is not None:
@@ -179,6 +206,14 @@ class add_window():
 
     # a method to create the toolbar
     def create_toolbar(self,store):
+        """
+        @description: create the toolbar of the main window
+        
+        @param: store
+            the listStore to connect to some buttons
+            
+        @return: a Gtk.toolbar
+        """
         # a toolbar
         toolbar = Gtk.Toolbar()
         # which is the primary toolbar of the application
@@ -268,6 +303,11 @@ class add_window():
 
     # return a combobox to add to the toolbar
     def get_combobox(self):
+        """
+        @description: get the combobox of the toolbar
+        
+        @return: a Gtk.Combobox
+        """
         # the data in the model, of type string
         listmodel = Gtk.ListStore(str)
         # append the data in the model
@@ -299,10 +339,20 @@ class add_window():
     
     # callback function attach to the combobox   
     def on_combochanged(self,combo):
+        """
+        @description: the combobox is used to filter the treeview and switch
+        between different commands types
+        """
         self.tree_filter.refilter()
 
     # filter function
     def match_func(self, model, iterr, data=None):
+        """
+        @description: we get the combobox selection and filter the treeview
+        data thanks to this selection.
+        
+        @return: a boolean
+        """
         query = self.combo.get_active()
         value = model.get_value(iterr, 1)
         field = model.get_value(iterr, 2)
@@ -319,6 +369,19 @@ class add_window():
             return False
 
     def add_clicked(self,button,store,add_type):
+        """
+        @description: callback function called when the user want to add
+        command
+        
+        @param: button
+            the button that has to be clicked
+        
+        @param: store
+            the listStore that will contain a new entry
+        
+        @param: add_type
+            the type of the new command to add
+        """
         if add_type == 'externe':
             store.append([_('key sentence'),_('your command'),_('external')])
         elif add_type == 'interne':
@@ -334,6 +397,15 @@ class add_window():
 
 
     def addModule(self,store,module):
+        """
+        @description: function that adds a module
+        
+        @param: store
+            the listStore that will receive a new entry
+        
+        @param: module
+            the path of the executable file of the module
+        """
         # ex: recup de weather.sh
         name = module.split('/')[-1]
         # ex: ~/.config/google2ubuntu/weather
@@ -356,6 +428,16 @@ class add_window():
             win = ArgsWindow(module,name,store)        
     
     def remove_clicked(self,button,store):
+        """
+        @description: callback function called wnen the user want to remove 
+        a line of the treeview
+        
+        @param: button
+            the button that will be clicked
+        
+        @param: store
+            the listStore that is going to be modify
+        """
         if len(store) != 0:
             (model, iters) = self.selection.get_selected()
             iter = self.tree_filter.convert_iter_to_child_iter(iters)
@@ -370,6 +452,10 @@ class add_window():
             print "Empty list"
 
     def removeall_clicked(self,button,store):
+        """
+        @description: Same as the past function but remove all lines of the 
+        treeview
+        """
         # if there is still an entry in the model
         old = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.xml'
         new = expanduser('~') +'/.config/google2ubuntu/.google2ubuntu.bak'
@@ -387,6 +473,15 @@ class add_window():
         print "Empty list"        
 
     def try_command(self,button,store):
+        """
+        @description: try a command (bash)
+        
+        @param: button
+            the button that has to be clicked
+        
+        @param: store
+            the listStore
+        """
         (model, iter) = self.selection.get_selected()
         if iter is not None:
             command = model[iter][1]
@@ -398,9 +493,22 @@ class add_window():
                 self.labelState.set_text(output+'\n'+error)
     
     def help_clicked(self,button):
+        """
+        @description: show the help window
+        
+        @param: button
+            the button that has to be clicked
+        """
         win = HelpWindow()
 
-    def populate_store(self, store):        
+    def populate_store(self, store):    
+        """
+        @description: load the treeview from the google2ubuntu.xml file or
+        from the default.xml file
+        
+        @param: store
+            the listStore that will be modify
+        """    
         config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.xml'
         path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
         lang = locale.getlocale()[0]
@@ -429,6 +537,12 @@ class add_window():
             print 'Error while reading config file'
 
     def saveTree(self,store):
+        """
+        @description: save the treeview in the google2ubuntu.xml file
+        
+        @param: store
+            the listStore attach to the treeview
+        """
         # if there is still an entry in the model
         model = self.tree_filter.get_model()
         config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.xml'     
