@@ -88,9 +88,9 @@ Don't care about capital letter, because the program automatically put the text 
 
 I've implemented different types of command:
 
-* external commands
-* internal commands
-* modules
+* **external commands**
+* **internal commands**
+* **modules**
 
 ###External commands
 External commands are basically commands that you can run in your terminal:
@@ -137,21 +137,21 @@ Yu can also simply drag&drop this executable on the treeview and the module will
 ####Already available
 google2ubuntu already comes with 6 modules:
 
-* google
+* **google**
 This plugin allows you to make search on Google and open the web browser on the search page you ask for.
-* wikipedia
+* **wikipedia**
 This plugin allows you to make search on Wikipedia
-* youtube
+* **youtube**
 This plugin allows you to make search on YouTube
-* way
+* **way**
 This plugin allows you to find a way between to place on Google map. You have to pronounce your place like this:
 ```
 way between Pars and Marseille
 ```
 So your locations need to be between the word "between" and "and"
-* weather
+* **weather**
 This plugin allows you to ask Google to show you the weather for a city
-* meaning
+* **meaning**
 This plugin allows you to ask to the meaning of a word, for exemple if I ask:
 ```
 meaning barack obama
@@ -212,3 +212,8 @@ msgfmt ./i18n/<current_language>/LC_MESSAGES/google2ubuntu.po --output-file ./i1
 ## Share ideas
 You can share ideas and contact me on the google+ comunauty:
 [google2ubuntu](https://plus.google.com/u/0/communities/103854623082229435165)
+
+## Demonstration
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=vkuX4tqaLFU
+" target="_blank"><img src="http://img.youtube.com/vi/vkuX4tqaLFU/0.jpg" 
+alt="google2ubuntu" width="480" height="360" border="5" /></a>
