@@ -217,3 +217,7 @@ You can share ideas and contact me on the google+ comunauty:
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=vkuX4tqaLFU
 " target="_blank"><img src="http://img.youtube.com/vi/vkuX4tqaLFU/0.jpg" 
 alt="google2ubuntu" width="480" height="360" border="5" /></a>
+
+## Documentation page
+I've wrote a documentation page with Sphinx
+[Documentation](http://benoitfragit.github.io/google2ubuntu/)
