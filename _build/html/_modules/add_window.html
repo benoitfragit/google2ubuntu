@@ -1,0 +1,670 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>add_window &mdash; google2ubuntu 1.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="google2ubuntu 1.0.8 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">google2ubuntu 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for add_window</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-  </span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Notify</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gdk</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gio</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
+<span class="kn">from</span> <span class="nn">ArgsWindow</span> <span class="kn">import</span> <span class="n">ArgsWindow</span>
+<span class="kn">from</span> <span class="nn">moduleSelection</span> <span class="kn">import</span> <span class="n">moduleSelection</span>
+<span class="kn">from</span> <span class="nn">HelpWindow</span> <span class="kn">import</span> <span class="n">HelpWindow</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">gettext</span>
+<span class="kn">import</span> <span class="nn">locale</span>
+<span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">as</span> <span class="nn">ET</span>
+
+<span class="n">gettext</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s">&#39;google2ubuntu&#39;</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span><span class="o">+</span><span class="s">&#39;/i18n/&#39;</span><span class="p">)</span>
+
+<span class="n">TARGET_TYPE_URI_LIST</span> <span class="o">=</span> <span class="mi">80</span>
+<span class="n">dnd_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">Gtk</span><span class="o">.</span><span class="n">TargetEntry</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&#39;text/uri-list&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">TARGET_TYPE_URI_LIST</span> <span class="p">)]</span>
+
+<div class="viewcode-block" id="add_window"><a class="viewcode-back" href="../code.html#add_window.add_window">[docs]</a><span class="k">class</span> <span class="nc">add_window</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    @description: This class allow the user to manage all his commands thanks</span>
+<span class="sd">    to a treeview. The grid generated will be added to the window</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Gtk.ListStore will hold data for the TreeView</span>
+        <span class="c"># Only the first two columns will be displayed</span>
+        <span class="c"># The third one is for sorting file sizes as numbers</span>
+        <span class="n">store</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ListStore</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="c"># Get the data - see below</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">populate_store</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+
+        <span class="c"># use a filter in order to filtering the data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree_filter</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">filter_new</span><span class="p">()</span>
+
+        <span class="c"># create the treeview</span>
+        <span class="n">treeview</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">TreeView</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree_filter</span><span class="p">)</span>
+        <span class="n">treeview</span><span class="o">.</span><span class="n">set_tooltip_text</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;list of commands&#39;</span><span class="p">))</span>
+        <span class="n">treeview</span><span class="o">.</span><span class="n">set_headers_visible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">treeview</span><span class="o">.</span><span class="n">set_enable_search</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">treeview</span><span class="o">.</span><span class="n">set_search_column</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">treeview</span><span class="o">.</span><span class="n">set_hexpand</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">treeview</span><span class="o">.</span><span class="n">set_vexpand</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="c"># The first TreeView column displays the data from</span>
+        <span class="c"># the first ListStore column (text=0), which contains</span>
+        <span class="c"># file names</span>
+        <span class="n">renderer_1</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">CellRendererText</span><span class="p">()</span>        
+        <span class="n">renderer_1</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="s">&quot;editable&quot;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+        <span class="n">renderer_1</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;edited&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">key_edited</span><span class="p">,</span><span class="n">store</span><span class="p">)</span>
+        <span class="n">column_1</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">TreeViewColumn</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;Keys&#39;</span><span class="p">),</span> <span class="n">renderer_1</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">column_1</span><span class="o">.</span><span class="n">set_min_width</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+        <span class="c"># Calling set_sort_column_id makes the treeViewColumn sortable</span>
+        <span class="c"># by clicking on its header. The column is sorted by</span>
+        <span class="c"># the ListStore column index passed to it </span>
+        <span class="c"># (in this case 0 - the first ListStore column) </span>
+        <span class="n">column_1</span><span class="o">.</span><span class="n">set_sort_column_id</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>        
+        <span class="n">treeview</span><span class="o">.</span><span class="n">append_column</span><span class="p">(</span><span class="n">column_1</span><span class="p">)</span>
+        
+        <span class="c"># xalign=1 right-aligns the file sizes in the second column</span>
+        <span class="n">renderer_2</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">CellRendererText</span><span class="p">(</span><span class="n">xalign</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">renderer_2</span><span class="o">.</span><span class="n">set_property</span><span class="p">(</span><span class="s">&quot;editable&quot;</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+        <span class="n">renderer_2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;edited&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">command_edited</span><span class="p">,</span><span class="n">store</span><span class="p">)</span>
+        <span class="c"># text=1 pulls the data from the second ListStore column</span>
+        <span class="c"># which contains filesizes in bytes formatted as strings</span>
+        <span class="c"># with thousand separators</span>
+        <span class="n">column_2</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">TreeViewColumn</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;Commands&#39;</span><span class="p">),</span> <span class="n">renderer_2</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c"># Mak the Treeview column sortable by the third ListStore column</span>
+        <span class="c"># which contains the actual file sizes</span>
+        <span class="n">column_2</span><span class="o">.</span><span class="n">set_sort_column_id</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">treeview</span><span class="o">.</span><span class="n">append_column</span><span class="p">(</span><span class="n">column_2</span><span class="p">)</span>
+        
+        <span class="c"># the label we use to show the selection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labelState</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Label</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labelState</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;Ready&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labelState</span><span class="o">.</span><span class="n">set_justify</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">Justification</span><span class="o">.</span><span class="n">LEFT</span><span class="p">)</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">labelState</span><span class="o">.</span><span class="n">set_halign</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">Align</span><span class="o">.</span><span class="n">START</span><span class="p">)</span> 
+
+        <span class="c"># when a row of the treeview is selected, it emits a signal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selection</span> <span class="o">=</span> <span class="n">treeview</span><span class="o">.</span><span class="n">get_selection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;changed&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_changed</span><span class="p">)</span>
+        
+        <span class="c"># Use ScrolledWindow to make the TreeView scrollable</span>
+        <span class="c"># Otherwise the TreeView would expand to show all items</span>
+        <span class="c"># Only allow vertical scrollbar</span>
+        <span class="n">scrolled_window</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ScrolledWindow</span><span class="p">()</span>
+        <span class="n">scrolled_window</span><span class="o">.</span><span class="n">set_policy</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">PolicyType</span><span class="o">.</span><span class="n">NEVER</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">PolicyType</span><span class="o">.</span><span class="n">AUTOMATIC</span><span class="p">)</span>
+        <span class="n">scrolled_window</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">treeview</span><span class="p">)</span>
+        <span class="n">scrolled_window</span><span class="o">.</span><span class="n">set_min_content_width</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+        <span class="n">scrolled_window</span><span class="o">.</span><span class="n">set_min_content_height</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>        
+        <span class="n">scrolled_window</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&#39;drag_data_received&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_drag_data_received</span><span class="p">,</span><span class="n">store</span><span class="p">)</span>
+        <span class="n">scrolled_window</span><span class="o">.</span><span class="n">drag_dest_set</span><span class="p">(</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">DestDefaults</span><span class="o">.</span><span class="n">MOTION</span> <span class="o">|</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">DestDefaults</span><span class="o">.</span><span class="n">HIGHLIGHT</span> <span class="o">|</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">DestDefaults</span><span class="o">.</span><span class="n">DROP</span><span class="p">,</span> <span class="n">dnd_list</span><span class="p">,</span> <span class="n">Gdk</span><span class="o">.</span><span class="n">DragAction</span><span class="o">.</span><span class="n">COPY</span><span class="p">)</span>
+                
+        <span class="c"># a toolbar created in the method create_toolbar (see below)</span>
+        <span class="n">toolbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_toolbar</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">set_hexpand</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="c"># define the visible func toolbar should be create</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree_filter</span><span class="o">.</span><span class="n">set_visible_func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">match_func</span><span class="p">)</span>
+
+        <span class="c"># Use a grid to add all item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Grid</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">set_row_spacing</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">toolbar</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">scrolled_window</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>    
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labelState</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>        
+
+<div class="viewcode-block" id="add_window.get_grid"><a class="viewcode-back" href="../code.html#add_window.add_window.get_grid">[docs]</a>    <span class="k">def</span> <span class="nf">get_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: get the grid</span>
+<span class="sd">        </span>
+<span class="sd">        @return a Gtk.Grid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span>
+</div>
+<div class="viewcode-block" id="add_window.on_drag_data_received"><a class="viewcode-back" href="../code.html#add_window.add_window.on_drag_data_received">[docs]</a>    <span class="k">def</span> <span class="nf">on_drag_data_received</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">widget</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Selection</span><span class="p">,</span> <span class="n">target_type</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span><span class="n">store</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: The treeview allows dnd so, if the user select a file then the process to </span>
+<span class="sd">        add a module start and finally a new line is added to the treeview. If the user select a </span>
+<span class="sd">        folder then a new line is added to the treeview with a command to open this folder</span>
+<span class="sd">        </span>
+<span class="sd">        @param: widget</span>
+<span class="sd">            the widget that support dnd</span>
+<span class="sd">        </span>
+<span class="sd">        @param: Selection</span>
+<span class="sd">            the item selected</span>
+<span class="sd">        </span>
+<span class="sd">        @param: store</span>
+<span class="sd">            the listStore to append the new entry</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">target_type</span> <span class="o">==</span> <span class="n">TARGET_TYPE_URI_LIST</span><span class="p">:</span>
+            <span class="n">uri</span><span class="o">=</span> <span class="n">Selection</span><span class="o">.</span><span class="n">get_uris</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">uri</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\r\n\x00</span><span class="s">&#39;</span><span class="p">)</span>
+            <span class="n">uris</span><span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;://&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">uris</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="p">:</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">uris</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">print</span> <span class="s">&#39;path&#39;</span><span class="p">,</span> <span class="n">path</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">addModule</span><span class="p">(</span><span class="n">store</span><span class="p">,</span><span class="n">path</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                    <span class="n">store</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;key sentence&#39;</span><span class="p">),</span><span class="s">&#39;xdg-open &#39;</span><span class="o">+</span><span class="n">path</span><span class="p">],</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;external&#39;</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="add_window.show_label"><a class="viewcode-back" href="../code.html#add_window.add_window.show_label">[docs]</a>    <span class="k">def</span> <span class="nf">show_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">action</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: Show or hide the bottom label</span>
+<span class="sd">        </span>
+<span class="sd">        @param: action</span>
+<span class="sd">            a string &#39;show&#39; or &#39;hide&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">etat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">labelState</span><span class="o">.</span><span class="n">get_parent</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s">&#39;show&#39;</span> <span class="ow">and</span> <span class="n">etat</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labelState</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">action</span> <span class="o">==</span> <span class="s">&#39;hide&#39;</span> <span class="ow">and</span> <span class="n">etat</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labelState</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="add_window.command_edited"><a class="viewcode-back" href="../code.html#add_window.add_window.command_edited">[docs]</a>    <span class="k">def</span> <span class="nf">command_edited</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span><span class="n">store</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: callback function called when the user edited the command</span>
+<span class="sd">        field of the treeview, we need to modify the liststore</span>
+<span class="sd">        </span>
+<span class="sd">        @param: widget</span>
+<span class="sd">            a Gtk.Widget</span>
+<span class="sd">        </span>
+<span class="sd">        @param: path</span>
+<span class="sd">            the way to find the modifiyed item</span>
+<span class="sd">        </span>
+<span class="sd">        @param: text</span>
+<span class="sd">            the new text</span>
+<span class="sd">        </span>
+<span class="sd">        @param: store</span>
+<span class="sd">            the listStore to modify</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">iters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_filter</span><span class="o">.</span><span class="n">get_iter</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_filter</span><span class="o">.</span><span class="n">convert_iter_to_child_iter</span><span class="p">(</span><span class="n">iters</span><span class="p">)</span>
+        <span class="n">store</span><span class="p">[</span><span class="n">path</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saveTree</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="add_window.key_edited"><a class="viewcode-back" href="../code.html#add_window.add_window.key_edited">[docs]</a>    <span class="k">def</span> <span class="nf">key_edited</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span><span class="n">store</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: same thing that the previous function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">iters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_filter</span><span class="o">.</span><span class="n">get_iter</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_filter</span><span class="o">.</span><span class="n">convert_iter_to_child_iter</span><span class="p">(</span><span class="n">iters</span><span class="p">)</span>        
+        <span class="n">store</span><span class="p">[</span><span class="n">path</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saveTree</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="add_window.on_changed"><a class="viewcode-back" href="../code.html#add_window.add_window.on_changed">[docs]</a>    <span class="k">def</span> <span class="nf">on_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: hide the bottom label when the selection change</span>
+<span class="sd">        </span>
+<span class="sd">        @param: selection</span>
+<span class="sd">            the selection from the treeview</span>
+<span class="sd">            </span>
+<span class="sd">        @return: a boolean </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># get the model and the iterator that points at the data in the model</span>
+        <span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="nb">iter</span><span class="p">)</span> <span class="o">=</span> <span class="n">selection</span><span class="o">.</span><span class="n">get_selected</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">iter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_label</span><span class="p">(</span><span class="s">&#39;hide&#39;</span><span class="p">)</span>          
+         
+        <span class="k">return</span> <span class="bp">True</span>
+
+    <span class="c"># a method to create the toolbar</span></div>
+<div class="viewcode-block" id="add_window.create_toolbar"><a class="viewcode-back" href="../code.html#add_window.add_window.create_toolbar">[docs]</a>    <span class="k">def</span> <span class="nf">create_toolbar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">store</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: create the toolbar of the main window</span>
+<span class="sd">        </span>
+<span class="sd">        @param: store</span>
+<span class="sd">            the listStore to connect to some buttons</span>
+<span class="sd">            </span>
+<span class="sd">        @return: a Gtk.toolbar</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># a toolbar</span>
+        <span class="n">toolbar</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Toolbar</span><span class="p">()</span>
+        <span class="c"># which is the primary toolbar of the application</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">set_icon_size</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">IconSize</span><span class="o">.</span><span class="n">LARGE_TOOLBAR</span><span class="p">)</span>    
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">ToolbarStyle</span><span class="o">.</span><span class="n">BOTH_HORIZ</span><span class="p">)</span>
+
+        <span class="c"># create a menu</span>
+        <span class="n">menu</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Menu</span><span class="p">()</span>
+        <span class="n">externe</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MenuItem</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;External commands&quot;</span><span class="p">))</span>
+        <span class="n">externe</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;activate&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">add_clicked</span><span class="p">,</span><span class="n">store</span><span class="p">,</span><span class="s">&#39;externe&#39;</span><span class="p">)</span>
+        <span class="n">externe</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">externe</span><span class="p">)</span>
+        <span class="n">interne</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MenuItem</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;Internal commands&quot;</span><span class="p">))</span>
+        <span class="n">interne</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;activate&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">add_clicked</span><span class="p">,</span><span class="n">store</span><span class="p">,</span><span class="s">&#39;interne&#39;</span><span class="p">)</span>
+        <span class="n">interne</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">interne</span><span class="p">)</span>        
+        <span class="n">module</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MenuItem</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;Module&quot;</span><span class="p">))</span>
+        <span class="n">module</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;activate&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">add_clicked</span><span class="p">,</span><span class="n">store</span><span class="p">,</span><span class="s">&#39;module&#39;</span><span class="p">)</span>
+        <span class="n">module</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">menu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+
+        <span class="c"># create a button for the &quot;add&quot; action, with a stock image</span>
+        <span class="n">add_button</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">MenuToolButton</span><span class="o">.</span><span class="n">new_from_stock</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">STOCK_ADD</span><span class="p">)</span>
+        <span class="n">add_button</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;Add&quot;</span><span class="p">))</span>
+        <span class="n">add_button</span><span class="o">.</span><span class="n">set_menu</span><span class="p">(</span><span class="n">menu</span><span class="p">)</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Image</span><span class="p">()</span>
+        <span class="n">image</span><span class="o">.</span><span class="n">set_from_stock</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">STOCK_ADD</span><span class="p">,</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">IconSize</span><span class="o">.</span><span class="n">BUTTON</span><span class="p">)</span>
+        <span class="c"># label is shown</span>
+        <span class="n">add_button</span><span class="o">.</span><span class="n">set_is_important</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="c"># insert the button at position in the toolbar</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">add_button</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="c"># show the button</span>
+        <span class="n">add_button</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;clicked&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_clicked</span><span class="p">,</span><span class="n">store</span><span class="p">,</span><span class="s">&#39;externe&#39;</span><span class="p">)</span>
+        <span class="n">add_button</span><span class="o">.</span><span class="n">set_tooltip_text</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;Add a new command&#39;</span><span class="p">))</span>
+        <span class="n">add_button</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+ 
+        <span class="c"># create a button for the &quot;try&quot; action</span>
+        <span class="n">try_button</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ToolButton</span><span class="o">.</span><span class="n">new_from_stock</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">STOCK_MEDIA_PLAY</span><span class="p">)</span>
+        <span class="n">try_button</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;Try&quot;</span><span class="p">))</span>
+        <span class="n">try_button</span><span class="o">.</span><span class="n">set_is_important</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">try_button</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">try_button</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;clicked&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">try_command</span><span class="p">,</span><span class="n">store</span><span class="p">)</span>
+        <span class="n">try_button</span><span class="o">.</span><span class="n">set_tooltip_text</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;Try this command&#39;</span><span class="p">))</span>
+        <span class="n">try_button</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+         
+        <span class="c"># create a button for the &quot;remove&quot; action</span>
+        <span class="n">remove_button</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ToolButton</span><span class="o">.</span><span class="n">new_from_stock</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">STOCK_REMOVE</span><span class="p">)</span>
+        <span class="n">remove_button</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;Remove&quot;</span><span class="p">))</span>
+        <span class="n">remove_button</span><span class="o">.</span><span class="n">set_is_important</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">remove_button</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">remove_button</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;clicked&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">remove_clicked</span><span class="p">,</span><span class="n">store</span><span class="p">)</span>
+        <span class="n">remove_button</span><span class="o">.</span><span class="n">set_tooltip_text</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;Remove this command&#39;</span><span class="p">))</span>
+        <span class="n">remove_button</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        
+        <span class="c"># create a button for the &quot;remove all&quot; action</span>
+        <span class="n">all_button</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ToolButton</span><span class="o">.</span><span class="n">new_from_stock</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">STOCK_STOP</span><span class="p">)</span>
+        <span class="n">all_button</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;Clean up&quot;</span><span class="p">))</span>
+        <span class="n">all_button</span><span class="o">.</span><span class="n">set_is_important</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">all_button</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">all_button</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;clicked&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">removeall_clicked</span><span class="p">,</span><span class="n">store</span><span class="p">)</span>
+        <span class="n">all_button</span><span class="o">.</span><span class="n">set_tooltip_text</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;Remove all commands&#39;</span><span class="p">))</span>
+        <span class="n">all_button</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+
+        <span class="c"># create a button for the &quot;Help&quot; action</span>
+        <span class="n">help_button</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ToolButton</span><span class="o">.</span><span class="n">new_from_stock</span><span class="p">(</span><span class="n">Gtk</span><span class="o">.</span><span class="n">STOCK_HELP</span><span class="p">)</span>
+        <span class="n">help_button</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;Help&quot;</span><span class="p">))</span>
+        <span class="n">help_button</span><span class="o">.</span><span class="n">set_is_important</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">help_button</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">help_button</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;clicked&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">help_clicked</span> <span class="p">)</span>
+        <span class="n">help_button</span><span class="o">.</span><span class="n">set_tooltip_text</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;Display help message&quot;</span><span class="p">))</span>
+        <span class="n">help_button</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+        
+        <span class="c"># add a separator</span>
+        <span class="n">separator</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ToolItem</span><span class="p">()</span>
+        <span class="n">separator</span><span class="o">.</span><span class="n">set_expand</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">separator</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+        
+        <span class="c"># create a combobox to store user choice</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">combo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_combobox</span><span class="p">()</span>
+        <span class="n">toolcombo</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ToolItem</span><span class="p">()</span>
+        <span class="n">toolcombo</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">combo</span><span class="p">)</span>
+        <span class="n">toolcombo</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="n">toolbar</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">toolcombo</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+
+        <span class="c"># return the complete toolbar</span>
+        <span class="k">return</span> <span class="n">toolbar</span>
+
+    <span class="c"># return a combobox to add to the toolbar</span></div>
+<div class="viewcode-block" id="add_window.get_combobox"><a class="viewcode-back" href="../code.html#add_window.add_window.get_combobox">[docs]</a>    <span class="k">def</span> <span class="nf">get_combobox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: get the combobox of the toolbar</span>
+<span class="sd">        </span>
+<span class="sd">        @return: a Gtk.Combobox</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># the data in the model, of type string</span>
+        <span class="n">listmodel</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ListStore</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="c"># append the data in the model</span>
+        <span class="n">listmodel</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;All&#39;</span><span class="p">)])</span>
+        <span class="n">listmodel</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;External&#39;</span><span class="p">)])</span>
+        <span class="n">listmodel</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;Internal&#39;</span><span class="p">)])</span>
+        <span class="n">listmodel</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;Modules&#39;</span><span class="p">)])</span>
+                        
+        <span class="c"># a combobox to see the data stored in the model</span>
+        <span class="n">combobox</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">ComboBox</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">listmodel</span><span class="p">)</span>
+        <span class="n">combobox</span><span class="o">.</span><span class="n">set_tooltip_text</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;What type of command to add&quot;</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;?&#39;</span><span class="p">)</span>
+
+        <span class="c"># a cellrenderer to render the text</span>
+        <span class="n">cell</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">CellRendererText</span><span class="p">()</span>
+
+        <span class="c"># pack the cell into the beginning of the combobox, allocating</span>
+        <span class="c"># no more space than needed</span>
+        <span class="n">combobox</span><span class="o">.</span><span class="n">pack_start</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+        <span class="c"># associate a property (&quot;text&quot;) of the cellrenderer (cell) to a column (column 0)</span>
+        <span class="c"># in the model used by the combobox</span>
+        <span class="n">combobox</span><span class="o">.</span><span class="n">add_attribute</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="s">&quot;text&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="c"># the first row is the active one by default at the beginning</span>
+        <span class="n">combobox</span><span class="o">.</span><span class="n">set_active</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c"># connect the signal emitted when a row is selected to the callback function</span>
+        <span class="n">combobox</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;changed&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_combochanged</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">combobox</span>
+    
+    <span class="c"># callback function attach to the combobox   </span></div>
+<div class="viewcode-block" id="add_window.on_combochanged"><a class="viewcode-back" href="../code.html#add_window.add_window.on_combochanged">[docs]</a>    <span class="k">def</span> <span class="nf">on_combochanged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">combo</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: the combobox is used to filter the treeview and switch</span>
+<span class="sd">        between different commands types</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree_filter</span><span class="o">.</span><span class="n">refilter</span><span class="p">()</span>
+
+    <span class="c"># filter function</span></div>
+<div class="viewcode-block" id="add_window.match_func"><a class="viewcode-back" href="../code.html#add_window.add_window.match_func">[docs]</a>    <span class="k">def</span> <span class="nf">match_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">iterr</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: we get the combobox selection and filter the treeview</span>
+<span class="sd">        data thanks to this selection.</span>
+<span class="sd">        </span>
+<span class="sd">        @return: a boolean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">combo</span><span class="o">.</span><span class="n">get_active</span><span class="p">()</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">iterr</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">iterr</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">query</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">elif</span> <span class="n">query</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;modules&#39;</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">field</span> <span class="ow">and</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;internal&#39;</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">field</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">elif</span> <span class="n">query</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;internal&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="n">field</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">elif</span> <span class="n">query</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;modules&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="n">field</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+</div>
+<div class="viewcode-block" id="add_window.add_clicked"><a class="viewcode-back" href="../code.html#add_window.add_window.add_clicked">[docs]</a>    <span class="k">def</span> <span class="nf">add_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">button</span><span class="p">,</span><span class="n">store</span><span class="p">,</span><span class="n">add_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: callback function called when the user want to add</span>
+<span class="sd">        command</span>
+<span class="sd">        </span>
+<span class="sd">        @param: button</span>
+<span class="sd">            the button that has to be clicked</span>
+<span class="sd">        </span>
+<span class="sd">        @param: store</span>
+<span class="sd">            the listStore that will contain a new entry</span>
+<span class="sd">        </span>
+<span class="sd">        @param: add_type</span>
+<span class="sd">            the type of the new command to add</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">add_type</span> <span class="o">==</span> <span class="s">&#39;externe&#39;</span><span class="p">:</span>
+            <span class="n">store</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;key sentence&#39;</span><span class="p">),</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;your command&#39;</span><span class="p">),</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;external&#39;</span><span class="p">)])</span>
+        <span class="k">elif</span> <span class="n">add_type</span> <span class="o">==</span> <span class="s">&#39;interne&#39;</span><span class="p">:</span>
+            <span class="n">store</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;key sentence&#39;</span><span class="p">),</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;word&#39;</span><span class="p">),</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;internal&#39;</span><span class="p">)])</span>
+        <span class="k">elif</span> <span class="n">add_type</span> <span class="o">==</span> <span class="s">&#39;module&#39;</span><span class="p">:</span>
+            <span class="n">mo</span> <span class="o">=</span> <span class="n">moduleSelection</span><span class="p">()</span>
+            <span class="n">module</span> <span class="o">=</span> <span class="n">mo</span><span class="o">.</span><span class="n">getModule</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">module</span> <span class="o">!=</span> <span class="s">&#39;-1&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">addModule</span><span class="p">(</span><span class="n">store</span><span class="p">,</span><span class="n">module</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">show_label</span><span class="p">(</span><span class="s">&#39;show&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">labelState</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;Error, you must choose a file&quot;</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="add_window.addModule"><a class="viewcode-back" href="../code.html#add_window.add_window.addModule">[docs]</a>    <span class="k">def</span> <span class="nf">addModule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">store</span><span class="p">,</span><span class="n">module</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: function that adds a module</span>
+<span class="sd">        </span>
+<span class="sd">        @param: store</span>
+<span class="sd">            the listStore that will receive a new entry</span>
+<span class="sd">        </span>
+<span class="sd">        @param: module</span>
+<span class="sd">            the path of the executable file of the module</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># ex: recup de weather.sh</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c"># ex: ~/.config/google2ubuntu/weather</span>
+        <span class="n">module</span><span class="o">=</span><span class="n">module</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">module</span><span class="o">+</span><span class="s">&quot;args&quot;</span>
+        <span class="c"># ex: recherche du fichier args</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">module</span><span class="o">+</span><span class="s">&#39;args&#39;</span><span class="p">):</span>
+            <span class="c"># ex: récupération de weather</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">store</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;key sentence&#39;</span><span class="p">),</span><span class="n">path</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="n">name</span><span class="p">,</span><span class="s">&#39;modules&#39;</span><span class="p">])</span>
+            <span class="c"># si le dossier de modules n&#39;existe pas</span>
+            <span class="n">module_path</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;/.config/google2ubuntu/modules/&#39;</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">module_path</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">module_path</span><span class="p">))</span>
+                <span class="c"># on copie le dossier du module    </span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;cp -r &#39;</span><span class="o">+</span><span class="n">module</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="n">module_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_label</span><span class="p">(</span><span class="s">&#39;show&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labelState</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;Error, args file missing&quot;</span><span class="p">))</span>
+            <span class="n">win</span> <span class="o">=</span> <span class="n">ArgsWindow</span><span class="p">(</span><span class="n">module</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">store</span><span class="p">)</span>        
+    </div>
+<div class="viewcode-block" id="add_window.remove_clicked"><a class="viewcode-back" href="../code.html#add_window.add_window.remove_clicked">[docs]</a>    <span class="k">def</span> <span class="nf">remove_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">button</span><span class="p">,</span><span class="n">store</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: callback function called wnen the user want to remove </span>
+<span class="sd">        a line of the treeview</span>
+<span class="sd">        </span>
+<span class="sd">        @param: button</span>
+<span class="sd">            the button that will be clicked</span>
+<span class="sd">        </span>
+<span class="sd">        @param: store</span>
+<span class="sd">            the listStore that is going to be modify</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">iters</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="o">.</span><span class="n">get_selected</span><span class="p">()</span>
+            <span class="nb">iter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_filter</span><span class="o">.</span><span class="n">convert_iter_to_child_iter</span><span class="p">(</span><span class="n">iters</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">iter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">show_label</span><span class="p">(</span><span class="s">&#39;show&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">labelState</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;Remove&#39;</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;: &#39;</span><span class="o">+</span><span class="n">store</span><span class="p">[</span><span class="nb">iter</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="n">store</span><span class="p">[</span><span class="nb">iter</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> 
+                <span class="n">store</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">saveTree</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;Select a title to remove&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Empty list&quot;</span>
+</div>
+<div class="viewcode-block" id="add_window.removeall_clicked"><a class="viewcode-back" href="../code.html#add_window.add_window.removeall_clicked">[docs]</a>    <span class="k">def</span> <span class="nf">removeall_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">button</span><span class="p">,</span><span class="n">store</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: Same as the past function but remove all lines of the </span>
+<span class="sd">        treeview</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># if there is still an entry in the model</span>
+        <span class="n">old</span> <span class="o">=</span> <span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/.config/google2ubuntu/google2ubuntu.xml&#39;</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/.config/google2ubuntu/.google2ubuntu.bak&#39;</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">old</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">old</span><span class="p">,</span><span class="n">new</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c"># remove all the entries in the model</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labelState</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;Remove all commands&#39;</span><span class="p">))</span>               
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">store</span><span class="p">)):</span>   
+                <span class="nb">iter</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_iter</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">store</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">saveTree</span><span class="p">(</span><span class="n">store</span><span class="p">)</span>   
+        <span class="k">print</span> <span class="s">&quot;Empty list&quot;</span>        
+</div>
+<div class="viewcode-block" id="add_window.try_command"><a class="viewcode-back" href="../code.html#add_window.add_window.try_command">[docs]</a>    <span class="k">def</span> <span class="nf">try_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">button</span><span class="p">,</span><span class="n">store</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: try a command (bash)</span>
+<span class="sd">        </span>
+<span class="sd">        @param: button</span>
+<span class="sd">            the button that has to be clicked</span>
+<span class="sd">        </span>
+<span class="sd">        @param: store</span>
+<span class="sd">            the listStore</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="nb">iter</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="o">.</span><span class="n">get_selected</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">iter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="nb">iter</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">Type</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="nb">iter</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;internal&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">Type</span> <span class="ow">and</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;modules&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">Type</span><span class="p">:</span>
+                <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">output</span><span class="p">,</span><span class="n">error</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">show_label</span><span class="p">(</span><span class="s">&#39;show&#39;</span><span class="p">)</span>       
+                <span class="bp">self</span><span class="o">.</span><span class="n">labelState</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">output</span><span class="o">+</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">+</span><span class="n">error</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="add_window.help_clicked"><a class="viewcode-back" href="../code.html#add_window.add_window.help_clicked">[docs]</a>    <span class="k">def</span> <span class="nf">help_clicked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">button</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: show the help window</span>
+<span class="sd">        </span>
+<span class="sd">        @param: button</span>
+<span class="sd">            the button that has to be clicked</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">win</span> <span class="o">=</span> <span class="n">HelpWindow</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="add_window.populate_store"><a class="viewcode-back" href="../code.html#add_window.add_window.populate_store">[docs]</a>    <span class="k">def</span> <span class="nf">populate_store</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">):</span>    
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: load the treeview from the google2ubuntu.xml file or</span>
+<span class="sd">        from the default.xml file</span>
+<span class="sd">        </span>
+<span class="sd">        @param: store</span>
+<span class="sd">            the listStore that will be modify</span>
+<span class="sd">        &quot;&quot;&quot;</span>    
+        <span class="n">config</span> <span class="o">=</span> <span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/.config/google2ubuntu/google2ubuntu.xml&#39;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;librairy&#39;</span><span class="p">)</span>
+        <span class="n">lang</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">getlocale</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="o">+</span><span class="s">&#39;config/&#39;</span><span class="o">+</span><span class="n">lang</span><span class="p">)</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="n">lang</span><span class="o">=</span><span class="s">&#39;en_EN&#39;</span>        
+            
+        <span class="n">default</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span><span class="s">&#39;config/&#39;</span><span class="o">+</span><span class="n">lang</span><span class="o">+</span><span class="s">&#39;/default.xml&#39;</span>        
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+                <span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/.config/google2ubuntu&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/.config/google2ubuntu&#39;</span><span class="p">)</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;cp -r /usr/share/google2ubuntu/modules &#39;</span><span class="o">+</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/.config/google2ubuntu&#39;</span><span class="p">)</span>    
+                
+                <span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">default</span><span class="p">)</span>
+            
+            <span class="n">root</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">root</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s">&#39;entry&#39;</span><span class="p">):</span>
+                <span class="n">Type</span><span class="o">=</span><span class="n">entry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span>
+                <span class="n">Key</span><span class="o">=</span><span class="n">entry</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;key&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+                <span class="n">Command</span><span class="o">=</span><span class="n">entry</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&#39;command&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+                <span class="n">store</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">Key</span><span class="p">,</span> <span class="n">Command</span><span class="p">,</span> <span class="n">Type</span><span class="p">])</span>  
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&#39;Error while reading config file&#39;</span>
+</div>
+<div class="viewcode-block" id="add_window.saveTree"><a class="viewcode-back" href="../code.html#add_window.add_window.saveTree">[docs]</a>    <span class="k">def</span> <span class="nf">saveTree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">store</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: save the treeview in the google2ubuntu.xml file</span>
+<span class="sd">        </span>
+<span class="sd">        @param: store</span>
+<span class="sd">            the listStore attach to the treeview</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># if there is still an entry in the model</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree_filter</span><span class="o">.</span><span class="n">get_model</span><span class="p">()</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/.config/google2ubuntu/google2ubuntu.xml&#39;</span>     
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">config</span><span class="p">)):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">config</span><span class="p">))</span>            
+            
+            <span class="n">root</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s">&quot;data&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">store</span><span class="p">)):</span>
+                    <span class="nb">iter</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_iter</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">model</span><span class="p">[</span><span class="nb">iter</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span> <span class="ow">and</span> <span class="n">model</span><span class="p">[</span><span class="nb">iter</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">model</span><span class="p">[</span><span class="nb">iter</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;|&#39;</span><span class="p">):</span>
+                            <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+                            <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;*&#39;</span><span class="p">,</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+                            <span class="n">Type</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s">&quot;entry&quot;</span><span class="p">)</span>
+                            <span class="n">Type</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span><span class="n">model</span><span class="p">[</span><span class="nb">iter</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+                            <span class="n">Key</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">Type</span><span class="p">,</span> <span class="s">&quot;key&quot;</span><span class="p">)</span>
+                            <span class="n">Key</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="s">&quot;utf-8&quot;</span><span class="p">)</span>
+                            <span class="n">Command</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">SubElement</span><span class="p">(</span><span class="n">Type</span><span class="p">,</span> <span class="s">&quot;command&quot;</span><span class="p">)</span>
+                            <span class="n">Command</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="nb">unicode</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="nb">iter</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="s">&quot;utf-8&quot;</span><span class="p">)</span>
+                
+            <span class="n">tree</span> <span class="o">=</span> <span class="n">ET</span><span class="o">.</span><span class="n">ElementTree</span><span class="p">(</span><span class="n">root</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">config</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">,</span><span class="n">xml_declaration</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_label</span><span class="p">(</span><span class="s">&#39;show&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labelState</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;Save commands&#39;</span><span class="p">))</span>   
+        <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Unable to write the file&quot;</span>    </div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/icons.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">google2ubuntu 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Benoit Franquet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

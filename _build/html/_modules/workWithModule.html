@@ -1,0 +1,157 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>workWithModule &mdash; google2ubuntu 1.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="google2ubuntu 1.0.8 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">google2ubuntu 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for workWithModule</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Googletts</span> <span class="kn">import</span> <span class="n">tts</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">gettext</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">subprocess</span><span class="o">,</span> <span class="nn">unicodedata</span>
+
+<span class="n">gettext</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s">&#39;google2ubuntu&#39;</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span><span class="o">+</span><span class="s">&#39;/i18n/&#39;</span><span class="p">)</span>
+
+<span class="c"># Permet de faire appel aux modules    </span>
+<div class="viewcode-block" id="workWithModule"><a class="viewcode-back" href="../code.html#workWithModule.workWithModule">[docs]</a><span class="k">class</span> <span class="nc">workWithModule</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    @description: This class allows you to call external modules. If a call</span>
+<span class="sd">    for an external module is detected by the parser then this class check</span>
+<span class="sd">    the module&#39;s config file before extracting modules&#39;s parameter from the</span>
+<span class="sd">    text you have pronounced</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">module_path</span><span class="p">,</span><span class="n">module_name</span><span class="p">,</span><span class="n">text</span><span class="p">,</span><span class="n">PID</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pid</span> <span class="o">=</span> <span class="n">PID</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c"># Lecture du fichier de configuration du module</span>
+            <span class="n">argsfile</span><span class="o">=</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;/.config/google2ubuntu/modules/&#39;</span><span class="o">+</span><span class="n">module_path</span><span class="o">+</span><span class="s">&#39;/args&#39;</span><span class="p">;</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">argsfile</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+            <span class="n">ligne</span><span class="o">=</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n\r</span><span class="s">&#39;</span><span class="p">)</span>  
+            <span class="n">linker</span><span class="o">=</span><span class="nb">unicode</span><span class="p">(</span><span class="n">ligne</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span><span class="s">&quot;utf-8&quot;</span><span class="p">)</span>
+            <span class="n">ligne</span><span class="o">=</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n\r</span><span class="s">&#39;</span><span class="p">)</span>              
+            <span class="n">plus</span><span class="o">=</span><span class="n">ligne</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> 
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>  
+
+            <span class="c"># on utilise un mot de liaison pour séparer l&#39;appel du module</span>
+            <span class="c"># des arguments à lui envoyer</span>
+            <span class="c"># ex: Quelle est la météo à Paris</span>
+            <span class="c">#     Quelle est la météo à Issy les moulineaux</span>
+            <span class="c">#</span>
+            <span class="c"># Le mot de liaison peut être &quot; à &quot;</span>
+            <span class="n">sentence</span><span class="o">=</span><span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="n">sentence</span><span class="o">=</span><span class="n">unicodedata</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s">&#39;NFKD&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;ASCII&#39;</span><span class="p">,</span> <span class="s">&#39;ignore&#39;</span><span class="p">)</span>
+            <span class="n">sentence</span><span class="o">=</span><span class="n">sentence</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>  
+       
+            <span class="k">if</span> <span class="n">sentence</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">linker</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">param</span> <span class="o">=</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">linker</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">)</span>
+                
+                <span class="c"># on regarde si l&#39;utilisateur veut transformer les &#39; &#39; en +</span>
+                
+                <span class="k">if</span> <span class="n">plus</span> <span class="o">==</span> <span class="s">&#39;1&#39;</span><span class="p">:</span>
+                    <span class="n">param</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">,</span><span class="s">&#39;+&#39;</span><span class="p">)</span>
+                
+                <span class="c"># commande qui sera exécutée    </span>
+                
+                <span class="n">execute</span> <span class="o">=</span> <span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/.config/google2ubuntu/modules/&#39;</span><span class="o">+</span><span class="n">module_path</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span><span class="n">module_name</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="s">&#39;&quot;&#39;</span><span class="o">+</span><span class="n">param</span><span class="o">+</span><span class="s">&#39;&quot;&#39;</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">execute</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">message</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;you didn&#39;t say the linking word&quot;</span><span class="p">)</span>   
+                <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;echo &quot;&#39;</span><span class="o">+</span><span class="n">message</span><span class="o">+</span><span class="s">&#39;&quot; &gt; /tmp/g2u_error_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">pid</span><span class="p">)</span>      
+            
+        <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;args file missing&#39;</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;echo &quot;&#39;</span><span class="o">+</span><span class="n">message</span><span class="o">+</span><span class="s">&#39;&quot; &gt; /tmp/g2u_error_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">pid</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> </div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/icons.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">google2ubuntu 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Benoit Franquet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

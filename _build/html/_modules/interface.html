@@ -1,0 +1,181 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>interface &mdash; google2ubuntu 1.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="google2ubuntu 1.0.8 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">google2ubuntu 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for interface</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">subprocess</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">unicodedata</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">gettext</span><span class="o">,</span> <span class="nn">locale</span>
+
+<span class="kn">from</span> <span class="nn">Googletts</span> <span class="kn">import</span> <span class="n">tts</span>
+<span class="kn">from</span> <span class="nn">stringParser</span> <span class="kn">import</span> <span class="n">stringParser</span>
+
+<span class="n">lang</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">getlocale</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">gettext</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s">&#39;google2ubuntu&#39;</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span><span class="o">+</span><span class="s">&#39;/i18n/&#39;</span><span class="p">)</span>
+
+<span class="c"># La classe interface permet de lancer l&#39;enregistrement et de communiquer</span>
+<span class="c"># avec Google</span>
+<div class="viewcode-block" id="interface"><a class="viewcode-back" href="../code.html#interface.interface">[docs]</a><span class="k">class</span> <span class="nc">interface</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    @description: This class start the osd server, then start recording your voice before</span>
+<span class="sd">    asking Google for the translation. Then, the result is parsing in order to</span>
+<span class="sd">    execute the associated action</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Initialisation des notifications</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PID</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;librairy&#39;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;rm /tmp/g2u_*_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">PID</span><span class="o">+</span><span class="s">&#39; 2&gt;/dev/null&#39;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;python &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">+</span><span class="s">&#39;librairy/osd.py &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">PID</span><span class="o">+</span><span class="s">&#39; &amp;&#39;</span><span class="p">)</span>
+
+        <span class="c"># on joue un son pour signaler le démarrage</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;play &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">+</span><span class="s">&#39;resources/sound.wav &amp;&#39;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;&gt; /tmp/g2u_start_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">PID</span><span class="p">)</span>
+
+        <span class="c"># On lance le script d&#39;enregistrement pour acquérir la voix pdt 5s</span>
+        <span class="n">command</span> <span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">+</span><span class="s">&#39;record.sh &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">PID</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">output</span><span class="p">,</span><span class="n">error</span>  <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendto</span><span class="p">()</span>    
+
+<div class="viewcode-block" id="interface.sendto"><a class="viewcode-back" href="../code.html#interface.interface.sendto">[docs]</a>    <span class="k">def</span> <span class="nf">sendto</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @function: Send the flac file to Google and start the parser</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># lecture du fichier audio</span>
+        <span class="n">filename</span><span class="o">=</span><span class="s">&#39;/tmp/voix_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">PID</span><span class="o">+</span><span class="s">&#39;.flac&#39;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        
+        <span class="c"># suppression du fichier audio</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s">&#39;/tmp/voix_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">PID</span><span class="o">+</span><span class="s">&#39;.flac&#39;</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;rm /tmp/voix_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">PID</span><span class="o">+</span><span class="s">&#39;.flac&#39;</span><span class="p">)</span>
+        
+        <span class="c"># fichier de configuration</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;/.config/google2ubuntu/google2ubuntu.xml&#39;</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">+</span><span class="s">&#39;config/&#39;</span><span class="o">+</span><span class="n">lang</span><span class="o">+</span><span class="s">&#39;/default.xml&#39;</span>
+        
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+            <span class="n">config_file</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/.config/google2ubuntu&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/.config/google2ubuntu&#39;</span><span class="p">)</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;cp -r /usr/share/google2ubuntu/modules &#39;</span><span class="o">+</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;/.config/google2ubuntu&#39;</span><span class="p">)</span>    
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">default</span><span class="p">)</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+                <span class="n">default</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">+</span><span class="s">&#39;config/en_EN/default.xml&#39;</span>
+                
+            <span class="n">config_file</span> <span class="o">=</span> <span class="n">default</span>
+        
+        <span class="k">print</span> <span class="s">&#39;config file:&#39;</span><span class="p">,</span> <span class="n">config_file</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c"># envoie une requête à Google</span>
+            <span class="n">req</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s">&#39;https://www.google.com/speech-api/v1/recognize?xjerr=1&amp;client=chromium&amp;lang=&#39;</span><span class="o">+</span><span class="n">lang</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;Content-type&#39;</span><span class="p">:</span> <span class="s">&#39;audio/x-flac; rate=16000&#39;</span><span class="p">})</span>  
+            <span class="c"># retour de la requête</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+            
+            <span class="c"># parsing du retour</span>
+            <span class="n">text</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">read</span><span class="p">())[</span><span class="s">&#39;hypotheses&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;utterance&#39;</span><span class="p">]</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;echo &quot;&#39;</span><span class="o">+</span><span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;&quot; &gt; /tmp/g2u_result_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">PID</span><span class="p">)</span>
+
+            <span class="c"># parsing du résultat pour trouver l&#39;action</span>
+            <span class="n">sp</span> <span class="o">=</span> <span class="n">stringParser</span><span class="p">(</span><span class="n">text</span><span class="p">,</span><span class="n">config_file</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">PID</span><span class="p">)</span>                 
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;unable to translate&#39;</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;echo &quot;&#39;</span><span class="o">+</span><span class="n">message</span><span class="o">+</span><span class="s">&#39;&quot; &gt; /tmp/g2u_error_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">PID</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/icons.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">google2ubuntu 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Benoit Franquet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

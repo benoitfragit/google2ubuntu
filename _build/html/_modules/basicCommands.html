@@ -1,0 +1,185 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>basicCommands &mdash; google2ubuntu 1.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="google2ubuntu 1.0.8 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">google2ubuntu 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for basicCommands</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gdk</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">Googletts</span> <span class="kn">import</span> <span class="n">tts</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">gettext</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">subprocess</span>
+
+<span class="n">gettext</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s">&#39;google2ubuntu&#39;</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span><span class="o">+</span><span class="s">&#39;/i18n/&#39;</span><span class="p">)</span>
+
+<span class="c"># Permet de faire appel aux fonctions basiques</span>
+<div class="viewcode-block" id="basicCommands"><a class="viewcode-back" href="../code.html#basicCommands.basicCommands">[docs]</a><span class="k">class</span> <span class="nc">basicCommands</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    @description: Called when the user wants to start an internal command</span>
+<span class="sd">    for the moment there is 3 internal commands:</span>
+<span class="sd">    </span>
+<span class="sd">    * time </span>
+<span class="sd">    * clipboard</span>
+<span class="sd">    * hour</span>
+<span class="sd">    </span>
+<span class="sd">    @param text</span>
+<span class="sd">        name of the function to launch</span>
+<span class="sd">        </span>
+<span class="sd">    @param PID</span>
+<span class="sd">        the program&#39;s pid to synchronize osd notification</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">text</span><span class="p">,</span><span class="n">PID</span><span class="p">):</span>
+        <span class="c"># suivant le paramètre reçu, on exécute une action</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pid</span> <span class="o">=</span> <span class="n">PID</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;time&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">getTime</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">text</span> <span class="o">==</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;power&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">getPower</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">text</span> <span class="o">==</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;clipboard&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">read_clipboard</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;no action found&quot;</span>
+    
+<div class="viewcode-block" id="basicCommands.read_clipboard"><a class="viewcode-back" href="../code.html#basicCommands.basicCommands.read_clipboard">[docs]</a>    <span class="k">def</span> <span class="nf">read_clipboard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: A function to make google2ubuntu reads the selected</span>
+<span class="sd">        text</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">clipboard</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">Clipboard</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">Gdk</span><span class="o">.</span><span class="n">SELECTION_PRIMARY</span><span class="p">)</span>
+
+        <span class="n">text</span> <span class="o">=</span> <span class="n">clipboard</span><span class="o">.</span><span class="n">wait_for_text</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;&#39;&quot;</span><span class="p">,</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+            <span class="k">print</span> <span class="n">text</span>
+            <span class="n">tts</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tts</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;Nothing in the clipboard&#39;</span><span class="p">))</span>
+    </div>
+<div class="viewcode-block" id="basicCommands.getTime"><a class="viewcode-back" href="../code.html#basicCommands.basicCommands.getTime">[docs]</a>    <span class="k">def</span> <span class="nf">getTime</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: a function that let google2ubuntu read and display</span>
+<span class="sd">        the current timme</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">var</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&#39;%H:%M&#39;</span><span class="p">,</span><span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">())</span>
+        <span class="n">hour</span><span class="o">=</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">minute</span><span class="o">=</span><span class="n">var</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        
+        <span class="n">message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;it is&#39;</span><span class="p">)</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="n">hour</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;hour&#39;</span><span class="p">)</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="n">minute</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;minute&#39;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;echo &quot;&#39;</span><span class="o">+</span><span class="n">var</span><span class="o">+</span><span class="s">&#39;&quot; &gt; /tmp/g2u_display_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">pid</span><span class="p">)</span>
+        <span class="n">tts</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+                    </div>
+<div class="viewcode-block" id="basicCommands.getPower"><a class="viewcode-back" href="../code.html#basicCommands.basicCommands.getPower">[docs]</a>    <span class="k">def</span> <span class="nf">getPower</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: a function that let google2ubuntu read and display</span>
+<span class="sd">        the current power state</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="s">&quot;acpi -b&quot;</span>
+        <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">output</span><span class="p">,</span><span class="n">error</span>  <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+        <span class="c">#parsing output</span>
+        <span class="k">if</span> <span class="n">output</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s">&#39;Battery&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">pcent</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">rtime</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)[</span><span class="mi">4</span><span class="p">]</span>
+            
+            <span class="k">if</span> <span class="n">output</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s">&#39;Charging&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;Charging&#39;</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;: &#39;</span><span class="o">+</span><span class="n">pcent</span><span class="o">+</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">+</span><span class="n">rtime</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;before charging&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;Discharging&#39;</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;: &#39;</span><span class="o">+</span><span class="n">pcent</span><span class="o">+</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">+</span><span class="n">rtime</span><span class="o">+</span><span class="s">&#39; &#39;</span><span class="o">+</span><span class="n">_</span><span class="p">(</span><span class="s">&#39;remaining&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s">&#39;battery is not plugged&#39;</span><span class="p">)</span>
+        
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;echo &quot;&#39;</span><span class="o">+</span><span class="n">message</span><span class="o">+</span><span class="s">&#39;&quot; &gt; /tmp/g2u_display_&#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">pid</span><span class="p">)</span>
+        <span class="n">tts</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/icons.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">google2ubuntu 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Benoit Franquet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

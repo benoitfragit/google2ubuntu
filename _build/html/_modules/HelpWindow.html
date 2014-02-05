@@ -1,0 +1,148 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>HelpWindow &mdash; google2ubuntu 1.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="google2ubuntu 1.0.8 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">google2ubuntu 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for HelpWindow</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-  </span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gtk</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Notify</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gdk</span>
+<span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">Gio</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">expanduser</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">subprocess</span><span class="o">,</span> <span class="nn">gettext</span>
+
+<span class="n">gettext</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s">&#39;google2ubuntu&#39;</span><span class="p">,</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span><span class="o">+</span><span class="s">&#39;/i18n/&#39;</span><span class="p">)</span>
+
+<span class="c"># gère l&#39;apparition de le fenêtre d&#39;aide</span>
+<div class="viewcode-block" id="HelpWindow"><a class="viewcode-back" href="../code.html#HelpWindow.HelpWindow">[docs]</a><span class="k">class</span> <span class="nc">HelpWindow</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    @description: Diaplay an help window</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c">#a  Gtk.AboutDialog</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aboutdialog</span> <span class="o">=</span> <span class="n">Gtk</span><span class="o">.</span><span class="n">AboutDialog</span><span class="p">()</span>
+
+        <span class="c"># lists of authors and documenters (will be used later)</span>
+        <span class="n">authors</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Franquet Benoit&quot;</span><span class="p">]</span>
+        <span class="n">documenters</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Franquet Benoit&quot;</span><span class="p">]</span>
+
+        <span class="c"># we fill in the aboutdialog</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aboutdialog</span><span class="o">.</span><span class="n">set_program_name</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;Help Google2Ubuntu&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aboutdialog</span><span class="o">.</span><span class="n">set_copyright</span><span class="p">(</span><span class="s">&quot;Copyright </span><span class="se">\xc2\xa9</span><span class="s"> 2014 Franquet Benoit&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aboutdialog</span><span class="o">.</span><span class="n">set_authors</span><span class="p">(</span><span class="n">authors</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aboutdialog</span><span class="o">.</span><span class="n">set_documenters</span><span class="p">(</span><span class="n">documenters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aboutdialog</span><span class="o">.</span><span class="n">set_website</span><span class="p">(</span><span class="s">&quot;http://forum.ubuntu-fr.org/viewtopic.php?id=804211&amp;p=1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aboutdialog</span><span class="o">.</span><span class="n">set_website_label</span><span class="p">(</span><span class="s">&quot;http://forum.ubuntu-fr.org/viewtopic.php?id=804211&amp;p=1&quot;</span><span class="p">)</span>
+
+        <span class="c"># we do not want to show the title, which by default would be &quot;About AboutDialog Example&quot;</span>
+        <span class="c"># we have to reset the title of the messagedialog window after setting the program name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aboutdialog</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="c"># to close the aboutdialog when &quot;close&quot; is clicked we connect the</span>
+        <span class="c"># &quot;response&quot; signal to on_close</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aboutdialog</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">&quot;response&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_close</span><span class="p">)</span>
+        <span class="c"># show the aboutdialog</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aboutdialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        
+    <span class="c"># destroy the aboutdialog</span>
+<div class="viewcode-block" id="HelpWindow.on_close"><a class="viewcode-back" href="../code.html#HelpWindow.HelpWindow.on_close">[docs]</a>    <span class="k">def</span> <span class="nf">on_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">parameter</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @description: function called when the user wants to close the window</span>
+<span class="sd">        </span>
+<span class="sd">        @param: action</span>
+<span class="sd">            the window to close</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">action</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/icons.png" alt="Logo"/>
+            </a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">google2ubuntu 1.0.8 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Benoit Franquet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
