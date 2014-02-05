@@ -1,0 +1,223 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Project specification &mdash; google2ubuntu 1.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="google2ubuntu 1.0.8 documentation" href="index.html" />
+    <link rel="next" title="google2ubuntu documentation" href="code.html" />
+    <link rel="prev" title="Tutorial for google2ubuntu" href="tutorial.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="code.html" title="google2ubuntu documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Tutorial for google2ubuntu"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">google2ubuntu 1.0.8 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="project-specification">
+<h1>Project specification<a class="headerlink" href="#project-specification" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="commands-storage">
+<h2>Commands&#8217; storage<a class="headerlink" href="#commands-storage" title="Permalink to this headline">¶</a></h2>
+<p>By default, google2ubuntu comes with several commands stored in a default xml file:</p>
+<p>/usr/share/google2ubuntu/config/&lt;your_language&gt;/default.xml</p>
+<p>For the moment, there is a default file for French and English users, if your language is not currently supported the default voice will be English.</p>
+<p>At the first, launch, a module folder is created in: ~/.config/google2ubuntu</p>
+<p>The first time you add, modify or rmove a command, your commands&#8217; configuration will be also stored in this folder: ~/.config/google2ubuntu/google2ubuntu.xml</p>
+</div>
+<div class="section" id="commands-description">
+<h2>Commands&#8217; description<a class="headerlink" href="#commands-description" title="Permalink to this headline">¶</a></h2>
+<p>A command is a pair of <cite>key</cite> and <cite>action</cite>. Each <cite>key</cite> referes to an <cite>action</cite>. Many <cite>key</cite> can leads to the same <cite>action</cite>.
+To define a command, you do not need to make explicitaly all the word you will tell, I mean, if I want to create the command:</p>
+<ul class="simple">
+<li>key: open my documents</li>
+<li>action: xdg-open ~/Documents</li>
+</ul>
+<p>The word <cite>my</cite> is not usefull so, I will put:</p>
+<ul class="simple">
+<li>key: open documents</li>
+<li>action: xdg-open ~/Documents</li>
+</ul>
+<p>Don&#8217;t care about capital letter, because the program automatically put the text in lowercase.</p>
+<p>I&#8217;ve implemented different types of command:</p>
+<ul class="simple">
+<li><strong>external commands</strong></li>
+<li><strong>internal commands</strong></li>
+<li><strong>modules</strong></li>
+</ul>
+<div class="section" id="external-commands">
+<h3>External commands<a class="headerlink" href="#external-commands" title="Permalink to this headline">¶</a></h3>
+<p>External commands are basically commands that you can run in your terminal:</p>
+<p><cite>exo-open &#8211;launch MailReader</cite></p>
+<p>If you want to add an external command, just click on the &#8220;Add&#8221; button. Then find the newline and replace &#8220;your key&#8221; by the key you want to associate to the command and replace &#8220;your command&#8221; by the action.</p>
+</div>
+<div class="section" id="internal-commands">
+<h3>Internal commands<a class="headerlink" href="#internal-commands" title="Permalink to this headline">¶</a></h3>
+<p>Internal commands are commands that I&#8217;ve implemented in google2ubuntu, for the moment there is 3 internal commands:</p>
+<ul class="simple">
+<li>time # show the time</li>
+<li>power # show and say the state of the battery</li>
+<li>clipboard # read the text selected by the cursor</li>
+</ul>
+<p>If you want to add an internal command, open the little menu near the &#8220;Add&#8221; button and select &#8220;internal&#8221;. Then replace &#8220;your key&#8221; by the &#8220;key&#8221; you will pronounce to call this command and replace &#8220;word&#8221; by one of those 3 actions</p>
+</div>
+<div class="section" id="modules">
+<h3>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h3>
+<p>In order to extand google2ubuntu very easily I&#8217;ve implemented a system of menu that let developers adds their own scripts in google2ubuntu. Besides, all modules will receive the text tha you pronouce in parameter</p>
+<div class="section" id="module-s-description">
+<h4>Module&#8217;s description<a class="headerlink" href="#module-s-description" title="Permalink to this headline">¶</a></h4>
+<p>A module is composed of 2 files, an executable file and a config file named &#8220;args&#8221; placed both in the same folder.
+The args file contains 2 fields:</p>
+<ul class="simple">
+<li><strong>linker</strong> a vord that let us distinguish the call to the module and the parameter we have to send to this module. For example, if I want to configure the module google, I can choose the linker &#8220;google &#8221; because when I make a research I say: &#8220;google who is barack obama&#8221; So, the google module will be call with <cite>who is barack obama</cite> in parameter.</li>
+<li><strong>spacebyplus</strong> If spacebyplus=1 then space are replace py +.</li>
+</ul>
+</div>
+<div class="section" id="how-to-add-a-module">
+<h4>How to add a module<a class="headerlink" href="#how-to-add-a-module" title="Permalink to this headline">¶</a></h4>
+<p>If you want to add a script, but this script doesn&#8217;t have an args file don&#8217;t worry, the gui will help you to create one and will place the module in :</p>
+<p>&#8220;~/.config/google2ubuntu/modules&#8221;</p>
+<p>You can add a module by opening the menu near to the &#8220;Add&#8221; button then selecting the executable files of the module.
+Yu can also simply drag&amp;drop this executable on the treeview and the module will be automatically added. When you add a new module you don&#8217;t have to modify the <cite>action</cite> field in the newline. You just have to modify the <cite>key</cite> field in the gui.</p>
+</div>
+<div class="section" id="already-available">
+<h4>Already available<a class="headerlink" href="#already-available" title="Permalink to this headline">¶</a></h4>
+<p>google2ubuntu already comes with 6 modules:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/benoitfragit/google2ubuntu/tree/master/modules/google">plugin google</a> This plugin allows you to make search on Google and open the web browser on the search page you ask for.</li>
+<li><a class="reference external" href="https://github.com/benoitfragit/google2ubuntu/tree/master/modules/wikipedia">plugin wikipedia</a> This plugin allows you to make search on Wikipedia</li>
+<li><a class="reference external" href="https://github.com/benoitfragit/google2ubuntu/tree/master/modules/youtube">plugin youtube</a> This plugin allows you to make search on YouTube</li>
+<li><a class="reference external" href="https://github.com/benoitfragit/google2ubuntu/tree/master/modules/way">plugin way</a> This plugin allows you to find a way between to place on Google map. You have to pronounce your place like this: &#8220;way between Pars and Marseille&#8221;. So your locations need to be between the word &#8220;between&#8221; and &#8220;and&#8221;</li>
+<li><a class="reference external" href="https://github.com/benoitfragit/google2ubuntu/tree/master/modules/weather">plugin weather</a> This plugin allows you to ask Google to show you the weather for a city</li>
+<li><a class="reference external" href="https://github.com/benoitfragit/google2ubuntu/tree/master/modules/meaning">plugin meaning</a> This plugin allows you to ask to the meaning of a word, for exemple if I ask: &#8220;meaning barack obama&#8221;. The plugin will tell me that he is the actual president of the US</li>
+</ul>
+</div>
+<div class="section" id="note-for-the-user">
+<h4>Note for the user<a class="headerlink" href="#note-for-the-user" title="Permalink to this headline">¶</a></h4>
+<p>Perhaps, you will have to modify the linker field of those module by modifying the corresponding args file in :</p>
+<p>&#8220;~/.config/google2ubuntu/modules/&lt;name&gt;/args&#8221;</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/icons.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Project specification</a><ul>
+<li><a class="reference internal" href="#commands-storage">Commands&#8217; storage</a></li>
+<li><a class="reference internal" href="#commands-description">Commands&#8217; description</a><ul>
+<li><a class="reference internal" href="#external-commands">External commands</a></li>
+<li><a class="reference internal" href="#internal-commands">Internal commands</a></li>
+<li><a class="reference internal" href="#modules">Modules</a><ul>
+<li><a class="reference internal" href="#module-s-description">Module&#8217;s description</a></li>
+<li><a class="reference internal" href="#how-to-add-a-module">How to add a module</a></li>
+<li><a class="reference internal" href="#already-available">Already available</a></li>
+<li><a class="reference internal" href="#note-for-the-user">Note for the user</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tutorial.html"
+                        title="previous chapter">Tutorial for google2ubuntu</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="code.html"
+                        title="next chapter">google2ubuntu documentation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/project.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="code.html" title="google2ubuntu documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Tutorial for google2ubuntu"
+             >previous</a> |</li>
+        <li><a href="index.html">google2ubuntu 1.0.8 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Benoit Franquet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

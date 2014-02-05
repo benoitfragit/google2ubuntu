@@ -1,0 +1,491 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>google2ubuntu documentation &mdash; google2ubuntu 1.0.8 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.8',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="google2ubuntu 1.0.8 documentation" href="index.html" />
+    <link rel="prev" title="Project specification" href="project.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="project.html" title="Project specification"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">google2ubuntu 1.0.8 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="google2ubuntu-documentation">
+<h1>google2ubuntu documentation<a class="headerlink" href="#google2ubuntu-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-interface">
+<span id="class-interface"></span><h2>Class interface<a class="headerlink" href="#module-interface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="interface.interface">
+<em class="property">class </em><tt class="descclassname">interface.</tt><tt class="descname">interface</tt><a class="reference internal" href="_modules/interface.html#interface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: This class start the osd server, then start recording your voice before
+asking Google for the translation. Then, the result is parsing in order to
+execute the associated action</p>
+<dl class="method">
+<dt id="interface.interface.sendto">
+<tt class="descname">sendto</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/interface.html#interface.sendto"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface.interface.sendto" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;function: Send the flac file to Google and start the parser</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-basicCommands">
+<span id="class-basiccommands"></span><h2>Class basicCommands<a class="headerlink" href="#module-basicCommands" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="basicCommands.basicCommands">
+<em class="property">class </em><tt class="descclassname">basicCommands.</tt><tt class="descname">basicCommands</tt><big>(</big><em>text</em>, <em>PID</em><big>)</big><a class="reference internal" href="_modules/basicCommands.html#basicCommands"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basicCommands.basicCommands" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: Called when the user wants to start an internal command
+for the moment there is 3 internal commands:</p>
+<ul class="simple">
+<li>time</li>
+<li>clipboard</li>
+<li>hour</li>
+</ul>
+<dl class="docutils">
+<dt>&#64;param text</dt>
+<dd>name of the function to launch</dd>
+<dt>&#64;param PID</dt>
+<dd>the program&#8217;s pid to synchronize osd notification</dd>
+</dl>
+<dl class="method">
+<dt id="basicCommands.basicCommands.read_clipboard">
+<tt class="descname">read_clipboard</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/basicCommands.html#basicCommands.read_clipboard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basicCommands.basicCommands.read_clipboard" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: A function to make google2ubuntu reads the selected
+text</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="basicCommands.basicCommands.getTime">
+<tt class="descname">getTime</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/basicCommands.html#basicCommands.getTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basicCommands.basicCommands.getTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: a function that let google2ubuntu read and display
+the current timme</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="basicCommands.basicCommands.getPower">
+<tt class="descname">getPower</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/basicCommands.html#basicCommands.getPower"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basicCommands.basicCommands.getPower" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: a function that let google2ubuntu read and display
+the current power state</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-workWithModule">
+<span id="class-workwithmodule"></span><h2>Class workWithModule<a class="headerlink" href="#module-workWithModule" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="workWithModule.workWithModule">
+<em class="property">class </em><tt class="descclassname">workWithModule.</tt><tt class="descname">workWithModule</tt><big>(</big><em>module_path</em>, <em>module_name</em>, <em>text</em>, <em>PID</em><big>)</big><a class="reference internal" href="_modules/workWithModule.html#workWithModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#workWithModule.workWithModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: This class allows you to call external modules. If a call
+for an external module is detected by the parser then this class check
+the module&#8217;s config file before extracting modules&#8217;s parameter from the
+text you have pronounced</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ArgsWindow">
+<span id="class-argswindow"></span><h2>Class ArgsWindow<a class="headerlink" href="#module-ArgsWindow" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="ArgsWindow.ArgsWindow">
+<em class="property">class </em><tt class="descclassname">ArgsWindow.</tt><tt class="descname">ArgsWindow</tt><big>(</big><em>module</em>, <em>name</em>, <em>store</em><big>)</big><a class="reference internal" href="_modules/ArgsWindow.html#ArgsWindow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ArgsWindow.ArgsWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: Display a window to help the user create a config for a
+module</p>
+<dl class="docutils">
+<dt>&#64;param module</dt>
+<dd>module&#8217;s folder</dd>
+<dt>&#64;param name</dt>
+<dd>module&#8217;s name</dd>
+<dt>&#64;param store</dt>
+<dd>a Gtk.Listore in which we will append a new line for this module</dd>
+</dl>
+<dl class="method">
+<dt id="ArgsWindow.ArgsWindow.do_clicked">
+<tt class="descname">do_clicked</tt><big>(</big><em>button</em>, <em>module</em>, <em>name</em>, <em>store</em><big>)</big><a class="reference internal" href="_modules/ArgsWindow.html#ArgsWindow.do_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ArgsWindow.ArgsWindow.do_clicked" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: callback function called when the user want to finish
+the configuration of the module. If everything is ok then the config
+file is written at the right place</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-add_window">
+<span id="class-add-window"></span><h2>Class add_window<a class="headerlink" href="#module-add_window" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="add_window.add_window">
+<em class="property">class </em><tt class="descclassname">add_window.</tt><tt class="descname">add_window</tt><a class="reference internal" href="_modules/add_window.html#add_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: This class allow the user to manage all his commands thanks
+to a treeview. The grid generated will be added to the window</p>
+<dl class="method">
+<dt id="add_window.add_window.get_grid">
+<tt class="descname">get_grid</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.get_grid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.get_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: get the grid</p>
+<p>&#64;return a Gtk.Grid</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.on_drag_data_received">
+<tt class="descname">on_drag_data_received</tt><big>(</big><em>widget</em>, <em>context</em>, <em>x</em>, <em>y</em>, <em>Selection</em>, <em>target_type</em>, <em>timestamp</em>, <em>store</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.on_drag_data_received"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.on_drag_data_received" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: The treeview allows dnd so, if the user select a file then the process to 
+add a module start and finally a new line is added to the treeview. If the user select a 
+folder then a new line is added to the treeview with a command to open this folder</p>
+<dl class="docutils">
+<dt>&#64;param: widget</dt>
+<dd>the widget that support dnd</dd>
+<dt>&#64;param: Selection</dt>
+<dd>the item selected</dd>
+<dt>&#64;param: store</dt>
+<dd>the listStore to append the new entry</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.show_label">
+<tt class="descname">show_label</tt><big>(</big><em>action</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.show_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.show_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: Show or hide the bottom label</p>
+<dl class="docutils">
+<dt>&#64;param: action</dt>
+<dd>a string &#8216;show&#8217; or &#8216;hide&#8217;</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.command_edited">
+<tt class="descname">command_edited</tt><big>(</big><em>widget</em>, <em>path</em>, <em>text</em>, <em>store</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.command_edited"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.command_edited" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: callback function called when the user edited the command
+field of the treeview, we need to modify the liststore</p>
+<dl class="docutils">
+<dt>&#64;param: widget</dt>
+<dd>a Gtk.Widget</dd>
+<dt>&#64;param: path</dt>
+<dd>the way to find the modifiyed item</dd>
+<dt>&#64;param: text</dt>
+<dd>the new text</dd>
+<dt>&#64;param: store</dt>
+<dd>the listStore to modify</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.key_edited">
+<tt class="descname">key_edited</tt><big>(</big><em>widget</em>, <em>path</em>, <em>text</em>, <em>store</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.key_edited"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.key_edited" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: same thing that the previous function</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.on_changed">
+<tt class="descname">on_changed</tt><big>(</big><em>selection</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.on_changed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.on_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: hide the bottom label when the selection change</p>
+<dl class="docutils">
+<dt>&#64;param: selection</dt>
+<dd>the selection from the treeview</dd>
+</dl>
+<p>&#64;return: a boolean</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.create_toolbar">
+<tt class="descname">create_toolbar</tt><big>(</big><em>store</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.create_toolbar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.create_toolbar" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: create the toolbar of the main window</p>
+<dl class="docutils">
+<dt>&#64;param: store</dt>
+<dd>the listStore to connect to some buttons</dd>
+</dl>
+<p>&#64;return: a Gtk.toolbar</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.get_combobox">
+<tt class="descname">get_combobox</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.get_combobox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.get_combobox" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: get the combobox of the toolbar</p>
+<p>&#64;return: a Gtk.Combobox</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.on_combochanged">
+<tt class="descname">on_combochanged</tt><big>(</big><em>combo</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.on_combochanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.on_combochanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: the combobox is used to filter the treeview and switch
+between different commands types</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.match_func">
+<tt class="descname">match_func</tt><big>(</big><em>model</em>, <em>iterr</em>, <em>data=None</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.match_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.match_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: we get the combobox selection and filter the treeview
+data thanks to this selection.</p>
+<p>&#64;return: a boolean</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.add_clicked">
+<tt class="descname">add_clicked</tt><big>(</big><em>button</em>, <em>store</em>, <em>add_type</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.add_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.add_clicked" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: callback function called when the user want to add
+command</p>
+<dl class="docutils">
+<dt>&#64;param: button</dt>
+<dd>the button that has to be clicked</dd>
+<dt>&#64;param: store</dt>
+<dd>the listStore that will contain a new entry</dd>
+<dt>&#64;param: add_type</dt>
+<dd>the type of the new command to add</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.addModule">
+<tt class="descname">addModule</tt><big>(</big><em>store</em>, <em>module</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.addModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.addModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: function that adds a module</p>
+<dl class="docutils">
+<dt>&#64;param: store</dt>
+<dd>the listStore that will receive a new entry</dd>
+<dt>&#64;param: module</dt>
+<dd>the path of the executable file of the module</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.remove_clicked">
+<tt class="descname">remove_clicked</tt><big>(</big><em>button</em>, <em>store</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.remove_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.remove_clicked" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: callback function called wnen the user want to remove 
+a line of the treeview</p>
+<dl class="docutils">
+<dt>&#64;param: button</dt>
+<dd>the button that will be clicked</dd>
+<dt>&#64;param: store</dt>
+<dd>the listStore that is going to be modify</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.removeall_clicked">
+<tt class="descname">removeall_clicked</tt><big>(</big><em>button</em>, <em>store</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.removeall_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.removeall_clicked" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: Same as the past function but remove all lines of the 
+treeview</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.try_command">
+<tt class="descname">try_command</tt><big>(</big><em>button</em>, <em>store</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.try_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.try_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: try a command (bash)</p>
+<dl class="docutils">
+<dt>&#64;param: button</dt>
+<dd>the button that has to be clicked</dd>
+<dt>&#64;param: store</dt>
+<dd>the listStore</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.help_clicked">
+<tt class="descname">help_clicked</tt><big>(</big><em>button</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.help_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.help_clicked" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: show the help window</p>
+<dl class="docutils">
+<dt>&#64;param: button</dt>
+<dd>the button that has to be clicked</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.populate_store">
+<tt class="descname">populate_store</tt><big>(</big><em>store</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.populate_store"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.populate_store" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: load the treeview from the google2ubuntu.xml file or
+from the default.xml file</p>
+<dl class="docutils">
+<dt>&#64;param: store</dt>
+<dd>the listStore that will be modify</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="add_window.add_window.saveTree">
+<tt class="descname">saveTree</tt><big>(</big><em>store</em><big>)</big><a class="reference internal" href="_modules/add_window.html#add_window.saveTree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#add_window.add_window.saveTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: save the treeview in the google2ubuntu.xml file</p>
+<dl class="docutils">
+<dt>&#64;param: store</dt>
+<dd>the listStore attach to the treeview</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-Googletts">
+<span id="class-googletts"></span><h2>Class Googletts<a class="headerlink" href="#module-Googletts" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="Googletts.tts">
+<em class="property">class </em><tt class="descclassname">Googletts.</tt><tt class="descname">tts</tt><big>(</big><em>text</em><big>)</big><a class="reference internal" href="_modules/Googletts.html#tts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Googletts.tts" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: Let google2ubuntu to use the Google tts API</p>
+<p>&#64;param: the text to read to the user</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-HelpWindow">
+<span id="class-helpwindow"></span><h2>Class HelpWindow<a class="headerlink" href="#module-HelpWindow" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="HelpWindow.HelpWindow">
+<em class="property">class </em><tt class="descclassname">HelpWindow.</tt><tt class="descname">HelpWindow</tt><a class="reference internal" href="_modules/HelpWindow.html#HelpWindow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#HelpWindow.HelpWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: Diaplay an help window</p>
+<dl class="method">
+<dt id="HelpWindow.HelpWindow.on_close">
+<tt class="descname">on_close</tt><big>(</big><em>action</em>, <em>parameter</em><big>)</big><a class="reference internal" href="_modules/HelpWindow.html#HelpWindow.on_close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#HelpWindow.HelpWindow.on_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: function called when the user wants to close the window</p>
+<dl class="docutils">
+<dt>&#64;param: action</dt>
+<dd>the window to close</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-MainWindow">
+<span id="class-mainwindow"></span><h2>Class MainWindow<a class="headerlink" href="#module-MainWindow" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="MainWindow.MainWindow">
+<em class="property">class </em><tt class="descclassname">MainWindow.</tt><tt class="descname">MainWindow</tt><big>(</big><em>app</em><big>)</big><a class="reference internal" href="_modules/MainWindow.html#MainWindow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#MainWindow.MainWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: This class display the main window that the user will 
+see when he wants to manage his commands</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-moduleSelection">
+<span id="class-moduleselection"></span><h2>Class moduleSelection<a class="headerlink" href="#module-moduleSelection" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="moduleSelection.moduleSelection">
+<em class="property">class </em><tt class="descclassname">moduleSelection.</tt><tt class="descname">moduleSelection</tt><a class="reference internal" href="_modules/moduleSelection.html#moduleSelection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#moduleSelection.moduleSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: This class display an fileChooserDialog when the user 
+wants to add a new module from the menu of the main window</p>
+<dl class="method">
+<dt id="moduleSelection.moduleSelection.getModule">
+<tt class="descname">getModule</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/moduleSelection.html#moduleSelection.getModule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#moduleSelection.moduleSelection.getModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: return the module selected</p>
+<p>&#64;return: return the path to the executable of the module</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-stringParser">
+<span id="class-stringparser"></span><h2>Class stringParser<a class="headerlink" href="#module-stringParser" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="stringParser.stringParser">
+<em class="property">class </em><tt class="descclassname">stringParser.</tt><tt class="descname">stringParser</tt><big>(</big><em>text</em>, <em>File</em>, <em>PID</em><big>)</big><a class="reference internal" href="_modules/stringParser.html#stringParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#stringParser.stringParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#64;description: This class parses the text retrieve by Google in order 
+to distinguish external commands, internal commands and modules</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/icons.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">google2ubuntu documentation</a><ul>
+<li><a class="reference internal" href="#module-interface">Class interface</a></li>
+<li><a class="reference internal" href="#module-basicCommands">Class basicCommands</a></li>
+<li><a class="reference internal" href="#module-workWithModule">Class workWithModule</a></li>
+<li><a class="reference internal" href="#module-ArgsWindow">Class ArgsWindow</a></li>
+<li><a class="reference internal" href="#module-add_window">Class add_window</a></li>
+<li><a class="reference internal" href="#module-Googletts">Class Googletts</a></li>
+<li><a class="reference internal" href="#module-HelpWindow">Class HelpWindow</a></li>
+<li><a class="reference internal" href="#module-MainWindow">Class MainWindow</a></li>
+<li><a class="reference internal" href="#module-moduleSelection">Class moduleSelection</a></li>
+<li><a class="reference internal" href="#module-stringParser">Class stringParser</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="project.html"
+                        title="previous chapter">Project specification</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/code.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="project.html" title="Project specification"
+             >previous</a> |</li>
+        <li><a href="index.html">google2ubuntu 1.0.8 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Benoit Franquet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
