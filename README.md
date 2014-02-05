@@ -214,6 +214,6 @@ You can share ideas and contact me on the google+ comunauty:
 [google2ubuntu](https://plus.google.com/u/0/communities/103854623082229435165)
 
 ## Demonstration
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=YOUTUBE_VIDEO_ID_HERE
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=vkuX4tqaLFU
 " target="_blank"><img src="http://img.youtube.com/vi/vkuX4tqaLFU/0.jpg" 
-alt="google2ubuntu" width="48040" height="360" border="5" /></a>
+alt="google2ubuntu" width="480" height="360" border="5" /></a>
