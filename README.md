@@ -38,6 +38,11 @@ sudo apt-get update
 sudo apt-get install google2ubuntu
 ```
 
+<a href="/benoitfragit/google2ubuntu/releases/download/v1.0.8/google2ubuntu_1.0.8.deb" rel="nofollow" class="button primary">
+  <span class="octicon octicon-arrow-down"></span>
+  <span class="tooltipped downwards" original-title="200.1 KB">google2ubuntu_1.0.8.deb</span>
+</a>
+
 ##First launch
 Once you have installed google2ubuntu, you can attribute a shortcut to those 2 Python scripts:
 
