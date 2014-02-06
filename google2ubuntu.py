@@ -7,11 +7,23 @@ import sys, subprocess, os, json, urllib2, unicodedata, time, gettext, locale
 sys.path.append(os.path.dirname(os.path.abspath(__file__))+'/librairy')
 from interface import interface
 
-lang = locale.getlocale()[0]
-if os.path.isdir(os.path.dirname(os.path.abspath(__file__))+'/i18n/'+lang.split('_')[0]) == False:
-    lang='en_EN'
+if os.path.exists(expanduser('~')+'/.config/google2ubuntu/locale.conf'):
+    f=open(expanduser('~')+'/.config/google2ubuntu/locale.conf',"r")
+    lc = f.readline().strip('\n')
+    f.close()
+    if lc is not None and lc is not '':
+        lang = lc
+    else:
+        lang = 'en'
+else:      
+    lc = locale.getlocale()[0]
+    lang = lc.split('_')[0]
+    if os.path.isdir(os.path.dirname(os.path.abspath(__file__))+'/i18n/'+lang) == False:
+        lang='en'
 
-gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
+t=gettext.translation('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/',languages=[lang])
+t.install()
 
-
+#keep the old way for the moment
+#gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
 g2u = interface()

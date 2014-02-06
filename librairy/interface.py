@@ -7,9 +7,6 @@ import sys, subprocess, os, json, urllib2, unicodedata, time, gettext, locale
 from Googletts import tts
 from stringParser import stringParser
 
-lang = locale.getlocale()[0]
-gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
-
 # La classe interface permet de lancer l'enregistrement et de communiquer
 # avec Google
 class interface():
@@ -19,9 +16,23 @@ class interface():
     execute the associated action
     """
     def __init__(self):
+        # make the program able to switch language
+        self.p = os.path.dirname(os.path.abspath(__file__)).strip('librairy')        
+        if os.path.exists(expanduser('~')+'/.config/google2ubuntu/locale.conf'):
+            f=open(expanduser('~')+'/.config/google2ubuntu/locale.conf',"r")
+            lc = f.readline().strip('\n')
+            f.close()
+            if lc is not None and lc is not '':
+                self.lang = lc+'_'+lc.upper()
+            else:
+                self.lang = 'en_EN'
+        else:      
+            self.lang = locale.getlocale()[0]
+            if os.path.isdir(self.p+'i18n/'+ self.lang.split('_')[0]) == False:
+                self.lang='en_EN'
+            
         # Initialisation des notifications
         self.PID = str(os.getpid())
-        self.p = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
         os.system('rm /tmp/g2u_*_'+self.PID+' 2>/dev/null')
         os.system('python '+self.p+'librairy/osd.py '+self.PID+' &')
 
@@ -52,7 +63,7 @@ class interface():
         
         # fichier de configuration
         config = expanduser('~') + '/.config/google2ubuntu/google2ubuntu.xml'
-        default = self.p +'config/'+lang+'/default.xml'
+        default = self.p +'config/'+self.lang+'/default.xml'
         
         if os.path.exists(config):
             config_file = config
@@ -68,7 +79,7 @@ class interface():
         print 'config file:', config_file
         try:
             # envoie une requête à Google
-            req = urllib2.Request('https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang='+lang, data=data, headers={'Content-type': 'audio/x-flac; rate=16000'})  
+            req = urllib2.Request('https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang='+self.lang, data=data, headers={'Content-type': 'audio/x-flac; rate=16000'})  
             # retour de la requête
             ret = urllib2.urlopen(req)
             

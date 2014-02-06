@@ -3,10 +3,29 @@
 from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Notify
-import time, os, gettext, sys
+from os.path import expanduser
+import time, os, gettext, sys, locale
 
 path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
-gettext.install('google2ubuntu',path+'/i18n/')
+if os.path.exists(expanduser('~')+'/.config/google2ubuntu/locale.conf'):
+    f=open(expanduser('~')+'/.config/google2ubuntu/locale.conf',"r")
+    lc = f.readline().strip('\n')
+    f.close()
+    if lc is not None and lc is not '':
+        lang = lc
+    else:
+        lang = 'en'
+else:      
+    lc = locale.getlocale()[0]
+    lang = lc.split('_')[0]
+    if os.path.isdir(path+'i18n/'+lang) == False:
+        lang='en'
+
+t=gettext.translation('google2ubuntu',path+'i18n/',languages=[lang])
+t.install()
+
+#keep the old way for the moment
+#gettext.install('google2ubuntu',path+'/i18n/')
 RESULT = False
 path += 'resources'
 

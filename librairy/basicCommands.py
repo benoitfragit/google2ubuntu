@@ -6,8 +6,6 @@ from subprocess import *
 from Googletts import tts
 import os, gettext, time, subprocess
 
-gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
-
 # Permet de faire appel aux fonctions basiques
 class basicCommands():
     """
@@ -51,7 +49,7 @@ class basicCommands():
         text = clipboard.wait_for_text()
         if text != None:
             text=text.replace("'",' ')
-            print text
+            print "read:", text
             tts(text)
         else:
             tts(_('Nothing in the clipboard'))
@@ -67,6 +65,7 @@ class basicCommands():
         
         message = _('it is')+' '+hour+' '+_('hour')+' '+minute+' '+_('minute')
         os.system('echo "'+var+'" > /tmp/g2u_display_'+self.pid)
+        print message
         tts(message)
                     
     def getPower(self):

@@ -11,8 +11,6 @@ import sys
 import subprocess
 import gettext
 
-gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
-
 # Classe MyWindow gere l'apparition de la fenêtre principale
 class MainWindow(Gtk.ApplicationWindow):
     """

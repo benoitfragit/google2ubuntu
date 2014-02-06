@@ -7,8 +7,6 @@ from gi.repository import Gio
 from os.path import expanduser
 import os, sys, subprocess, gettext
 
-gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
-
 # gère l'apparition de le fenêtre d'aide
 class HelpWindow():
     """

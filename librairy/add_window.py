@@ -15,8 +15,6 @@ import gettext
 import locale
 import xml.etree.ElementTree as ET
 
-gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
-
 TARGET_TYPE_URI_LIST = 80
 dnd_list = [Gtk.TargetEntry.new('text/uri-list', 0, TARGET_TYPE_URI_LIST )]
 
@@ -286,27 +284,72 @@ class add_window():
         help_button.set_tooltip_text(_("Display help message"))
         help_button.show() 
         
-        # add a separator
-        separator = Gtk.ToolItem()
-        separator.set_expand(True)
-        toolbar.insert(separator,5)
-        
         # create a combobox to store user choice
         self.combo = self.get_combobox()
         toolcombo = Gtk.ToolItem()
         toolcombo.add(self.combo)
         toolcombo.show()
-        toolbar.insert(toolcombo,6)
-
+        toolbar.insert(toolcombo,5)        
+        
+        # add a separator
+        separator = Gtk.ToolItem()
+        separator.set_expand(True)
+        toolbar.insert(separator,6)
+        
         # create a little menu button to override locale language
-        local
+        current_locale = ((locale.getdefaultlocale()[0]).split('_'))[0]
         
-        locale_button = Gtk.ToolMenuButton.new("fr")
+        locale_config=expanduser('~')+'/.config/google2ubuntu/locale.conf'
+        if os.path.exists(locale_config):
+            f = open(locale_config,"r")
+            tmp = f.readline().strip('\n')
+            f.close()
+            if tmp is not None and tmp is not '':
+                current_locale = tmp
+            
+        locale_path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
+        locale_path += 'i18n'
+        locale_menu = Gtk.Menu()
         
+        for language in os.listdir(locale_path):
+            if os.path.isdir(locale_path+'/'+language):
+                item = Gtk.MenuItem(label=language)
+                item.connect("activate",self.change_locale,locale_path,language)
+                item.show()
+                locale_menu.append(item)
         
-
+        self.locale_button = Gtk.MenuToolButton.new(None,current_locale)
+        self.locale_button.set_is_important(True)
+        self.locale_button.set_menu(locale_menu)
+        self.locale_button.show()
+        toolbar.insert(self.locale_button,7)
+        
         # return the complete toolbar
         return toolbar
+
+    # change the locale set
+    def change_locale(self,button,locale_path,language):
+        """
+        @description: set the local desired by the user among supported
+        locale
+        
+        @param button
+            the button that has to be clicked
+        
+        @param locale_path
+            the folder containing locales
+        
+        @param language
+            desired locale
+        """
+        self.locale_button.set_label(language)
+        try:
+            locale_config=expanduser('~')+'/.config/google2ubuntu/locale.conf'
+            f = open(locale_config,"w")
+            f.write(language+'\n')
+            f.close()
+        except Exception:
+            print "error, while opening locale.conf file"
 
     # return a combobox to add to the toolbar
     def get_combobox(self):
@@ -516,12 +559,24 @@ class add_window():
         @param: store
             the listStore that will be modify
         """    
+        # user ocnfig file
         config = expanduser('~') +'/.config/google2ubuntu/google2ubuntu.xml'
-        path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
-        lang = locale.getlocale()[0]
-        if os.path.isdir(path+'config/'+lang) == False:
-            lang='en_EN'        
-            
+        
+        # default config file for the selected language
+        path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')    
+        if os.path.exists(expanduser('~')+'/.config/google2ubuntu/locale.conf'):
+            f=open(expanduser('~')+'/.config/google2ubuntu/locale.conf',"r")
+            lc = f.readline().strip('\n')
+            f.close()
+            if lc is not None and lc is not '':
+                lang = lc+'_'+lc.upper()
+            else:
+                lang = 'en_EN'
+        else:      
+            lang = locale.getlocale()[0]
+            if os.path.isdir(path+'i18n/'+ lang.split('_')[0]) == False:
+                lang='en_EN'
+        
         default = path +'config/'+lang+'/default.xml'        
 
         try:

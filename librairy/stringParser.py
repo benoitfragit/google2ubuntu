@@ -6,7 +6,6 @@ from basicCommands import basicCommands
 from Googletts import tts
 import xml.etree.ElementTree as ET
 import os, gettext, time, sys, subprocess
-gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
 
 # Permet d'exécuter la commande associée à un mot prononcé
 class stringParser():
