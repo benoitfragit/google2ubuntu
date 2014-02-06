@@ -298,6 +298,13 @@ class add_window():
         toolcombo.show()
         toolbar.insert(toolcombo,6)
 
+        # create a little menu button to override locale language
+        local
+        
+        locale_button = Gtk.ToolMenuButton.new("fr")
+        
+        
+
         # return the complete toolbar
         return toolbar
 
