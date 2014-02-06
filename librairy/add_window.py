@@ -276,7 +276,7 @@ class add_window():
         all_button.connect("clicked",self.removeall_clicked,store)
         all_button.set_tooltip_text(_('Remove all commands'))
         all_button.show() 
-
+        
         # create a button for the "Help" action
         help_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_HELP)
         help_button.set_label(_("Help"))

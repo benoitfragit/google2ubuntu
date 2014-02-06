@@ -33,6 +33,11 @@ class basicCommands():
             self.getPower()
         elif text == _('clipboard'):
             self.read_clipboard()
+        elif text == _('dictation mode'):
+            f=open('/tmp/g2u_dictation',"w")
+            f.close()
+        elif text == _('exit dictation mode'):
+            os.remove('/tmp/g2u_dictation')
         else:
             print "no action found"
     

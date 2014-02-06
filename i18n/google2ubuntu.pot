@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-05 18:40+0100\n"
+"POT-Creation-Date: 2014-02-05 21:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,7 +39,7 @@ msgid "key sentence"
 msgstr ""
 
 #: librairy/add_window.py:145 librairy/add_window.py:386
-#: librairy/stringParser.py:58
+#: librairy/stringParser.py:74
 msgid "external"
 msgstr ""
 
@@ -116,13 +116,13 @@ msgid "What type of command to add"
 msgstr ""
 
 #: librairy/add_window.py:362 librairy/add_window.py:366
-#: librairy/add_window.py:489 librairy/stringParser.py:49
+#: librairy/add_window.py:489 librairy/stringParser.py:65
 msgid "modules"
 msgstr ""
 
 #: librairy/add_window.py:362 librairy/add_window.py:364
 #: librairy/add_window.py:388 librairy/add_window.py:489
-#: librairy/stringParser.py:54
+#: librairy/stringParser.py:70
 msgid "internal"
 msgstr ""
 
@@ -178,39 +178,47 @@ msgstr ""
 msgid "clipboard"
 msgstr ""
 
-#: librairy/basicCommands.py:52
+#: librairy/basicCommands.py:36
+msgid "dictation mode"
+msgstr ""
+
+#: librairy/basicCommands.py:39
+msgid "exit dictation mode"
+msgstr ""
+
+#: librairy/basicCommands.py:57
 msgid "Nothing in the clipboard"
 msgstr ""
 
-#: librairy/basicCommands.py:63
+#: librairy/basicCommands.py:68
 msgid "it is"
 msgstr ""
 
-#: librairy/basicCommands.py:63
+#: librairy/basicCommands.py:68
 msgid "hour"
 msgstr ""
 
-#: librairy/basicCommands.py:63
+#: librairy/basicCommands.py:68
 msgid "minute"
 msgstr ""
 
-#: librairy/basicCommands.py:81
+#: librairy/basicCommands.py:86
 msgid "Charging"
 msgstr ""
 
-#: librairy/basicCommands.py:81
+#: librairy/basicCommands.py:86
 msgid "before charging"
 msgstr ""
 
-#: librairy/basicCommands.py:83
+#: librairy/basicCommands.py:88
 msgid "Discharging"
 msgstr ""
 
-#: librairy/basicCommands.py:83
+#: librairy/basicCommands.py:88
 msgid "remaining"
 msgstr ""
 
-#: librairy/basicCommands.py:85
+#: librairy/basicCommands.py:90
 msgid "battery is not plugged"
 msgstr ""
 
@@ -254,7 +262,7 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-#: librairy/stringParser.py:66
+#: librairy/stringParser.py:84
 msgid "Setup file missing"
 msgstr ""
 

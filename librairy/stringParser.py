@@ -23,20 +23,39 @@ class stringParser():
             tree = ET.parse(File)
             root = tree.getroot()
             tp = ''
-            
-            for entry in root.findall('entry'):
-                score = 0
-                Type=entry.get('name')
-                Key=entry.find('key').text
-                Command=entry.find('command').text
-                key=Key.split(' ')
-                for j in range(len(key)):
-                    score += text.count(key[j])
+            # si le mode dictée est activé
+            if os.path.exists('/tmp/g2u_dictation'):
+                for entry in root.findall('entry'):
+                    if entry.get('name') == _('internal'):
+                        score = 0
+                        Type=entry.get('name')
+                        Key=entry.find('key').text
+                        Command=entry.find('command').text
+                        key=Key.split(' ')
+                        for j in range(len(key)):
+                            score += text.count(key[j])
                         
-                if max < score:
-                    max = score
-                    do = Command
-                    tp = Type
+                        if max < score:
+                            max = score
+                            do = Command
+                            tp = Type
+                        
+                if max == 0:
+                    do = text
+            else:
+                for entry in root.findall('entry'):
+                    score = 0
+                    Type=entry.get('name')
+                    Key=entry.find('key').text
+                    Command=entry.find('command').text
+                    key=Key.split(' ')
+                    for j in range(len(key)):
+                        score += text.count(key[j])
+                        
+                    if max < score:
+                        max = score
+                        do = Command
+                        tp = Type
             
             # on regarde si la commande fait appel à un module
             # si oui, alors on lui passe en paramètre les dernier mots prononcé
@@ -57,7 +76,8 @@ class stringParser():
                 b = basicCommands(do,self.pid)
             elif _('external') in tp:
                 os.system(do)
-             
+            else:
+                os.system('xdotool type "'+do+'"')
                 
             os.system('> /tmp/g2u_stop_'+self.pid)
             

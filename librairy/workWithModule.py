@@ -28,6 +28,7 @@ class workWithModule():
             plus=ligne.split('=')[1] 
             f.close()  
 
+            print linker+'_', plus
             # on utilise un mot de liaison pour séparer l'appel du module
             # des arguments à lui envoyer
             # ex: Quelle est la météo à Paris
