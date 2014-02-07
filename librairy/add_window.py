@@ -573,6 +573,7 @@ class add_window():
 
         try:
             if os.path.isfile(config):
+                # here the program refuses to load the xml file
                 tree = ET.parse(config)
             else:
                 if os.path.exists(expanduser('~') +'/.config/google2ubuntu') == False:
@@ -587,8 +588,11 @@ class add_window():
                 Key=entry.find('key').text
                 Command=entry.find('command').text
                 store.append([Key, Command, Type])  
-        except Exception:
+        except Exception as e:
             print 'Error while reading config file'
+            print type(e)
+            print e.args
+            print e
 
     def saveTree(self,store):
         """
@@ -613,7 +617,7 @@ class add_window():
                             s = s.lower()
                             s = s.replace('*',' ')
                             Type = ET.SubElement(root, "entry")
-                            Type.set("name",model[iter][2])
+                            Type.set("name",unicode(model[iter][2],"utf-8"))
                             Key = ET.SubElement(Type, "key")
                             Key.text = unicode(s,"utf-8")
                             Command = ET.SubElement(Type, "command")
