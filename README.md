@@ -49,10 +49,10 @@ Once you have installed google2ubuntu, you can attribute a shortcut to those 2 P
 Moreover, if you search in the application's menu you will find two launchers, one for each of those programs.
 
 After that, you can launch google2ubuntu-manager.py in order to manage all commands.
-![google2ubuntu-manager](http://pix.toile-libre.org/upload/original/1391509665.png)
+![google2ubuntu-manager](http://pix.toile-libre.org/upload/original/1391806249.png)
 
 
-<a href='http://pix.toile-libre.org/?img=1391805854.png'><img src='http://pix.toile-libre.org/upload/thumb/1391805854.png' /></a> <a href='http://pix.toile-libre.org/?img=1391805991.png'><img src='http://pix.toile-libre.org/upload/thumb/1391805991.png' /></a>
+<a href='http://pix.toile-libre.org/?img=1391805854.png'><img src='http://pix.toile-libre.org/upload/thumb/1391805854.png' /></a> <a href='http://pix.toile-libre.org/?img=1391805991.png'><img src='http://pix.toile-libre.org/upload/thumb/1391805991.png' /></a> <a href='http://pix.toile-libre.org/?img=1391806086.png'><img src='http://pix.toile-libre.org/upload/thumb/1391806086.png' /></a> <a href='http://pix.toile-libre.org/?img=1391806166.png'><img src='http://pix.toile-libre.org/upload/thumb/1391806166.png' /></a> 
 
 As you can see, google2ubuntu coms with several default commands. I will explain you how to manage and add commands.
 
