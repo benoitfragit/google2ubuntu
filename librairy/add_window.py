@@ -140,7 +140,7 @@ class add_window():
                 if os.path.isfile(path):
                     self.addModule(store,path)
                 elif os.path.isdir(path):
-                    store.append([_('key sentence'),'xdg-open '+path],_('external'))
+                    store.append([_('key sentence'),'xdg-open '+path,_('external')])
 
     def show_label(self,action):
         """
@@ -333,13 +333,13 @@ class add_window():
         @description: set the local desired by the user among supported
         locale
         
-        @param button
+        @param: button
             the button that has to be clicked
         
-        @param locale_path
+        @param: locale_path
             the folder containing locales
         
-        @param language
+        @param: language
             desired locale
         """
         self.locale_button.set_label(language)
