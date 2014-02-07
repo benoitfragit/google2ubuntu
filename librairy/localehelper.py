@@ -5,10 +5,9 @@ import locale
 import os
 
 RELATIVE_LOCALE_CONFIG_PATH = '/.config/google2ubuntu/locale.conf'
-DEFAULT_LOCALE = 'en'
 
 class LocaleHelper:
-    def __init__(self, languageFolder = os.path.dirname(os.path.abspath(__file__))+'/../i18n/'):
+    def __init__(self, defaultLocale = 'en', languageFolder = os.path.dirname(os.path.abspath(__file__))+'/../i18n/'):
         systemLocale = locale.getlocale()
         
         self.__systemLocale = None
@@ -18,13 +17,14 @@ class LocaleHelper:
                 self.__systemLocale = systemLocale[0].split('_')[0]
         
         self.__languageFolder = languageFolder
+        self.__defaultLocale = defaultLocale
         self.__localeConfPath = expanduser('~')+RELATIVE_LOCALE_CONFIG_PATH
     
     def __getSystemLocale(self):
         if self.__checkIfLocalePresent(self.__systemLocale):
             return self.__systemLocale
         else:
-            return DEFAULT_LOCALE
+            return self.__defaultLocale
         
     def __getLocaleConfigValue(self):
         configFileHandle = None
@@ -44,7 +44,7 @@ class LocaleHelper:
             if self.__checkIfLocalePresent(localeConfig):
                 return localeConfig
             else:
-                return DEFAULT_LOCALE
+                return self.__defaultLocale
             
     def __checkIfLocalePresent(self, lang):
         return os.path.isdir(self.__languageFolder+lang) == True
