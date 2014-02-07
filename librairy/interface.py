@@ -19,8 +19,8 @@ class interface():
     def __init__(self):
         # make the program able to switch language
         self.p = os.path.dirname(os.path.abspath(__file__)).strip('librairy')        
-        localeHelper = LocaleHelper()
-        self.lang = localeHelper.getLocale('en_EN')
+        localeHelper = LocaleHelper('en_EN')
+        self.lang = localeHelper.getLocale()
             
         # Initialisation des notifications
         self.PID = str(os.getpid())
