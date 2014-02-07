@@ -1,0 +1,277 @@
+# Italian translations for google package
+# Traduzioni italiane per il pacchetto google..
+# Copyright (C) 2014 THE google'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the google package.
+# Mte90 <mte90net@gmail.com>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: google 2ubuntu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-02-07 15:59+0100\n"
+"PO-Revision-Date: 2014-02-07 16:06+0100\n"
+"Last-Translator: Mte90 <mte90net@gmail.com>\n"
+"Language-Team: Italian\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: librairy/add_window.py:40
+msgid "list of commands"
+msgstr "lista dei comandi"
+
+#: librairy/add_window.py:53
+msgid "Keys"
+msgstr "Tasti"
+
+#: librairy/add_window.py:69
+msgid "Commands"
+msgstr "Comandi"
+
+#: librairy/add_window.py:77 librairy/osd.py:35 librairy/osd.py:40
+msgid "Ready"
+msgstr "Pronto"
+
+#: librairy/add_window.py:144 librairy/add_window.py:437
+#: librairy/add_window.py:439 librairy/add_window.py:469
+msgid "key sentence"
+msgstr "frase chiave"
+
+#: librairy/add_window.py:144 librairy/add_window.py:437
+#: librairy/stringParser.py:76
+msgid "external"
+msgstr "esterno"
+
+#: librairy/add_window.py:224
+msgid "External commands"
+msgstr "Comando esterno"
+
+#: librairy/add_window.py:228
+msgid "Internal commands"
+msgstr "Comando interno"
+
+#: librairy/add_window.py:232
+msgid "Module"
+msgstr "Modulo"
+
+#: librairy/add_window.py:239
+msgid "Add"
+msgstr "Aggiungi"
+
+#: librairy/add_window.py:249
+msgid "Add a new command"
+msgstr "Aggiungi un nuovo comando"
+
+#: librairy/add_window.py:254
+msgid "Try"
+msgstr "Prova"
+
+#: librairy/add_window.py:258
+msgid "Try this command"
+msgstr "Prova questo comando"
+
+#: librairy/add_window.py:263 librairy/add_window.py:497
+msgid "Remove"
+msgstr "Rimuovi"
+
+#: librairy/add_window.py:267
+msgid "Remove this command"
+msgstr "Rimuovi questo comando"
+
+#: librairy/add_window.py:272
+msgid "Clean up"
+msgstr "Pulisci"
+
+#: librairy/add_window.py:276 librairy/add_window.py:518
+msgid "Remove all commands"
+msgstr "Rimuovi tutti i comandi"
+
+#: librairy/add_window.py:281
+msgid "Help"
+msgstr "Aiuto"
+
+#: librairy/add_window.py:285
+msgid "Display help message"
+msgstr "Mostra messaggi d'aiuto"
+
+#: librairy/add_window.py:365
+msgid "All"
+msgstr "Tutti"
+
+#: librairy/add_window.py:366
+msgid "External"
+msgstr "Esterni"
+
+#: librairy/add_window.py:367
+msgid "Internal"
+msgstr "Interni"
+
+#: librairy/add_window.py:368
+msgid "Modules"
+msgstr "Moduli"
+
+#: librairy/add_window.py:372
+msgid "What type of command to add"
+msgstr "Tipo di comando da aggiungere"
+
+#: librairy/add_window.py:413 librairy/add_window.py:417
+#: librairy/add_window.py:540 librairy/stringParser.py:67
+msgid "modules"
+msgstr "moduli"
+
+#: librairy/add_window.py:413 librairy/add_window.py:415
+#: librairy/add_window.py:439 librairy/add_window.py:540
+#: librairy/stringParser.py:28 librairy/stringParser.py:72
+msgid "internal"
+msgstr "interno"
+
+#: librairy/add_window.py:437
+msgid "your command"
+msgstr "comando"
+
+#: librairy/add_window.py:439
+msgid "word"
+msgstr "parola"
+
+#: librairy/add_window.py:447
+msgid "Error, you must choose a file"
+msgstr "Errore devi scegliere un file"
+
+#: librairy/add_window.py:478
+msgid "Error, args file missing"
+msgstr "Errore file mancante"
+
+#: librairy/add_window.py:625
+msgid "Save commands"
+msgstr "Salva i comandi"
+
+#: librairy/ArgsWindow.py:27
+msgid "Module setup"
+msgstr "Configurazione modulo"
+
+#: librairy/ArgsWindow.py:35
+msgid "Linking word"
+msgstr "Parola collegata"
+
+#: librairy/ArgsWindow.py:39
+msgid "Word to separate call and parameter"
+msgstr "Parola per separare chiamata e parametro"
+
+#: librairy/ArgsWindow.py:41 librairy/ArgsWindow.py:42
+msgid "Replace space by plus"
+msgstr "Sostituisci spazio con un +"
+
+#: librairy/ArgsWindow.py:44 librairy/ArgsWindow.py:45
+msgid "Go"
+msgstr "Vai"
+
+#: librairy/basicCommands.py:28
+msgid "time"
+msgstr "tempo"
+
+#: librairy/basicCommands.py:30
+msgid "power"
+msgstr "avvia"
+
+#: librairy/basicCommands.py:32
+msgid "clipboard"
+msgstr "appunti"
+
+#: librairy/basicCommands.py:34
+msgid "dictation mode"
+msgstr "modalità dettatura"
+
+#: librairy/basicCommands.py:37
+msgid "exit dictation mode"
+msgstr "esci dalla modalità dettatura"
+
+#: librairy/basicCommands.py:55
+msgid "Nothing in the clipboard"
+msgstr "Appunti vuoto"
+
+#: librairy/basicCommands.py:66
+msgid "it is"
+msgstr "è"
+
+#: librairy/basicCommands.py:66
+msgid "hour"
+msgstr "ora"
+
+#: librairy/basicCommands.py:66
+msgid "minute"
+msgstr "minuto"
+
+#: librairy/basicCommands.py:85
+msgid "Charging"
+msgstr "Caricamento"
+
+#: librairy/basicCommands.py:85
+msgid "before charging"
+msgstr "prima del caricamento"
+
+#: librairy/basicCommands.py:87
+msgid "Discharging"
+msgstr "Caricamento annullato"
+
+#: librairy/basicCommands.py:87
+msgid "remaining"
+msgstr "rimasto"
+
+#: librairy/basicCommands.py:89
+msgid "battery is not plugged"
+msgstr "batteria non inserita"
+
+#: librairy/HelpWindow.py:24
+msgid "Help Google2Ubuntu"
+msgstr "Aiuta Google2Ubuntu"
+
+#: librairy/interface.py:87
+msgid "unable to translate"
+msgstr "traduzione non possibile"
+
+#: librairy/moduleSelection.py:18
+msgid "Choose a file"
+msgstr "Scegli un file"
+
+#: librairy/osd.py:49
+msgid "Error"
+msgstr "Errore"
+
+#: librairy/osd.py:61
+msgid "Recognition result"
+msgstr "Risultato riconoscimento"
+
+#: librairy/osd.py:71
+msgid "Calling command"
+msgstr "esecuzione del comando"
+
+#: librairy/osd.py:78
+msgid "Information"
+msgstr "Informazioni"
+
+#: librairy/osd.py:84
+msgid "Performing recording"
+msgstr "Avvio della registrazione "
+
+#: librairy/osd.py:85
+msgid "Please speak"
+msgstr "Parla"
+
+#: librairy/osd.py:95
+msgid "Done"
+msgstr "Effettuato"
+
+#: librairy/stringParser.py:85
+msgid "Setup file missing"
+msgstr "File di configurazione mancante"
+
+#: librairy/workWithModule.py:55
+msgid "you didn't say the linking word"
+msgstr "non hai detto la parola collegata"
+
+#: librairy/workWithModule.py:59
+msgid "args file missing"
+msgstr "file mancante"
