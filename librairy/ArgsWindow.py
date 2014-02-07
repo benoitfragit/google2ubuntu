@@ -22,7 +22,7 @@ class ArgsWindow():
     @param store
         a Gtk.Listore in which we will append a new line for this module
     """
-    def __init__(self,module,name,store):
+    def __init__(self,module,name,store,selection=None):
         self.w = Gtk.Window()
         self.w.set_title(_("Module setup"))
         self.w.set_resizable(False)     
@@ -40,14 +40,33 @@ class ArgsWindow():
         self.checkbutton = Gtk.CheckButton()
         self.checkbutton.set_label(_("Replace space by plus"))
         self.checkbutton.set_tooltip_text(_("Replace space by plus"))
+        self.checkbutton.set_active(False)
         button = Gtk.Button()
         button.set_label(_("Go"))
         button.set_tooltip_text(_("Go"))
         image = Gtk.Image()
         image.set_from_stock(Gtk.STOCK_APPLY, Gtk.IconSize.BUTTON)
         button.set_image(image)
-        button.connect("clicked",self.do_clicked,module,name,store)
         
+        print module, name
+        if selection is None:
+            button.connect("clicked",self.do_clicked,module,name,store)
+        else:
+            # currently modifying
+            # if selection is not None then the user want to modify an existing module
+            print "modification"
+            path = name.split('.')[0]
+            # args file for the module should exist
+            argsfile = expanduser('~')+'/.config/modules/'+path+'/args'
+            if os.path.exists(argsfile):
+                f = open(argsfile,"r")
+                linker = (f.readline().strip('\n')).split('=')[-1]
+                spacebyplus = (f.readline().strip('\n')).split('=')[-1]
+                self.entry1.set_text(linker)
+                if spacebyplus == '1':
+                    self.checkbutton.set_active(True)
+                    button.connect("clicked",self.do_modify,module,name,store,selection)
+                
         grid.attach(label1,0,0,4,1)
         grid.attach(self.entry1,0,1,4,1)
         grid.attach(self.checkbutton,0,2,4,1) 
@@ -86,3 +105,5 @@ class ArgsWindow():
                 "Unable to open the file"
         
         self.w.destroy()
+    
+    def do_modify(self,)
