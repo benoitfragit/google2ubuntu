@@ -221,3 +221,19 @@ alt="google2ubuntu" width="480" height="360" border="5" /></a>
 ## Documentation page
 I've wrote a documentation page with Sphinx
 [Documentation](http://benoitfragit.github.io/google2ubuntu/)
+
+#Update
+
+## Future version 1.0.9
+   
+* adding a menu to change language
+* adding the possibility to reconfigure a module from google2ubuntu-manager
+* adding spanish translation
+* adding deutch translation
+* adding italian translation
+
+## TODO
+
+* update the documentation
+* improve translation
+* bug fixe
