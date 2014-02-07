@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: google 2ubuntu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-07 15:59+0100\n"
-"PO-Revision-Date: 2014-02-07 16:06+0100\n"
+"PO-Revision-Date: 2014-02-07 19:11+0100\n"
 "Last-Translator: Mte90 <mte90net@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it\n"
@@ -170,11 +170,11 @@ msgstr "Vai"
 
 #: librairy/basicCommands.py:28
 msgid "time"
-msgstr "tempo"
+msgstr "orario"
 
 #: librairy/basicCommands.py:30
 msgid "power"
-msgstr "avvia"
+msgstr "batteria"
 
 #: librairy/basicCommands.py:32
 msgid "clipboard"
@@ -230,7 +230,7 @@ msgstr "Aiuta Google2Ubuntu"
 
 #: librairy/interface.py:87
 msgid "unable to translate"
-msgstr "traduzione non possibile"
+msgstr "rilevazione non possibile"
 
 #: librairy/moduleSelection.py:18
 msgid "Choose a file"
