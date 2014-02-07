@@ -65,7 +65,7 @@ class ArgsWindow():
                 self.entry1.set_text(linker)
                 if spacebyplus == '1':
                     self.checkbutton.set_active(True)
-                    button.connect("clicked",self.do_modify,module,name,store,selection)
+                button.connect("clicked",self.do_modify,argsfile)
                 
         grid.attach(label1,0,0,4,1)
         grid.attach(self.entry1,0,1,4,1)
@@ -106,4 +106,5 @@ class ArgsWindow():
         
         self.w.destroy()
     
-    def do_modify(self,)
+    def do_modify(self,button,argsfile):
+        print argsfile
