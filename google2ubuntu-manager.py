@@ -5,7 +5,6 @@ from gi.repository import Notify
 from gi.repository import Gdk
 from gi.repository import Gio
 from os.path import expanduser
-from librairy import LocaleHelper
 import os
 import sys
 import subprocess
@@ -14,6 +13,7 @@ import xml.etree.ElementTree as ET
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__))+'/librairy')
 from MainWindow import *
+from localehelper import LocaleHelper
 
 localeHelper = LocaleHelper()
 lang = localeHelper.getLocale()

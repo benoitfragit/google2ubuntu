@@ -8,7 +8,7 @@ from os.path import expanduser
 from ArgsWindow import ArgsWindow
 from moduleSelection import moduleSelection
 from HelpWindow import HelpWindow
-from librairy import LocaleHelper
+from localehelper import LocaleHelper
 import os
 import sys
 import subprocess

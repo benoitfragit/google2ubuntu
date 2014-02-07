@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from os.path import expanduser
-from librairy import LocaleHelper
+from localehelper import LocaleHelper
 import urllib, urllib2, time, re, unicodedata, os, sys, locale
 
 class tts():

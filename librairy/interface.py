@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 from subprocess import *
 from os.path import expanduser
-from librairy import LocaleHelper
 import sys, subprocess, os, json, urllib2, unicodedata, time, gettext, locale
 
 from Googletts import tts
 from stringParser import stringParser
+from localehelper import LocaleHelper
 
 # La classe interface permet de lancer l'enregistrement et de communiquer
 # avec Google
@@ -20,7 +20,7 @@ class interface():
         # make the program able to switch language
         self.p = os.path.dirname(os.path.abspath(__file__)).strip('librairy')        
         localeHelper = LocaleHelper()
-        self.lang = localeHelper.getLocale('en_EN')
+        self.lang = localeHelper.getLocale()
             
         # Initialisation des notifications
         self.PID = str(os.getpid())

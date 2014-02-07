@@ -4,7 +4,7 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Notify
 from os.path import expanduser
-from librairy import LocaleHelper
+from localehelper import LocaleHelper
 import time, os, gettext, sys, locale
 
 path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')

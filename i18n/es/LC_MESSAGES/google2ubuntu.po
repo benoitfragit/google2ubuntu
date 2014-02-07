@@ -54,7 +54,7 @@ msgstr "Ordenes internas"
 
 #: librairy/add_window.py:233
 msgid "Module"
-msgstr "Modulo"
+msgstr "Módulo"
 
 #: librairy/add_window.py:240
 msgid "Add"
@@ -90,11 +90,11 @@ msgstr "Eliminar todas las ordenes"
 
 #: librairy/add_window.py:282
 msgid "Help"
-msgstr "Utilizando"
+msgstr "Ayuda"
 
 #: librairy/add_window.py:286
 msgid "Display help message"
-msgstr "Mostrar utilizando"
+msgstr "Mostrar la ayuda"
 
 #: librairy/add_window.py:314
 msgid "All"
@@ -110,7 +110,7 @@ msgstr "Internas"
 
 #: librairy/add_window.py:317
 msgid "Modules"
-msgstr "Modulos"
+msgstr "Módulos"
 
 #: librairy/add_window.py:321
 msgid "What type of command to add"
@@ -119,7 +119,7 @@ msgstr "Que type de orden agregar"
 #: librairy/add_window.py:362 librairy/add_window.py:366
 #: librairy/add_window.py:489 librairy/stringParser.py:65
 msgid "modules"
-msgstr "modulos"
+msgstr "módulos"
 
 #: librairy/add_window.py:362 librairy/add_window.py:364
 #: librairy/add_window.py:388 librairy/add_window.py:489
@@ -149,7 +149,7 @@ msgstr "Salvar ordenes"
 
 #: librairy/ArgsWindow.py:29
 msgid "Module setup"
-msgstr "Modulo confiuguracion"
+msgstr "Módulo confiuguracion"
 
 #: librairy/ArgsWindow.py:37
 msgid "Linking word"
@@ -209,7 +209,7 @@ msgstr "Cargando"
 
 #: librairy/basicCommands.py:86
 msgid "before charging"
-msgstr "antesde cargando"
+msgstr "antes de cargando"
 
 #: librairy/basicCommands.py:88
 msgid "Discharging"
@@ -221,11 +221,11 @@ msgstr "queda"
 
 #: librairy/basicCommands.py:90
 msgid "battery is not plugged"
-msgstr "la batteria no esta"
+msgstr "la bateria no esta"
 
 #: librairy/HelpWindow.py:26
 msgid "Help Google2Ubuntu"
-msgstr "Utilizando de google2ubuntu"
+msgstr "Ayuda de google2ubuntu"
 
 #: librairy/interface.py:82
 msgid "unable to translate"
@@ -233,7 +233,7 @@ msgstr "imposible de traducir"
 
 #: librairy/moduleSelection.py:20
 msgid "Choose a file"
-msgstr "elige une archivo"
+msgstr "Elige une archivo"
 
 #: librairy/osd.py:41
 msgid "Error"
@@ -249,7 +249,7 @@ msgstr "orden de llamada"
 
 #: librairy/osd.py:70
 msgid "Information"
-msgstr "Inforamacion"
+msgstr "Información"
 
 #: librairy/osd.py:76
 msgid "Performing recording"
@@ -265,7 +265,7 @@ msgstr "terminado"
 
 #: librairy/stringParser.py:84
 msgid "Setup file missing"
-msgstr "El archivo de configuraciion no esta"
+msgstr "El archivo de configuración ausente"
 
 #: librairy/workWithModule.py:54
 msgid "you didn't say the linking word"
@@ -273,4 +273,4 @@ msgstr "no has dicho la palabra de enlace"
 
 #: librairy/workWithModule.py:58
 msgid "args file missing"
-msgstr "args archivo no esta"
+msgstr "args archivo ausente"
