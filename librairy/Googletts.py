@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from os.path import expanduser
+from librairy import LocaleHelper
 import urllib, urllib2, time, re, unicodedata, os, sys, locale
 
 class tts():
@@ -15,23 +16,8 @@ class tts():
 
         # make the program able to switch language
         p = os.path.dirname(os.path.abspath(__file__)).strip('librairy')   
-        if os.path.exists(expanduser('~')+'/.config/google2ubuntu/locale.conf'):
-            f=open(expanduser('~')+'/.config/google2ubuntu/locale.conf',"r")
-            lc = f.readline().strip('\n')
-            f.close()
-            if lc is not None and lc is not '':
-                lang = lc+'_'+lc.upper()
-            else:
-                lang = locale.getlocale()[0]
-                if os.path.isdir(p+'i18n/'+ lang.split('_')[0]) == False:
-                    lang='en_EN'
-        else:      
-            lang = locale.getlocale()[0]
-            if os.path.isdir(p+'i18n/'+ lang.split('_')[0]) == False:
-                lang='en_EN'
-
-        lc = lang.split('_')[0]
-        print lc
+        localeHelper = LocaleHelper()
+        lc = localeHelper.getLocale()
         text = unicodedata.normalize('NFKD', unicode(text,"utf-8")).encode('ASCII', 'ignore')
         #text=text.encode("utf8")
         text = text.replace('\n',' ')

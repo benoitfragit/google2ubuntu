@@ -8,6 +8,7 @@ from os.path import expanduser
 from ArgsWindow import ArgsWindow
 from moduleSelection import moduleSelection
 from HelpWindow import HelpWindow
+from librairy import LocaleHelper
 import os
 import sys
 import subprocess
@@ -564,20 +565,8 @@ class add_window():
         
         # default config file for the selected language
         path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')    
-        if os.path.exists(expanduser('~')+'/.config/google2ubuntu/locale.conf'):
-            f=open(expanduser('~')+'/.config/google2ubuntu/locale.conf',"r")
-            lc = f.readline().strip('\n')
-            f.close()
-            if lc is not None and lc is not '':
-                lang = lc+'_'+lc.upper()
-            else:
-                lang = locale.getlocale()[0]
-                if os.path.isdir(path+'i18n/'+ lang.split('_')[0]) == False:
-                    lang='en_EN'
-        else:      
-            lang = locale.getlocale()[0]
-            if os.path.isdir(path+'i18n/'+ lang.split('_')[0]) == False:
-                lang='en_EN'
+        localeHelper = LocaleHelper()
+        lang = localeHelper.getLocale()
         
         default = path +'config/'+lang+'/default.xml'        
 

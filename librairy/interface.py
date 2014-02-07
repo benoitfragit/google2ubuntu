@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from subprocess import *
 from os.path import expanduser
+from librairy import LocaleHelper
 import sys, subprocess, os, json, urllib2, unicodedata, time, gettext, locale
 
 from Googletts import tts
@@ -18,20 +19,8 @@ class interface():
     def __init__(self):
         # make the program able to switch language
         self.p = os.path.dirname(os.path.abspath(__file__)).strip('librairy')        
-        if os.path.exists(expanduser('~')+'/.config/google2ubuntu/locale.conf'):
-            f=open(expanduser('~')+'/.config/google2ubuntu/locale.conf',"r")
-            lc = f.readline().strip('\n')
-            f.close()
-            if lc is not None and lc is not '':
-                self.lang = lc+'_'+lc.upper()
-            else:
-                self.lang = locale.getlocale()[0]
-                if os.path.isdir(self.p+'i18n/'+ self.lang.split('_')[0]) == False:
-                    self.lang='en_EN'
-        else:      
-            self.lang = locale.getlocale()[0]
-            if os.path.isdir(self.p+'i18n/'+ self.lang.split('_')[0]) == False:
-                self.lang='en_EN'
+        localeHelper = LocaleHelper()
+        self.lang = localeHelper.getLocale('en_EN')
             
         # Initialisation des notifications
         self.PID = str(os.getpid())
