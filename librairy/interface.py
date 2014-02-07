@@ -76,7 +76,7 @@ class interface():
             req = urllib2.Request('https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang='+self.lang, data=data, headers={'Content-type': 'audio/x-flac; rate=16000'})  
             # retour de la requête
             ret = urllib2.urlopen(req)
-            
+
             # parsing du retour
             text=json.loads(ret.read())['hypotheses'][0]['utterance']
             os.system('echo "'+text.encode("utf-8")+'" > /tmp/g2u_result_'+self.PID)

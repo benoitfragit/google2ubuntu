@@ -267,11 +267,20 @@ class add_window():
         remove_button.set_tooltip_text(_('Remove this command'))
         remove_button.show()
         
+        # create a button to edit a module
+        module_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_EDIT)
+        module_button.set_label(_('Module setup'))
+        module_button.set_is_important(True)
+        toolbar.insert(module_button,3)
+        module_button.connect("clicked",self.edit_clicked,store)
+        module_button.set_tooltip_text(_('Module setup'))
+        module_button.show()
+        
         # create a button for the "remove all" action
         all_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_STOP)
         all_button.set_label(_("Clean up"))
         all_button.set_is_important(True)
-        toolbar.insert(all_button,3)
+        toolbar.insert(all_button,4)
         all_button.connect("clicked",self.removeall_clicked,store)
         all_button.set_tooltip_text(_('Remove all commands'))
         all_button.show() 
@@ -280,7 +289,7 @@ class add_window():
         help_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_HELP)
         help_button.set_label(_("Help"))
         help_button.set_is_important(True)
-        toolbar.insert(help_button,4)
+        toolbar.insert(help_button,5)
         help_button.connect("clicked",self.help_clicked )
         help_button.set_tooltip_text(_("Display help message"))
         help_button.show() 
@@ -290,12 +299,12 @@ class add_window():
         toolcombo = Gtk.ToolItem()
         toolcombo.add(self.combo)
         toolcombo.show()
-        toolbar.insert(toolcombo,5)        
+        toolbar.insert(toolcombo,6)        
         
         # add a separator
         separator = Gtk.ToolItem()
         separator.set_expand(True)
-        toolbar.insert(separator,6)
+        toolbar.insert(separator,7)
         
         # create a little menu button to override locale language
         current_locale = ((locale.getdefaultlocale()[0]).split('_'))[0]
@@ -323,7 +332,7 @@ class add_window():
         self.locale_button.set_is_important(True)
         self.locale_button.set_menu(locale_menu)
         self.locale_button.show()
-        toolbar.insert(self.locale_button,7)
+        toolbar.insert(self.locale_button,8)
         
         # return the complete toolbar
         return toolbar
@@ -418,6 +427,16 @@ class add_window():
             return True
         else:
             return False
+    
+    def edit_clicked(self,button,store):
+        # get the selected line, if it is module then we can open the window
+        (model, iters) = self.selection.get_selected()
+        if len(store) != 0:
+            iter = self.tree_filter.convert_iter_to_child_iter(iters)
+            if store[iter][2] == _('modules'):
+                w=ArgsWindow("",((store[iter][1]).split('/'))[-1],store,True)
+                    
+                            
 
     def add_clicked(self,button,store,add_type):
         """

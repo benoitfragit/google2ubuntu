@@ -22,7 +22,7 @@ class ArgsWindow():
     @param store
         a Gtk.Listore in which we will append a new line for this module
     """
-    def __init__(self,module,name,store,selection=None):
+    def __init__(self,module,name,store,exist=False):
         self.w = Gtk.Window()
         self.w.set_title(_("Module setup"))
         self.w.set_resizable(False)     
@@ -49,19 +49,20 @@ class ArgsWindow():
         button.set_image(image)
         
         print module, name
-        if selection is None:
+        if exist is False:
             button.connect("clicked",self.do_clicked,module,name,store)
         else:
             # currently modifying
             # if selection is not None then the user want to modify an existing module
-            print "modification"
             path = name.split('.')[0]
             # args file for the module should exist
-            argsfile = expanduser('~')+'/.config/modules/'+path+'/args'
+            argsfile = expanduser('~')+'/.config/google2ubuntu/modules/'+path+'/args'
+
             if os.path.exists(argsfile):
                 f = open(argsfile,"r")
                 linker = (f.readline().strip('\n')).split('=')[-1]
                 spacebyplus = (f.readline().strip('\n')).split('=')[-1]
+                f.close()
                 self.entry1.set_text(linker)
                 if spacebyplus == '1':
                     self.checkbutton.set_active(True)
@@ -107,4 +108,12 @@ class ArgsWindow():
         self.w.destroy()
     
     def do_modify(self,button,argsfile):
-        print argsfile
+        f = open(argsfile,"w")
+        f.write('linker='+self.entry1.get_text()+'\n')
+        if self.checkbutton.get_active():
+            f.write('spacebyplus=1\n')
+        else:
+            f.write('spacebyplus=0\n')
+            
+        f.close()
+        self.w.destroy()
