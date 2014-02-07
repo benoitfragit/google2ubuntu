@@ -227,6 +227,7 @@ I've wrote a documentation page with Sphinx
 ## Future version 1.0.9
    
 * adding a menu to change language
+* adding a class to manage locale easily
 * adding the possibility to reconfigure a module from google2ubuntu-manager
 * adding spanish translation
 * adding deutch translation
