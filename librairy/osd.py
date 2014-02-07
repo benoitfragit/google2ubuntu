@@ -4,25 +4,12 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import Notify
 from os.path import expanduser
+from librairy import LocaleHelper
 import time, os, gettext, sys, locale
 
 path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
-if os.path.exists(expanduser('~')+'/.config/google2ubuntu/locale.conf'):
-    f=open(expanduser('~')+'/.config/google2ubuntu/locale.conf',"r")
-    lc = f.readline().strip('\n')
-    f.close()
-    if lc is not None and lc is not '':
-        lang = lc
-    else:
-		lang = (locale.getlocale()[0]).split('_')[0]
-		if os.path.isdir(path+'i18n/'+lang) == False:
-			lang='en'
-else:      
-    lc = locale.getlocale()[0]
-    lang = lc.split('_')[0]
-    if os.path.isdir(path+'i18n/'+lang) == False:
-        lang='en'
-
+localeHelper = LocaleHelper()
+lang = localeHelper.getLocale()
 t=gettext.translation('google2ubuntu',path+'i18n/',languages=[lang])
 t.install()
 
