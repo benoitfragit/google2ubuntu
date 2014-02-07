@@ -218,6 +218,7 @@ class add_window():
         # which is the primary toolbar of the application
         toolbar.set_icon_size(Gtk.IconSize.LARGE_TOOLBAR)    
         toolbar.set_style(Gtk.ToolbarStyle.BOTH_HORIZ)
+        toolbar.set_show_arrow(True) 
 
         # create a menu
         menu = Gtk.Menu()

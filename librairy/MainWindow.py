@@ -19,7 +19,7 @@ class MainWindow(Gtk.ApplicationWindow):
     """
     def __init__(self,app):
         Gtk.Window.__init__(self, title="google2ubuntu-manager",application=app)
-        self.set_default_size(700, 500)  
+        self.set_default_size(769, 500)  
         self.set_resizable(True)     
         self.set_border_width(0)
         self.get_focus()
