@@ -21,9 +21,8 @@ class LocaleHelper:
         self.__localeConfPath = expanduser('~')+RELATIVE_LOCALE_CONFIG_PATH
     
     def __getSystemLocale(self):
-        lc = locale.getlocale()[0].split('_')[0]
-        if self.__checkIfLocalePresent(lc):
-            return lc
+        if self.__checkIfLocalePresent(self.__systemLocale):
+            return self.__systemLocale
         else:
             return DEFAULT_LOCALE
         
