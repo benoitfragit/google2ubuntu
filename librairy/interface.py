@@ -25,7 +25,9 @@ class interface():
             if lc is not None and lc is not '':
                 self.lang = lc+'_'+lc.upper()
             else:
-                self.lang = 'en_EN'
+                self.lang = locale.getlocale()[0]
+                if os.path.isdir(self.p+'i18n/'+ self.lang.split('_')[0]) == False:
+                    self.lang='en_EN'
         else:      
             self.lang = locale.getlocale()[0]
             if os.path.isdir(self.p+'i18n/'+ self.lang.split('_')[0]) == False:

@@ -14,7 +14,11 @@ if os.path.exists(expanduser('~')+'/.config/google2ubuntu/locale.conf'):
     if lc is not None and lc is not '':
         lang = lc
     else:
-        lang = 'en'
+        # better to check getlocale to retrieve default locale
+        lang = (locale.getlocale()[0]).split('_')[0]
+        # if default locale not supported take en as default
+        if os.path.isdir(os.path.dirname(os.path.abspath(__file__))+'/i18n/'+lang) == False:
+            lang = 'en'
 else:      
     lc = locale.getlocale()[0]
     lang = lc.split('_')[0]

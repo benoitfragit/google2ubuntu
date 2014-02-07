@@ -22,7 +22,9 @@ class tts():
             if lc is not None and lc is not '':
                 lang = lc+'_'+lc.upper()
             else:
-                lang = 'en_EN'
+                lang = locale.getlocale()[0]
+                if os.path.isdir(p+'i18n/'+ lang.split('_')[0]) == False:
+                    lang='en_EN'
         else:      
             lang = locale.getlocale()[0]
             if os.path.isdir(p+'i18n/'+ lang.split('_')[0]) == False:
