@@ -565,7 +565,7 @@ class add_window():
         
         # default config file for the selected language
         path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')    
-        localeHelper = LocaleHelper()
+        localeHelper = LocaleHelper('en_EN')
         lang = localeHelper.getLocale()
         
         default = path +'config/'+lang+'/default.xml'        
