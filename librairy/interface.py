@@ -23,7 +23,8 @@ class interface():
         localeHelper = LocaleHelper('en_EN')
 
         self.lang = localeHelper.getLocale()
-            
+        self.lang = self.lang+'_'+self.lang.upper()
+   
         # Initialisation des notifications
         self.PID = str(os.getpid())
         os.system('rm /tmp/g2u_*_'+self.PID+' 2>/dev/null')

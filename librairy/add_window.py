@@ -567,6 +567,7 @@ class add_window():
         path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')    
         localeHelper = LocaleHelper('en_EN')
         lang = localeHelper.getLocale()
+        lang = lang+'_'+lang.upper()
         
         default = path +'config/'+lang+'/default.xml'        
 
