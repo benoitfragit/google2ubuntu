@@ -243,7 +243,7 @@ I've wrote a documentation page with Sphinx
 
 #Update
 
-## Improvments
+## Improvements
 
 | State | Addons    
 |---|---
