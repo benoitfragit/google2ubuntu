@@ -57,6 +57,7 @@ Moreover, if you search in the application's menu you will find two launchers, o
 
 After that, you can launch google2ubuntu-manager.py in order to manage all commands.
 ![google2ubuntu-manager](http://pix.toile-libre.org/upload/original/1391806249.png)
+<a href='http://pix.toile-libre.org/?img=1391805854.png'><img src='http://pix.toile-libre.org/upload/thumb/1391805854.png' /></a> <a href='http://pix.toile-libre.org/?img=1391805991.png'><img src='http://pix.toile-libre.org/upload/thumb/1391805991.png' /></a> <a href='http://pix.toile-libre.org/?img=1391806086.png'><img src='http://pix.toile-libre.org/upload/thumb/1391806086.png' /></a> <a href='http://pix.toile-libre.org/?img=1391806166.png'><img src='http://pix.toile-libre.org/upload/thumb/1391806166.png' /></a> 
 
 
 As you can see, google2ubuntu comes with several default commands. I will explain you how to manage and add commands.
@@ -101,6 +102,7 @@ I've implemented different types of command:
 * **modules**
 
 ###External commands
+
 External commands are basically commands that you can run in your terminal:
 ```
 exo-open --launch MailReader
@@ -108,6 +110,7 @@ exo-open --launch MailReader
 If you want to add an external command, just click on the "Add" button. Then find the newline and replace "your key" by the key you want to associate to the command and replace "your command" by the action.
 
 ###Internal commands
+####What are they ?
 Internal commands are commands that I've implemented in google2ubuntu, for the moment there is 3 internal commands:
 
 | Name | Function | 
@@ -118,7 +121,11 @@ Internal commands are commands that I've implemented in google2ubuntu, for the m
 | dictation mode | Enter in dictation mode |
 | exit dictation mode | Exit dictation mode | 
 
-If you want to add an internal command, open the little menu near the "Add" button and select "internal". Then replace "your key" by the "key" you will pronounce to call this command and replace "word" by one of those 3 actions 
+If you want to add an internal command, open the little menu near the "Add" button and select "internal". Then replace "your key" by the "key" you will pronounce to call this command and replace "word" by one of those 5 actions' name. 
+
+####Some words about dictation mode
+
+The dictation mode let you type all word you pronouce. If you want to enter in the dictation mode use the dictation mode internal function. If you want to exit this mode just use the associated function. Dictation is not continue so you have to launch google2ubuntu for each sentence you want to type
 
 ###Modules
 In order to extand google2ubuntu very easily I've implemented a system of menu that let developers adds their own scripts in google2ubuntu. Besides, all modules will receive the text tha you pronouce in parameter
@@ -236,24 +243,23 @@ I've wrote a documentation page with Sphinx
 
 #Update
 
-## Future version 1.0.9
-   
-* adding a menu to change language
-* adding a class to manage locale easily
-* adding a dictation mode
-* adding the possibility to reconfigure a module from google2ubuntu-manager
-* drag & drop a folder automaticcaly add a line in the treeview with a command to open it
-* adding a man page
-* adding spanish translation
-* adding deutch translation
-* adding italian translation
-* correct dependancies
-* adding Sox not recording in 16kHz bug fixe
+## Improvments
 
-<a href='http://pix.toile-libre.org/?img=1391805854.png'><img src='http://pix.toile-libre.org/upload/thumb/1391805854.png' /></a> <a href='http://pix.toile-libre.org/?img=1391805991.png'><img src='http://pix.toile-libre.org/upload/thumb/1391805991.png' /></a> <a href='http://pix.toile-libre.org/?img=1391806086.png'><img src='http://pix.toile-libre.org/upload/thumb/1391806086.png' /></a> <a href='http://pix.toile-libre.org/?img=1391806166.png'><img src='http://pix.toile-libre.org/upload/thumb/1391806166.png' /></a> 
+| State | Addons    
+|---|---
+| done | adding a menu to change language 
+| done |adding a class to manage locale easily
+| done |adding a dictation mode
+| done | adding the possibility to reconfigure a module from google2ubuntu-manager
+| done |drag & drop a folder automaticcaly add a line in the treeview with a command to open it
+| done |adding a man page
+| done | adding spanish translation
+| done | adding deutch translation
+| done | adding italian translation
+| done | correct dependancies
+| done | adding Sox not recording in 16kHz bug fixe
+| todo | update the documentation
+| todo | improve translation 
+| todo | bug fixe 
+| todo | adding russian translation
 
-## TODO
-
-* update the documentation
-* improve translation
-* bug fixe
