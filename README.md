@@ -10,9 +10,9 @@ google2ubuntu is a tool that I started 2 years ago. Unfortunatly, I was not able
 * google2ubuntu.py
 * google2ubuntu-manager.py
 
-The first one lets you sends commands to Google and then execute some actions. The second one lets you manage all the commands. 
+The first one lets you send commands to Google and then execute some actions. The second one lets you manage all the commands. 
 
-I've done huge efforts to make the program easy to install and easy to use. Besides, the program can be internationalize, for the moment, it is already available in French and English.
+I've done huge efforts to make the program easy to install and easy to use. Besides, the program can be internationalize, for the moment, it is already available in French, English, Deutch, Spanish and Italian.
 
 #Installation
 ## Dependancies
@@ -59,7 +59,7 @@ After that, you can launch google2ubuntu-manager.py in order to manage all comma
 ![google2ubuntu-manager](http://pix.toile-libre.org/upload/original/1391806249.png)
 
 
-As you can see, google2ubuntu coms with several default commands. I will explain you how to manage and add commands.
+As you can see, google2ubuntu comes with several default commands. I will explain you how to manage and add commands.
 
 #Manage commands
 ##Commands' storage
@@ -67,13 +67,13 @@ By default, google2ubuntu comes with several commands stored in a default xml fi
 ```
 /usr/share/google2ubuntu/config/<your_language>/default.xml
 ```
-For the moment, there is a default file for French and English users, if your language is not currently supported the default voice will be English.
+For the moment, there is a default file for French, English, Spanish, Deutch and Italian users, if your language is not currently supported the default voice will be English.
 
 At the first, launch, a module folder is created in:
 ```
 ~/.config/google2ubuntu
 ```
-The first time you add, modify or rmove a command, your commands' configuration will be also stored in this folder:
+The first time you add, modify or remove a command, your commands' configuration will be also stored in this folder in the file:
 ```
 ~/.config/google2ubuntu/google2ubuntu.xml
 ```
@@ -110,9 +110,13 @@ If you want to add an external command, just click on the "Add" button. Then fin
 ###Internal commands
 Internal commands are commands that I've implemented in google2ubuntu, for the moment there is 3 internal commands:
 
-* time # show the time
-* power # show and say the state of the battery
-* clipboard # read the text selected by the cursor
+| Name | Function | 
+| --- | --- |
+| time   |  Tell the current time |
+| power | Tell the battery state |
+| clipboard | Read the text selected by the cursor |
+[ dictation mode | Enter in dictation mode |
+| exit dictation mode | Exit dictation mode | 
 
 If you want to add an internal command, open the little menu near the "Add" button and select "internal". Then replace "your key" by the "key" you will pronounce to call this command and replace "word" by one of those 3 actions 
 
