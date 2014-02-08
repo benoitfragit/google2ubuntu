@@ -39,6 +39,11 @@ class interface():
         p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         output,error  = p.communicate()
 
+		# convert the flac file if needed
+        command =self.p+'convert.sh ' + self.PID
+        p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        output,error  = p.communicate()
+
         self.sendto()    
 
     def sendto(self):
