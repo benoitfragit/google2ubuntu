@@ -32,6 +32,11 @@ class MyApplication(Gtk.Application):
     def do_activate(self):
         win = MainWindow(self)
         win.show_all()
+        localeHelper = LocaleHelper()
+        lang = localeHelper.getLocale()
+
+        t=gettext.translation('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/',languages=[lang])
+        t.install()
 
     def do_startup(self):
         Gtk.Application.do_startup(self)
