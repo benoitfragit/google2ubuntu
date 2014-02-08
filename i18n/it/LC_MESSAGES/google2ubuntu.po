@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: google 2ubuntu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-07 15:59+0100\n"
-"PO-Revision-Date: 2014-02-07 19:11+0100\n"
+"PO-Revision-Date: 2014-02-08 16:56+0100\n"
 "Last-Translator: Mte90 <mte90net@gmail.com>\n"
 "Language-Team: Italian\n"
 "Language: it\n"
@@ -194,15 +194,15 @@ msgstr "Appunti vuoto"
 
 #: librairy/basicCommands.py:66
 msgid "it is"
-msgstr "è"
+msgstr "sono le"
 
 #: librairy/basicCommands.py:66
 msgid "hour"
-msgstr "ora"
+msgstr "e"
 
 #: librairy/basicCommands.py:66
 msgid "minute"
-msgstr "minuto"
+msgstr " "
 
 #: librairy/basicCommands.py:85
 msgid "Charging"
@@ -246,7 +246,7 @@ msgstr "Risultato riconoscimento"
 
 #: librairy/osd.py:71
 msgid "Calling command"
-msgstr "esecuzione del comando"
+msgstr "Esecuzione del comando"
 
 #: librairy/osd.py:78
 msgid "Information"
