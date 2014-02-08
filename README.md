@@ -229,6 +229,7 @@ I've wrote a documentation page with Sphinx
    
 * adding a menu to change language
 * adding a class to manage locale easily
+* adding a dictation mode
 * adding the possibility to reconfigure a module from google2ubuntu-manager
 * drag a drop a folder automaticcaly add a line in the treeview with a command to open it
 * adding a man page
