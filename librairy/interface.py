@@ -39,11 +39,6 @@ class interface():
         p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         output,error  = p.communicate()
 
-		# convert the flac file if needed
-        command =self.p+'convert.sh ' + self.PID
-        p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        output,error  = p.communicate()
-
         self.sendto()    
 
     def sendto(self):
@@ -81,11 +76,12 @@ class interface():
             req = urllib2.Request('https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang='+self.lang, data=data, headers={'Content-type': 'audio/x-flac; rate=16000'})  
             # retour de la requête
             ret = urllib2.urlopen(req)
-            # before parsing we need to eliminate eventually empty result
-            ret= ((ret.read()).split('}'))[0]+'}]}'
+            
+            # before parsing we need to eliminate eventually empty result when sox bug
+            # ret= ((ret.read()).split('}'))[0]+'}]}'
 
             # parsing du retour
-            text=json.loads(ret)['hypotheses'][0]['utterance']
+            text=json.loads(ret.read())['hypotheses'][0]['utterance']
             os.system('echo "'+text.encode("utf-8")+'" > /tmp/g2u_result_'+self.PID)
 
             # parsing du résultat pour trouver l'action
