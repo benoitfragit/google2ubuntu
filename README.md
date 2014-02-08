@@ -115,7 +115,7 @@ Internal commands are commands that I've implemented in google2ubuntu, for the m
 | time   |  Tell the current time |
 | power | Tell the battery state |
 | clipboard | Read the text selected by the cursor |
-[ dictation mode | Enter in dictation mode |
+| dictation mode | Enter in dictation mode |
 | exit dictation mode | Exit dictation mode | 
 
 If you want to add an internal command, open the little menu near the "Add" button and select "internal". Then replace "your key" by the "key" you will pronounce to call this command and replace "word" by one of those 3 actions 
