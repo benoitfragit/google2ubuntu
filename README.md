@@ -24,14 +24,17 @@ For the moment, dependancies are:
 * python-gi
 * libnotify-dev
 * sox
-* alsa-utils
 * xdotool
 * libsox-fmt-mp3
 * acpi
-* python-request
+* python-requests
 * python-simplejson
 * python-urllib3
 
+If you are installing google2ubuntu from source not from deb or from ppa, type this:
+```
+   sudo apt-get install bash python python-gi python-requests python-simplejson python-urllib3 libsox-fmt-mp3 sox libnotify-dev acpi xdotool
+```
 
 ##Find the package
 google2ubuntu is available on Github on the [release](https://github.com/benoitfragit/google2ubuntu/releases) page and in my [ppa](https://launchpad.net/~benoitfra/+archive/google2ubuntu). To install google2ubuntu 
@@ -241,6 +244,7 @@ I've wrote a documentation page with Sphinx
 * adding deutch translation
 * adding italian translation
 * correct dependancies
+* adding Sox not recording in 16kHz bug fixe
 
 <a href='http://pix.toile-libre.org/?img=1391805854.png'><img src='http://pix.toile-libre.org/upload/thumb/1391805854.png' /></a> <a href='http://pix.toile-libre.org/?img=1391805991.png'><img src='http://pix.toile-libre.org/upload/thumb/1391805991.png' /></a> <a href='http://pix.toile-libre.org/?img=1391806086.png'><img src='http://pix.toile-libre.org/upload/thumb/1391806086.png' /></a> <a href='http://pix.toile-libre.org/?img=1391806166.png'><img src='http://pix.toile-libre.org/upload/thumb/1391806166.png' /></a> 
 
