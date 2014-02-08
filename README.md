@@ -26,7 +26,11 @@ For the moment, dependancies are:
 * sox
 * alsa-utils
 * xdotool
-* wget
+* libsox-fmt-mp3
+* acpi
+* python-request
+* python-simplejson
+* python-urllib3
 
 
 ##Find the package
@@ -231,11 +235,12 @@ I've wrote a documentation page with Sphinx
 * adding a class to manage locale easily
 * adding a dictation mode
 * adding the possibility to reconfigure a module from google2ubuntu-manager
-* drag a drop a folder automaticcaly add a line in the treeview with a command to open it
+* drag & drop a folder automaticcaly add a line in the treeview with a command to open it
 * adding a man page
 * adding spanish translation
 * adding deutch translation
 * adding italian translation
+* correct dependancies
 
 <a href='http://pix.toile-libre.org/?img=1391805854.png'><img src='http://pix.toile-libre.org/upload/thumb/1391805854.png' /></a> <a href='http://pix.toile-libre.org/?img=1391805991.png'><img src='http://pix.toile-libre.org/upload/thumb/1391805991.png' /></a> <a href='http://pix.toile-libre.org/?img=1391806086.png'><img src='http://pix.toile-libre.org/upload/thumb/1391806086.png' /></a> <a href='http://pix.toile-libre.org/?img=1391806166.png'><img src='http://pix.toile-libre.org/upload/thumb/1391806166.png' /></a> 
 
