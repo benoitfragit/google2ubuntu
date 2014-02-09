@@ -36,7 +36,7 @@ class add_window():
         self.tree_filter = store.filter_new()
 
         # create the treeview
-        treeview = Gtk.TreeView(self.tree_filter)
+        treeview = Gtk.TreeView.new_with_model(self.tree_filter)
         treeview.set_tooltip_text(_('list of commands'))
         treeview.set_headers_visible(False)
         treeview.set_enable_search(True)
@@ -438,8 +438,6 @@ class add_window():
                 if store[iter][2] == _('modules'):
                     w=ArgsWindow("",((store[iter][1]).split('/'))[-1],store,True)
                     
-                            
-
     def add_clicked(self,button,store,add_type):
         """
         @description: callback function called when the user want to add
