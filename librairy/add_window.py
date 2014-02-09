@@ -433,9 +433,10 @@ class add_window():
         # get the selected line, if it is module then we can open the window
         (model, iters) = self.selection.get_selected()
         if len(store) != 0:
-            iter = self.tree_filter.convert_iter_to_child_iter(iters)
-            if store[iter][2] == _('modules'):
-                w=ArgsWindow("",((store[iter][1]).split('/'))[-1],store,True)
+            if iters is not None:
+                iter = self.tree_filter.convert_iter_to_child_iter(iters)
+                if store[iter][2] == _('modules'):
+                    w=ArgsWindow("",((store[iter][1]).split('/'))[-1],store,True)
                     
                             
 
