@@ -7,14 +7,14 @@ import os
 RELATIVE_LOCALE_CONFIG_PATH = '/.config/google2ubuntu/locale.conf'
 
 class LocaleHelper:
-    def __init__(self, defaultLocale = 'en', languageFolder = os.path.dirname(os.path.abspath(__file__))+'/../i18n/'):
+    def __init__(self, defaultLocale = 'en_EN', languageFolder = os.path.dirname(os.path.abspath(__file__))+'/../i18n/'):
         systemLocale = locale.getlocale()
         
         self.__systemLocale = None
         
         if systemLocale is not None and len(systemLocale) > 0:
             if systemLocale[0] is not None and len(systemLocale[0]) > 0:
-                self.__systemLocale = systemLocale[0].split('_')[0]
+                self.__systemLocale = systemLocale[0]
         
         self.__languageFolder = languageFolder
         self.__defaultLocale = defaultLocale

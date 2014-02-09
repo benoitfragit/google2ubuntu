@@ -308,7 +308,7 @@ class add_window():
         toolbar.insert(separator,7)
         
         # create a little menu button to override locale language
-        current_locale = ((locale.getdefaultlocale()[0]).split('_'))[0]
+        current_locale = locale.getdefaultlocale()[0]
         
         locale_config=expanduser('~')+'/.config/google2ubuntu/locale.conf'
         if os.path.exists(locale_config):
