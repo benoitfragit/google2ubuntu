@@ -19,14 +19,19 @@ class HelpWindow():
         # lists of authors and documenters (will be used later)
         authors = ["Franquet Benoit"]
         documenters = ["Franquet Benoit"]
+        translators = "Franquet Benoit <benoitfranquet@gmail.com>\n"
+        translators += "Daniele Scasciafratte <mte90net@gmail.com>"
 
         # we fill in the aboutdialog
         self.aboutdialog.set_program_name(_("Help Google2Ubuntu"))
         self.aboutdialog.set_copyright("Copyright \xc2\xa9 2014 Franquet Benoit")
         self.aboutdialog.set_authors(authors)
+        self.aboutdialog.set_translator_credits(translators) 
         self.aboutdialog.set_documenters(documenters)
-        self.aboutdialog.set_website("http://forum.ubuntu-fr.org/viewtopic.php?id=804211&p=1")
-        self.aboutdialog.set_website_label("http://forum.ubuntu-fr.org/viewtopic.php?id=804211&p=1")
+        self.aboutdialog.set_version("1.1.1")
+        self.aboutdialog.set_license_type (Gtk.License.GPL_3_0,)
+        self.aboutdialog.set_website("https://github.com/benoitfragit/google2ubuntu")
+        self.aboutdialog.set_website_label("https://github.com/benoitfragit/google2ubuntu")
 
         # we do not want to show the title, which by default would be "About AboutDialog Example"
         # we have to reset the title of the messagedialog window after setting the program name

@@ -38,7 +38,7 @@ class add_window():
         # create the treeview
         treeview = Gtk.TreeView.new_with_model(self.tree_filter)
         treeview.set_tooltip_text(_('list of commands'))
-        treeview.set_headers_visible(True)
+        treeview.set_headers_visible(False)
         treeview.set_enable_search(True)
         treeview.set_search_column(1)
         treeview.set_hexpand(True)
