@@ -27,13 +27,11 @@ For the moment, dependancies are:
 * xdotool
 * libsox-fmt-mp3
 * acpi
-* python-requests
 * python-simplejson
-* python-urllib3
 
 If you are installing google2ubuntu from source not from deb or from ppa, type this:
 ```
-   sudo apt-get install bash python python-gi python-requests python-simplejson python-urllib3 libsox-fmt-mp3 sox libnotify-dev acpi xdotool
+   sudo apt-get install bash python python-gi python-simplejson libsox-fmt-mp3 sox libnotify-dev acpi xdotool
 ```
 
 ##Find the package
