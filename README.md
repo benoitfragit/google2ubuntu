@@ -248,18 +248,18 @@ I've wrote a documentation page with Sphinx
 | State | Addons    
 |---|---
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding a menu to change language 
-| done |adding a class to manage locale easily
-| done |adding a dictation mode
-| done | adding the possibility to reconfigure a module from google2ubuntu-manager
-| done |drag & drop a folder automaticcaly add a line in the treeview with a command to open it
-| done |adding a man page
-| done | adding spanish translation
-| done | adding deutch translation
-| done | adding italian translation
-| done | correct dependancies
-| done | adding Sox not recording in 16kHz bug fixe
-| todo | update the documentation
-| todo | improve translation 
-| todo | bug fixe 
-| todo | adding russian translation
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) |adding a class to manage locale easily
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) |adding a dictation mode
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding the possibility to reconfigure a module from google2ubuntu-manager
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) |drag & drop a folder automaticcaly add a line in the treeview with a command to open it
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) |adding a man page
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding spanish translation
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding deutch translation
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding italian translation
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | correct dependancies
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding Sox not recording in 16kHz bug fixe
+| ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | update the documentation
+| ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | improve translation 
+| ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif)| bug fixe 
+| ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | adding russian translation
 
