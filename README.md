@@ -258,6 +258,8 @@ I've wrote a documentation page with Sphinx
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding italian translation
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | correct dependancies
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding Sox not recording in 16kHz bug fixe
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | correct module setup button bug
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | correct pyGobject constructor issue
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | update the documentation
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | improve translation 
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif)| bug fixe 
