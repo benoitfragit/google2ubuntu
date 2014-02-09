@@ -40,7 +40,6 @@ class interface():
         p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         output,error  = p.communicate()
 
-
         # return to 16kHz
         os.system(self.p+'convert.sh '+self.PID)
         
