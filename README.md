@@ -247,7 +247,7 @@ I've wrote a documentation page with Sphinx
 
 | State | Addons    
 |---|---
-| done | adding a menu to change language 
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding a menu to change language 
 | done |adding a class to manage locale easily
 | done |adding a dictation mode
 | done | adding the possibility to reconfigure a module from google2ubuntu-manager
