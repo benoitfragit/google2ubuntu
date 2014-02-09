@@ -23,7 +23,8 @@ class interface():
         localeHelper = LocaleHelper('en_EN')
 
         self.lang = localeHelper.getLocale()
-        self.lang = self.lang+'_'+self.lang.upper()
+        # this line can be remove if we modify the config/en_EN to config/en
+        #self.lang = self.lang+'_'+self.lang.upper()
    
         # Initialisation des notifications
         self.PID = str(os.getpid())
@@ -56,7 +57,7 @@ class interface():
         f.close()
         
         # suppression du fichier audio
-        if os.path.isfile('/tmp/voix_'+self.PID+'.flac'):
+        if os.path.exists('/tmp/voix_'+self.PID+'.flac'):
             os.system('rm /tmp/voix_'+self.PID+'.flac')
         
         # fichier de configuration
