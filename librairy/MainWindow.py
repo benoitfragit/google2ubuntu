@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-  
 from gi.repository import Gtk
@@ -11,7 +12,7 @@ import sys
 import subprocess
 import gettext
 
-# Classe MyWindow gere l'apparition de la fenêtre principale
+# Classe MyWindow gere l'apparition de la fenetre principale
 class MainWindow(Gtk.ApplicationWindow):
     """
     @description: This class display the main window that the user will 
@@ -19,7 +20,7 @@ class MainWindow(Gtk.ApplicationWindow):
     """
     def __init__(self,app):
         Gtk.Window.__init__(self, title="google2ubuntu-manager",application=app)
-        self.set_default_size(769, 500)  
+        self.set_default_size(850, 500)  
         self.set_resizable(True)     
         self.set_border_width(0)
         self.get_focus()

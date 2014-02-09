@@ -38,7 +38,7 @@ class add_window():
         # create the treeview
         treeview = Gtk.TreeView.new_with_model(self.tree_filter)
         treeview.set_tooltip_text(_('list of commands'))
-        treeview.set_headers_visible(False)
+        treeview.set_headers_visible(True)
         treeview.set_enable_search(True)
         treeview.set_search_column(1)
         treeview.set_hexpand(True)
@@ -249,24 +249,42 @@ class add_window():
         add_button.connect("clicked", self.add_clicked,store,'externe')
         add_button.set_tooltip_text(_('Add a new command'))
         add_button.show()
- 
-        # create a button for the "try" action
+        
+        # create a menu to store remove action
+        delete_menu = Gtk.Menu()
+        one_item = Gtk.MenuItem(label=_("Remove"))
+        one_item.connect("activate",self.remove_clicked,store)
+        one_item.set_tooltip_text(_('Remove this command'))
+        one_item.show()
+        delete_menu.append(one_item)
+        all_item = Gtk.MenuItem(label=_("Clean up"))
+        all_item.connect("activate",self.removeall_clicked,store)
+        all_item.set_tooltip_text(_('Remove all commands'))
+        all_item.show()
+        delete_menu.append(all_item)   
+
+        remove_button = Gtk.MenuToolButton.new_from_stock(Gtk.STOCK_REMOVE)
+        remove_button.set_label(_("Remove"))
+        remove_button.set_menu(delete_menu)
+        image = Gtk.Image()
+        image.set_from_stock(Gtk.STOCK_REMOVE, Gtk.IconSize.BUTTON)
+        # label is shown
+        remove_button.set_is_important(True)
+        # insert the button at position in the toolbar
+        toolbar.insert(remove_button, 1)
+        # show the button
+        remove_button.connect("clicked", self.remove_clicked,store)
+        remove_button.set_tooltip_text(_('Remove this command'))
+        remove_button.show()
+
+         # create a button for the "try" action
         try_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_MEDIA_PLAY)
         try_button.set_label(_("Try"))
         try_button.set_is_important(True)
-        toolbar.insert(try_button,1)
+        toolbar.insert(try_button,2)
         try_button.connect("clicked",self.try_command,store)
         try_button.set_tooltip_text(_('Try this command'))
         try_button.show() 
-         
-        # create a button for the "remove" action
-        remove_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_REMOVE)
-        remove_button.set_label(_("Remove"))
-        remove_button.set_is_important(True)
-        toolbar.insert(remove_button,2)
-        remove_button.connect("clicked",self.remove_clicked,store)
-        remove_button.set_tooltip_text(_('Remove this command'))
-        remove_button.show()
         
         # create a button to edit a module
         module_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_EDIT)
@@ -277,20 +295,11 @@ class add_window():
         module_button.set_tooltip_text(_('Module setup'))
         module_button.show()
         
-        # create a button for the "remove all" action
-        all_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_STOP)
-        all_button.set_label(_("Clean up"))
-        all_button.set_is_important(True)
-        toolbar.insert(all_button,4)
-        all_button.connect("clicked",self.removeall_clicked,store)
-        all_button.set_tooltip_text(_('Remove all commands'))
-        all_button.show() 
-        
         # create a button for the "Help" action
         help_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_HELP)
         help_button.set_label(_("Help"))
         help_button.set_is_important(True)
-        toolbar.insert(help_button,5)
+        toolbar.insert(help_button,4)
         help_button.connect("clicked",self.help_clicked )
         help_button.set_tooltip_text(_("Display help message"))
         help_button.show() 
@@ -300,12 +309,12 @@ class add_window():
         toolcombo = Gtk.ToolItem()
         toolcombo.add(self.combo)
         toolcombo.show()
-        toolbar.insert(toolcombo,6)        
+        toolbar.insert(toolcombo,5)        
         
         # add a separator
         separator = Gtk.ToolItem()
         separator.set_expand(True)
-        toolbar.insert(separator,7)
+        toolbar.insert(separator,6)
         
         # create a little menu button to override locale language
         current_locale = locale.getdefaultlocale()[0]
@@ -333,7 +342,7 @@ class add_window():
         self.locale_button.set_is_important(True)
         self.locale_button.set_menu(locale_menu)
         self.locale_button.show()
-        toolbar.insert(self.locale_button,8)
+        toolbar.insert(self.locale_button,7)
         
         # return the complete toolbar
         return toolbar
@@ -510,14 +519,15 @@ class add_window():
         """
         if len(store) != 0:
             (model, iters) = self.selection.get_selected()
-            iter = self.tree_filter.convert_iter_to_child_iter(iters)
-            if iter is not None:
-                self.show_label('show')
-                self.labelState.set_text(_('Remove')+': '+store[iter][0]+' '+store[iter][1]) 
-                store.remove(iter)
-                self.saveTree(store)
-            else:
-                print "Select a title to remove"
+            if iters is not None:
+                iter = self.tree_filter.convert_iter_to_child_iter(iters)
+                if iter is not None:
+                    self.show_label('show')
+                    self.labelState.set_text(_('Remove')+': '+store[iter][0]+' '+store[iter][1]) 
+                    store.remove(iter)
+                    self.saveTree(store)
+                else:
+                    print "Select a title to remove"
         else:
             print "Empty list"
 
