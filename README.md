@@ -261,7 +261,7 @@ I've wrote a documentation page with Sphinx
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | correct pyGobject constructor issue
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | regroupe both remove all and delete in one button
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | delete button bug fixe when no item selected
-| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | localHelper not locale name
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | localHelper not cut locale name
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | beginning to work on the HelpWindow
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | changing i18n locale's folder name
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | update the documentation
