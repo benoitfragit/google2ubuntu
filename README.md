@@ -194,7 +194,7 @@ If you want to translate this app, you need first to download the [project](http
 ```
 _('text to translate')
 ```
-Then be sure, that there is this at the begenning of the file you want to translate:
+Then be sure, that there is this at the begenning of the file you want to translate (only needed for google2ubuntu.py, gogl2ubuntu-manager.py)
 ```
 import gettext
 
@@ -208,6 +208,7 @@ mkdir -p i18n/<new_language/LC_MESSAGES
 xgettext --language=Python --keyword=_ --output=./i18n/google2ubuntu.pot ./*.py librairy/*.py
 msginit --input=./i18n/google2ubuntu.pot --output=./i18n/<new_language>/LC_MESSAGES/google2ubuntu.po
 ```
+The 2 first line are optional and are usefull only there is no .pot file in the i18n/ folder.
 
 Then, open the `.po` file and translate all the line, then compoile the `.po` :
 ```
