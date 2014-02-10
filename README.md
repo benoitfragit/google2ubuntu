@@ -18,23 +18,13 @@ I've done huge efforts to make the program easy to install and easy to use. Besi
 Before I begin, I want to thank some of you that help me.
 
 ##Contributors
-###Devs
+Devs | Translators | Bug reports
+-----| ----- | -----
+ [tectas](https://github.com/tectas) | [tectas](https://github.com/tectas) | [bmeznarsic](https://github.com/bmeznarsic) 
+ [mte90](https://github.com/mte90) | [mte90](https://github.com/mte90) | [Andrew from Webupd8](https://github.com/hotice)
+ | [lincus](https://github.com/lincus) |  [mte90](https://github.com/mte90)
+ | |  [mads5408](https://github.com/mads5408)
 
-* [tectas](https://github.com/tectas) 
-* [mte90](https://github.com/mte90)
-
-###Translators
-
-* [tectas](https://github.com/tectas) 
-* [mte90](https://github.com/mte90)
-* [lincus](https://github.com/lincus)
-
-###Bug Reports
-
-* [bmeznarsic](https://github.com/bmeznarsic) 
-* [Andrew from Webupd8](https://github.com/hotice)
-* [mte90](https://github.com/mte90)
-* [mads5408](https://github.com/mads5408)
 
 ##Publication
 [WebUpd8](http://www.webupd8.org/2014/02/linux-speech-recognition-using-google.html#more)
