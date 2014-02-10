@@ -27,8 +27,9 @@ Devs | Translators | Bug reports
 
 
 ##Publication
-[WebUpd8](http://www.webupd8.org/2014/02/linux-speech-recognition-using-google.html#more)
-[La vache libre](http://la-vache-libre.org/google2ubuntu-le-projet-de-reconnaissance-vocale-pour-gnulinux-a-un-nouveau-developpeur/)
+
+* [WebUpd8](http://www.webupd8.org/2014/02/linux-speech-recognition-using-google.html#more)
+* [La vache libre](http://la-vache-libre.org/google2ubuntu-le-projet-de-reconnaissance-vocale-pour-gnulinux-a-un-nouveau-developpeur/)
 
 
 
