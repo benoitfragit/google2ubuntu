@@ -20,21 +20,21 @@ Before I begin, I want to thank some of you that help me.
 ##Contributors
 ###Devs
 
-* tectas
-* Mte90
+* [tectas](https://github.com/tectas) 
+* [mte90](https://github.com/mte90)
 
-###Translator
+###Translators
 
-* tectas 
-* mte90
-* lincus
+* [tectas](https://github.com/tectas) 
+* [mte90](https://github.com/mte90)
+* [lincus](https://github.com/lincus)
 
 ###Bug Reports
 
-* bmeznarsic 
-* hotice from Webupd8
-* Mte90
-* made5488
+* [bmeznarsic](https://github.com/bmeznarsic) 
+* [Andrew from Webupd8](https://github.com/hotice)
+* [mte90](https://github.com/mte90)
+* [mads5408](https://github.com/mads5408)
 
 ##Publication
 [WebUpd8](http://www.webupd8.org/2014/02/linux-speech-recognition-using-google.html#more)
