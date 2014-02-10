@@ -14,6 +14,34 @@ The first one lets you send commands to Google and then execute some actions. Th
 
 I've done huge efforts to make the program easy to install and easy to use. Besides, the program can be internationalize, for the moment, it is already available in French, English, Deutch, Spanish and Italian.
 
+# Special thanks
+Before I begin, I want to thank some of you that help me.
+
+##Contributors
+###Devs
+
+* tectas
+* Mte90
+
+###Translator
+
+* tectas 
+* mte90
+* lincus
+
+###Bug Reports
+
+* bmeznarsic 
+* hotice from Webupd8
+* Mte90
+* made5488
+
+##Publication
+[WebUpd8](http://www.webupd8.org/2014/02/linux-speech-recognition-using-google.html#more)
+[La vache libre](http://la-vache-libre.org/google2ubuntu-le-projet-de-reconnaissance-vocale-pour-gnulinux-a-un-nouveau-developpeur/)
+
+
+
 #Installation
 ## Dependancies
 
