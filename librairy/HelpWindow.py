@@ -20,7 +20,9 @@ class HelpWindow():
         authors = ["Franquet Benoit"]
         documenters = ["Franquet Benoit"]
         translators = "Franquet Benoit <benoitfranquet@gmail.com>\n"
-        translators += "Daniele Scasciafratte <mte90net@gmail.com>"
+        translators += "Tectas\n"
+        translators += "Daniele Scasciafratte <mte90net@gmail.com>\n"
+        translators += "Leor < leor.bi.otti.flor@gmail.com﻿>"
 
         # we fill in the aboutdialog
         self.aboutdialog.set_program_name(_("Help Google2Ubuntu"))

@@ -49,7 +49,7 @@ class workWithModule():
                 
                 # commande qui sera exécutée    
                 
-                execute = expanduser('~') +'/.config/google2ubuntu/modules/'+module_path+'/'+module_name+' '+'"'+param+'"'
+                execute = expanduser('~') +'/.config/google2ubuntu/modules/'+module_path+'/'+module_name+' '+'"'+param+'" &'
                 os.system(execute)
             else:
                 message=_("you didn't say the linking word")   
