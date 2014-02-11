@@ -25,7 +25,7 @@ class stringParser():
             # si le mode dictée est activé
             if os.path.exists('/tmp/g2u_dictation'):
                 for entry in root.findall('entry'):
-                    if entry.get('name') == _('internal'):
+                    if entry.get('name') == _('internal') and entry.find('command').text == unicode(_('exit dictation mode'),"utf8"):
                         score = 0
                         Type=entry.get('name')
                         Key=entry.find('key').text
@@ -34,13 +34,11 @@ class stringParser():
                         for j in range(len(key)):
                             score += text.count(key[j])
                         
-                        if max < score:
-                            max = score
+                        if score == len(key):
                             do = Command
                             tp = Type
-                        
-                if max == 0:
-                    do = text
+                        else:
+                            do = text
             else:
                 for entry in root.findall('entry'):
                     score = 0
