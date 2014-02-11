@@ -283,6 +283,9 @@ I've wrote a documentation page with Sphinx
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | localHelper not cut locale name
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | beginning to work on the HelpWindow
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | changing i18n locale's folder name
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | correct a bug due to module execution
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding pt_BR support
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding pt_PT support
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | update the documentation
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | improve translation 
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | bug fixe 
