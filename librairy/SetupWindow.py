@@ -22,11 +22,13 @@ class SetupWindow():
         # build the window
         self.w = Gtk.Window()
         self.w.set_title(_("Setup window"))
-        self.w.set_resizable(True)     
+        self.w.set_resizable(False)     
         self.w.get_focus()
         self.w.set_position(Gtk.WindowPosition.CENTER)      
-        self.w.set_default_size(300,300)  
+        self.w.set_default_size(80,80)  
         self.w.set_border_width(5)
+        self.w.set_hexpand(True)
+        self.w.set_vexpand(True)
 
         # add the grid to the window        
         grid = self.__getGrid()
@@ -76,21 +78,24 @@ class SetupWindow():
         label1=Gtk.Label(_('Set the recording time'))
         label2=Gtk.Label(_('Set the mode'))
         label3=Gtk.Label(_("Set the music player's play command"))
-        label4=Gtk.Label(_("Set the music palyer's pause command")=
+        label4=Gtk.Label(_("Set the music palyer's pause command"))
         
-        scale = Gtk.Scale()
+        scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL,1,10,1)
         switch = Gtk.Switch()
         entry1 = Gtk.Entry()
         entry2 = Gtk.Entry()
         button = Gtk.Button.new_from_stock(Gtk.STOCK_OK)
+        
         grid = Gtk.Grid()
-        grid.attach(label1,0,0,1,1)
-        grid.attach(scale, 0,1,1,2)
-        grid.attach(label2,0,2,1,3)
-        grid.attach(switch,1,2,2,3)
-        grid.attach(label3,0,3,1,4)
-        grid.attach(entry1,0,4,1,5)
-        grid.attach(label4,0,5,1,6)
-        grid.attach(entry2,0,6,1,7)
-        grid.attach(button,1,7,2,8)
-        return   grid
+        grid.set_row_spacing(5)
+        grid.set_column_spacing(5)
+        grid.attach(label1,0,0,6,1)
+        grid.attach(scale, 0,1,6,1)
+        grid.attach(label2,0,2,5,1)
+        grid.attach(switch,5,2,1,1)
+        grid.attach(label3,0,3,6,1)
+        grid.attach(entry1,0,4,6,1)
+        grid.attach(label4,0,5,6,1)
+        grid.attach(entry2,0,6,6,1)
+        grid.attach(button,5,7,1,1)
+        return grid
