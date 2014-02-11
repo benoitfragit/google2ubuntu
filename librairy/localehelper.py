@@ -24,30 +24,40 @@ class LocaleHelper:
         if self.__checkIfLocalePresent(self.__systemLocale):
             return self.__systemLocale
         else:
-            return self.__defaultLocale
-        
-    def __getLocaleConfigValue(self):
-        configFileHandle = None
-        localeConfig = None
+            fallback = self.__getLocaleFallbackValue(self.__systemLocale)
+            if self.__checkIfLocalePresent(fallback):
+                return fallback
+            else:
+                return self.__defaultLocale
+
+    def __readSingleLine(self, filePath):
+        fileHandle = None
+        line = None
         try:
-            configFileHandle = open(self.__localeConfPath, 'r')
-            localeConfig = configFileHandle.readline().strip('\n')
+            fileHandle = open(filePath, 'r')
+            line = fileHandle.readline().strip('\n')
         except:
             pass
         finally:
-            if configFileHandle:
-                configFileHandle.close()
-        
-        if localeConfig is None or localeConfig == '':
-            return self.__getSystemLocale()
+            if fileHandle:
+                fileHandle.close()
+        return line
+
+    def __getLocaleConfigValue(self):
+        lc = self.__readSingleLine(self.__localeConfPath)
+        if self.__checkIfLocalePresent(lc):
+            return lc
         else:
-            if self.__checkIfLocalePresent(localeConfig):
-                return localeConfig
-            else:
-                return self.__defaultLocale
-            
+            return self.__getSystemLocale()
+
+    def __getLocaleFallbackValue(self, lang):
+        if lang is not None and lang != '':
+            return self.__readSingleLine(self.__languageFolder+lang+'/fallback')
+        return None
+
     def __checkIfLocalePresent(self, lang):
-        return os.path.isdir(self.__languageFolder+lang) == True
+        return lang is not None and lang != '' and \
+                os.path.isdir(self.__languageFolder+lang+'/LC_MESSAGES') == True
     
     def getLocale(self):
         return self.__getLocaleConfigValue()
