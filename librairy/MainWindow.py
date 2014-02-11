@@ -11,6 +11,8 @@ import sys
 import subprocess
 import gettext
 
+from SetupWindow import *
+
 # Classe MyWindow gere l'apparition de la fenetre principale
 class MainWindow(Gtk.ApplicationWindow):
     """
@@ -32,3 +34,4 @@ class MainWindow(Gtk.ApplicationWindow):
         # show
         self.add(content.get_grid())
         self.show_all()
+        s = SetupWindow()
