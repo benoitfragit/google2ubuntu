@@ -69,8 +69,8 @@ class SetupWindow():
         try:
             with open(self.config, "w") as f:
                 f.write('recording='+str(self.recording_time)+'\n')
-                f.write('pause='+self.player_pause+'\n')
-                f.write('play='+self.player_play+'\n')
+                f.write('pause='+self.entry2.get_text()+'\n')
+                f.write('play='+self.entry1.get_text()+'\n')
                 f.write('locale='+self.locale+'\n')
                 f.close()
         except Exception:
@@ -99,18 +99,16 @@ class SetupWindow():
         self.scale.connect("value-changed", self.scale_moved)
         self.scale.set_tooltip_text(_('Change the recording time'))
                 
-        entry1 = Gtk.Entry()
-        entry1.set_text(self.player_play)
-        entry1.set_tooltip_text(_('Set the play command'))
-        entry1.connect("activate", self.entry1_activate)
+        self.entry1 = Gtk.Entry()
+        self.entry1.set_text(self.player_play)
+        self.entry1.set_tooltip_text(_('Set the play command'))
         
-        entry2 = Gtk.Entry()
-        entry2.set_text(self.player_pause)
-        entry2.set_tooltip_text(_('Set the pause command'))
-        entry2.connect("activate", self.entry2_activate)
-        image = Gtk.Image()
-        image.set_from_stock(Gtk.STOCK_OK, Gtk.IconSize.BUTTON)
-        button = Gtk.Button(label="", image=image)
+        
+        self.entry2 = Gtk.Entry()
+        self.entry2.set_text(self.player_pause)
+        self.entry2.set_tooltip_text(_('Set the pause command'))
+
+        button = Gtk.Button.new_from_stock(Gtk.STOCK_OK)
         button.connect("clicked",self.on_clicked)
         
         hs1 = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
@@ -126,23 +124,15 @@ class SetupWindow():
         grid.attach(self.scale, 0,3,6,1)
         grid.attach(hs2,0,4,6,1)
         grid.attach(label4,0,5,6,1)
-        grid.attach(entry1,0,6,6,1)
+        grid.attach(self.entry1,0,6,6,1)
         grid.attach(label5,0,7,6,1)
-        grid.attach(entry2,0,8,6,1)
+        grid.attach(self.entry2,0,8,6,1)
         grid.attach(button,5,9,1,1)
         
         return grid
 
     def scale_moved(self,event):
         self.recording_time = int(self.scale.get_value())
-        self.__recordconfig()
-
-    def entry1_activate(self,entry):
-        self.player_play = entry.get_text()
-        self.__recordconfig()
-    
-    def entry2_activate(self,entry):
-        self.player_pause = entry.get_text()
         self.__recordconfig()
 
     def dictation_state(self,button,active):
