@@ -9,6 +9,7 @@ from ArgsWindow import ArgsWindow
 from moduleSelection import moduleSelection
 from HelpWindow import HelpWindow
 from localehelper import LocaleHelper
+from SetupWindow import *
 import os
 import sys
 import subprocess
@@ -77,10 +78,6 @@ class add_window():
         self.labelState.set_text(_("Ready"))
         self.labelState.set_justify(Gtk.Justification.LEFT) 
         self.labelState.set_halign(Gtk.Align.START) 
-
-        # when a row of the treeview is selected, it emits a signal
-        self.selection = treeview.get_selection()
-        self.selection.connect("changed", self.on_changed)
         
         # Use ScrolledWindow to make the TreeView scrollable
         # Otherwise the TreeView would expand to show all items
@@ -97,6 +94,10 @@ class add_window():
         toolbar = self.create_toolbar(store)
         toolbar.set_hexpand(True)
         toolbar.show()
+
+        # when a row of the treeview is selected, it emits a signal
+        self.selection = treeview.get_selection()
+        self.selection.connect("changed", self.on_changed,store)
 
         # define the visible func toolbar should be create
         self.tree_filter.set_visible_func(self.match_func)
@@ -187,7 +188,7 @@ class add_window():
         store[path][0] = text
         self.saveTree(store)
 
-    def on_changed(self, selection):
+    def on_changed(self, selection,store):
         """
         @description: hide the bottom label when the selection change
         
@@ -199,7 +200,17 @@ class add_window():
         # get the model and the iterator that points at the data in the model
         (model, iter) = selection.get_selected()
         if iter is not None:
-            self.show_label('hide')          
+            self.show_label('hide')
+            path = self.tree_filter.convert_iter_to_child_iter(iter)
+            if store[path][2] == _('external'):
+                self.try_button.show()
+                self.module_button.hide()
+            elif store[path][2] == _('modules'):
+                self.try_button.hide()
+                self.module_button.show()
+            else:
+                self.try_button.hide()
+                self.module_button.hide()
          
         return True
 
@@ -278,31 +289,32 @@ class add_window():
         remove_button.show()
 
          # create a button for the "try" action
-        try_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_MEDIA_PLAY)
-        try_button.set_label(_("Try"))
-        try_button.set_is_important(True)
-        toolbar.insert(try_button,2)
-        try_button.connect("clicked",self.try_command,store)
-        try_button.set_tooltip_text(_('Try this command'))
-        try_button.show() 
+        self.try_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_MEDIA_PLAY)
+        self.try_button.set_label(_("Try"))
+        self.try_button.set_is_important(True)
+        self.try_button.connect("clicked",self.try_command,store)
+        self.try_button.set_tooltip_text(_('Try this command'))
+        self.try_button.hide()
+        toolbar.insert(self.try_button,2)
+
         
         # create a button to edit a module
-        module_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_EDIT)
-        module_button.set_label(_('Module setup'))
-        module_button.set_is_important(True)
-        toolbar.insert(module_button,3)
-        module_button.connect("clicked",self.edit_clicked,store)
-        module_button.set_tooltip_text(_('Module setup'))
-        module_button.show()
-        
-        # create a button for the "Help" action
-        help_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_HELP)
-        help_button.set_label(_("Help"))
-        help_button.set_is_important(True)
-        toolbar.insert(help_button,4)
-        help_button.connect("clicked",self.help_clicked )
-        help_button.set_tooltip_text(_("Display help message"))
-        help_button.show() 
+        self.module_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_EDIT)
+        self.module_button.set_label(_('Module setup'))
+        self.module_button.set_is_important(True)
+        self.module_button.connect("clicked",self.edit_clicked,store)
+        self.module_button.set_tooltip_text(_('Module setup'))
+        self.module_button.hide()
+        toolbar.insert(self.module_button,3)
+
+        # create a button to setup the application
+        setup_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_PREFERENCES)
+        setup_button.set_label(_("Setup"))
+        setup_button.set_is_important(True)
+        toolbar.insert(setup_button,4)
+        setup_button.connect("clicked",self.setup_clicked)
+        setup_button.set_tooltip_text(_('Open setup window'))
+        setup_button.show() 
         
         # create a combobox to store user choice
         self.combo = self.get_combobox()
@@ -316,60 +328,21 @@ class add_window():
         separator.set_expand(True)
         toolbar.insert(separator,6)
         
-        # create a little menu button to override locale language
-        current_locale = locale.getdefaultlocale()[0]
-        
-        locale_config=expanduser('~')+'/.config/google2ubuntu/locale.conf'
-        if os.path.exists(locale_config):
-            f = open(locale_config,"r")
-            tmp = f.readline().strip('\n')
-            f.close()
-            if tmp is not None and tmp is not '':
-                current_locale = tmp
-            
-        locale_path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
-        locale_path += 'i18n'
-        locale_menu = Gtk.Menu()
-        
-        for language in os.listdir(locale_path):
-            if os.path.isdir(locale_path+'/'+language):
-                item = Gtk.MenuItem(label=language)
-                item.connect("activate",self.change_locale,locale_path,language)
-                item.show()
-                locale_menu.append(item)
-        
-        self.locale_button = Gtk.MenuToolButton.new(None,current_locale)
-        self.locale_button.set_is_important(True)
-        self.locale_button.set_menu(locale_menu)
-        self.locale_button.show()
-        toolbar.insert(self.locale_button,7)
+        # create a button for the "Help" action
+        help_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_HELP)
+        help_button.set_label(_("Help"))
+        help_button.set_is_important(True)
+        toolbar.insert(help_button,7)
+        help_button.connect("clicked",self.help_clicked )
+        help_button.set_tooltip_text(_("Display help message"))
+        help_button.show() 
         
         # return the complete toolbar
         return toolbar
 
-    # change the locale set
-    def change_locale(self,button,locale_path,language):
-        """
-        @description: set the local desired by the user among supported
-        locale
-        
-        @param: button
-            the button that has to be clicked
-        
-        @param: locale_path
-            the folder containing locales
-        
-        @param: language
-            desired locale
-        """
-        self.locale_button.set_label(language)
-        try:
-            locale_config=expanduser('~')+'/.config/google2ubuntu/locale.conf'
-            f = open(locale_config,"w")
-            f.write(language+'\n')
-            f.close()
-        except Exception:
-            print "error, while opening locale.conf file"
+    # open a setup window
+    def setup_clicked(self,button):
+        s = SetupWindow()
 
     # return a combobox to add to the toolbar
     def get_combobox(self):

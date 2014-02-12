@@ -4,7 +4,7 @@ from os.path import expanduser
 import locale
 import os
 
-RELATIVE_LOCALE_CONFIG_PATH = '/.config/google2ubuntu/locale.conf'
+RELATIVE_LOCALE_CONFIG_PATH = '/.config/google2ubuntu/google2ubuntu.conf'
 
 class LocaleHelper:
     def __init__(self, defaultLocale = 'en_EN', languageFolder = os.path.dirname(os.path.abspath(__file__))+'/../i18n/'):
@@ -31,7 +31,11 @@ class LocaleHelper:
         localeConfig = None
         try:
             configFileHandle = open(self.__localeConfPath, 'r')
-            localeConfig = configFileHandle.readline().strip('\n')
+            for line in configFileHandle.readlines():
+                line = line.strip('\n')
+                field=line.split('=')
+                if field[0] == 'locale':
+                    localeConfig = field[1]
         except:
             pass
         finally:
