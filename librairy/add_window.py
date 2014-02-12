@@ -568,11 +568,8 @@ class add_window():
         # default config file for the selected language
         path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')    
         localeHelper = LocaleHelper('en_EN')
-        lang = localeHelper.getLocale()
-        # this line can be remove if we change config/en_EN to config/en
-        #lang = lang+'_'+lang.upper()
-        
-        default = path +'config/'+lang+'/default.xml'        
+        self.lang = localeHelper.getLocale()
+        default = path +'config/'+self.lang+'/default.xml'        
 
         try:
             if os.path.isfile(config):

@@ -171,7 +171,7 @@ class SetupWindow():
         i=0
         self.LANG = {}
         for language in os.listdir(locale_path):
-            if os.path.isdir(locale_path+'/'+language):
+            if os.path.isdir(locale_path+'/'+language+'/LC_MESSAGES'):
                 listmodel.append([language])
                 self.LANG[i] = language
                 if language == self.locale:
