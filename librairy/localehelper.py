@@ -7,7 +7,7 @@ import os
 RELATIVE_LOCALE_CONFIG_PATH = '/.config/google2ubuntu/locale.conf'
 
 class LocaleHelper:
-    def __init__(self, defaultLocale = 'en_EN', languageFolder = os.path.dirname(os.path.abspath(__file__))+'/../i18n/'):
+    def __init__(self, defaultLocale='en_EN', languageFolder=os.path.dirname(os.path.abspath(__file__)) + '/../i18n/'):
         systemLocale = locale.getlocale()
         
         self.__systemLocale = None
@@ -18,7 +18,7 @@ class LocaleHelper:
         
         self.__languageFolder = languageFolder
         self.__defaultLocale = defaultLocale
-        self.__localeConfPath = expanduser('~')+RELATIVE_LOCALE_CONFIG_PATH
+        self.__localeConfPath = expanduser('~') + RELATIVE_LOCALE_CONFIG_PATH
     
     def __getSystemLocale(self):
         if self.__checkIfLocalePresent(self.__systemLocale):
@@ -52,12 +52,30 @@ class LocaleHelper:
 
     def __getLocaleFallbackValue(self, lang):
         if lang is not None and lang != '':
-            return self.__readSingleLine(self.__languageFolder+lang+'/fallback')
+            return self.__readSingleLine(self.__languageFolder + lang + '/fallback')
         return None
 
     def __checkIfLocalePresent(self, lang):
-        return lang is not None and lang != '' and \
-                os.path.isdir(self.__languageFolder+lang+'/LC_MESSAGES') == True
+        if lang is not None:
+            if lang.strip() != '' and os.path.isdir(self.__languageFolder + lang + '/LC_MESSAGES') == True:
+                return True
+        
+        return False
     
-    def getLocale(self):
-        return self.__getLocaleConfigValue()
+    def getFormatedLocaleString(self, localeString, longFormat=True):
+        if localeString is None:
+            return None
+        elif localeString.strip() == '':
+            return None
+
+        localeString = localeString.replace(' ', '')
+
+        if '_' not in localeString and longFormat == True:
+            localeString = localeString + '_' + localeString.upper()
+        elif '_' in localeString and longFormat == False:
+            localeString = localeString.split('_')[0]
+        
+        return localeString
+    
+    def getLocale(self, longFormat=True):
+        return self.getFormatedLocaleString(self.__getLocaleConfigValue(), longFormat)
