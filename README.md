@@ -63,6 +63,7 @@ sudo apt-get install google2ubuntu
 ```
 
 ##First launch
+###Main programs
 Once you have installed google2ubuntu, you can attribute a shortcut to those 2 Python scripts:
 
 ```
@@ -73,13 +74,25 @@ Once you have installed google2ubuntu, you can attribute a shortcut to those 2 P
 Moreover, if you search in the application's menu you will find two launchers, one for each of those programs.
 
 After that, you can launch google2ubuntu-manager.py in order to manage all commands.
-![google2ubuntu-manager](http://pix.toile-libre.org/upload/original/1391806249.png)
-<a href='http://pix.toile-libre.org/?img=1391805854.png'><img src='http://pix.toile-libre.org/upload/thumb/1391805854.png' /></a> <a href='http://pix.toile-libre.org/?img=1391805991.png'><img src='http://pix.toile-libre.org/upload/thumb/1391805991.png' /></a> <a href='http://pix.toile-libre.org/?img=1391806086.png'><img src='http://pix.toile-libre.org/upload/thumb/1391806086.png' /></a> <a href='http://pix.toile-libre.org/?img=1391806166.png'><img src='http://pix.toile-libre.org/upload/thumb/1391806166.png' /></a> 
+![google2ubuntu-manager](http://pix.toile-libre.org/upload/original/1392223354.png)
 
 
 As you can see, google2ubuntu comes with several default commands. I will explain you how to manage and add commands.
 
+###Basic configs
+Then you can configure google2ubuntu by clicking on the **Setup** button, that will open a window
+![setup](http://pix.toile-libre.org/upload/original/1392223488.png)
+In this window you can:
+
+* configure the language you want to use, by changing the language in the combobox. For the GUI the will take effect after restart. 
+* Set the recording time (seconds) between 1 and 10 seconds
+* Set the command to pause the media player, (If you don't know what command to use let it emply)
+* Set the command to make the media player play (If you don't know, let it empty)
+
+For the last two parameters, as there is a lot of media player (vlc, mplayer, banshee, ...) I think this way is the most effective because it lets everybody writing a basic shell script that will pause or play his favorite media player. So those commands could be shell commands or could be more elaborated scripts
+
 #Manage commands
+
 ##Commands' storage
 By default, google2ubuntu comes with several commands stored in a default xml file:
 ```
