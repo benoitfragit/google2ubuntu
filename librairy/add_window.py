@@ -317,28 +317,19 @@ class add_window():
         toolbar.insert(separator,6)
         
         # create a little menu button to override locale language
-        current_locale = locale.getdefaultlocale()[0]
-        
-        locale_config=expanduser('~')+'/.config/google2ubuntu/locale.conf'
-        if os.path.exists(locale_config):
-            f = open(locale_config,"r")
-            tmp = f.readline().strip('\n')
-            f.close()
-            if tmp is not None and tmp is not '':
-                current_locale = tmp
-            
+
         locale_path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
         locale_path += 'i18n'
         locale_menu = Gtk.Menu()
         
         for language in os.listdir(locale_path):
-            if os.path.isdir(locale_path+'/'+language):
+            if os.path.isdir(locale_path+'/'+language+'/LC_MESSAGES'):
                 item = Gtk.MenuItem(label=language)
                 item.connect("activate",self.change_locale,locale_path,language)
                 item.show()
                 locale_menu.append(item)
         
-        self.locale_button = Gtk.MenuToolButton.new(None,current_locale)
+        self.locale_button = Gtk.MenuToolButton.new(None,self.lang)
         self.locale_button.set_is_important(True)
         self.locale_button.set_menu(locale_menu)
         self.locale_button.show()
@@ -595,11 +586,9 @@ class add_window():
         # default config file for the selected language
         path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')    
         localeHelper = LocaleHelper('en_EN')
-        lang = localeHelper.getLocale()
-        # this line can be remove if we change config/en_EN to config/en
-        #lang = lang+'_'+lang.upper()
+        self.lang = localeHelper.getLocale()
         
-        default = path +'config/'+lang+'/default.xml'        
+        default = path +'config/'+self.lang+'/default.xml'
 
         try:
             if os.path.isfile(config):

@@ -60,6 +60,7 @@ class stringParser():
             # la ligne de configuration dans le fichier est: [q/Q]uelle*météo=/modules/weather/weather.sh
             # on coupe donc l'action suivant '/'
             do=do.encode('utf8') 
+            tp=tp.encode('utf8')
             print tp, do
             os.system('echo "'+do+'" > /tmp/g2u_cmd_'+self.pid)
             if _('modules') in tp:
