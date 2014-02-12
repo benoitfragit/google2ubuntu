@@ -130,6 +130,7 @@ class SetupWindow():
         grid.attach(label5,0,7,6,1)
         grid.attach(entry2,0,8,6,1)
         grid.attach(button,5,9,1,1)
+        
         return grid
 
     def scale_moved(self,event):

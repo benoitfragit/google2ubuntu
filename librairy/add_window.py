@@ -91,9 +91,9 @@ class add_window():
         scrolled_window.drag_dest_set( Gtk.DestDefaults.MOTION | Gtk.DestDefaults.HIGHLIGHT | Gtk.DestDefaults.DROP, dnd_list, Gdk.DragAction.COPY)
                 
         # a toolbar created in the method create_toolbar (see below)
-        toolbar = self.create_toolbar(store)
-        toolbar.set_hexpand(True)
-        toolbar.show()
+        self.toolbar = self.create_toolbar(store)
+        self.toolbar.set_hexpand(True)
+        self.toolbar.show()
 
         # when a row of the treeview is selected, it emits a signal
         self.selection = treeview.get_selection()
@@ -105,9 +105,9 @@ class add_window():
         # Use a grid to add all item
         self.grid = Gtk.Grid()
         self.grid.set_row_spacing(2);
-        self.grid.attach(toolbar,0,0,1,1)
+        self.grid.attach(self.toolbar,0,0,1,1)
         self.grid.attach(scrolled_window, 0, 1, 1, 1)    
-        self.grid.attach(self.labelState,0,2,1,1)        
+        self.grid.attach(self.labelState,0,2,1,1) 
 
     def get_grid(self):
         """
@@ -203,14 +203,20 @@ class add_window():
             self.show_label('hide')
             path = self.tree_filter.convert_iter_to_child_iter(iter)
             if store[path][2] == _('external'):
-                self.try_button.show()
-                self.module_button.hide()
+                if self.module_button.get_parent() is not None:
+                    self.toolbar.remove(self.module_button)
+                if self.try_button.get_parent() is None:
+                    self.toolbar.insert(self.try_button,2)
             elif store[path][2] == _('modules'):
-                self.try_button.hide()
-                self.module_button.show()
+                if self.try_button.get_parent() is not None:
+                    self.toolbar.remove(self.try_button)
+                if self.module_button.get_parent() is None:
+                    self.toolbar.insert(self.module_button,2)
             else:
-                self.try_button.hide()
-                self.module_button.hide()
+                if self.try_button.get_parent() is not None:
+                    self.toolbar.remove(self.try_button)
+                if self.module_button.get_parent() is not None:
+                    self.toolbar.remove(self.module_button)
          
         return True
 
@@ -294,8 +300,8 @@ class add_window():
         self.try_button.set_is_important(True)
         self.try_button.connect("clicked",self.try_command,store)
         self.try_button.set_tooltip_text(_('Try this command'))
-        self.try_button.hide()
-        toolbar.insert(self.try_button,2)
+        self.try_button.show()
+        #toolbar.insert(self.try_button,2)
 
         
         # create a button to edit a module
@@ -304,14 +310,14 @@ class add_window():
         self.module_button.set_is_important(True)
         self.module_button.connect("clicked",self.edit_clicked,store)
         self.module_button.set_tooltip_text(_('Module setup'))
-        self.module_button.hide()
-        toolbar.insert(self.module_button,3)
+        self.module_button.show()
+        #toolbar.insert(self.module_button,3)
 
         # create a button to setup the application
         setup_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_PREFERENCES)
         setup_button.set_label(_("Setup"))
         setup_button.set_is_important(True)
-        toolbar.insert(setup_button,4)
+        toolbar.insert(setup_button,2)
         setup_button.connect("clicked",self.setup_clicked)
         setup_button.set_tooltip_text(_('Open setup window'))
         setup_button.show() 
@@ -321,18 +327,18 @@ class add_window():
         toolcombo = Gtk.ToolItem()
         toolcombo.add(self.combo)
         toolcombo.show()
-        toolbar.insert(toolcombo,5)        
+        toolbar.insert(toolcombo,3)        
         
         # add a separator
         separator = Gtk.ToolItem()
         separator.set_expand(True)
-        toolbar.insert(separator,6)
+        toolbar.insert(separator,4)
         
         # create a button for the "Help" action
         help_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_HELP)
         help_button.set_label(_("Help"))
         help_button.set_is_important(True)
-        toolbar.insert(help_button,7)
+        toolbar.insert(help_button,5)
         help_button.connect("clicked",self.help_clicked )
         help_button.set_tooltip_text(_("Display help message"))
         help_button.show() 
