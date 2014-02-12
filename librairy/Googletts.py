@@ -18,8 +18,8 @@ class tts():
         p = os.path.dirname(os.path.abspath(__file__)).strip('librairy')   
         localeHelper = LocaleHelper()
         lc = localeHelper.getLocale()
-        text = unicodedata.normalize('NFKD', unicode(text,"utf-8")).encode('ASCII', 'ignore')
-        #text=text.encode("utf8")
+        text = unicodedata.normalize('NFKD', unicode(text,"utf-8"))
+        text=text.encode("utf8")
         text = text.replace('\n',' ')
         text_list = re.split('(\,|\.)', text)
         combined_text = []
