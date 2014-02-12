@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: google 2ubuntu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-05 21:31+0100\n"
+"POT-Creation-Date: 2014-02-12 15:32+0100\n"
 "PO-Revision-Date: 2014-02-02 09:47+0100\n"
 "Last-Translator: benoit <benoitfranquet@gmail.com>\n"
 "Language-Team: French\n"
@@ -30,250 +30,300 @@ msgstr "Clés"
 msgid "Commands"
 msgstr "Commandes"
 
-#: librairy/add_window.py:78 librairy/osd.py:27 librairy/osd.py:32
+#: librairy/add_window.py:78 librairy/osd.py:35 librairy/osd.py:40
 msgid "Ready"
 msgstr "Prêt"
 
-#: librairy/add_window.py:145 librairy/add_window.py:386
-#: librairy/add_window.py:388 librairy/add_window.py:418
+#: librairy/add_window.py:145 librairy/add_window.py:438
+#: librairy/add_window.py:440 librairy/add_window.py:470
 msgid "key sentence"
 msgstr "phrase clé"
 
-#: librairy/add_window.py:145 librairy/add_window.py:386
-#: librairy/stringParser.py:74
+#: librairy/add_window.py:145 librairy/add_window.py:205
+#: librairy/add_window.py:438 librairy/stringParser.py:75
 msgid "external"
 msgstr "externe"
 
-#: librairy/add_window.py:225
-msgid "External commands"
-msgstr "Commandes externes"
-
-#: librairy/add_window.py:229
-msgid "Internal commands"
-msgstr "Commandes internes"
-
-#: librairy/add_window.py:233
-msgid "Module"
-msgstr "Module"
-
-#: librairy/add_window.py:240
-msgid "Add"
-msgstr "Ajouter"
-
-#: librairy/add_window.py:250
-msgid "Add a new command"
-msgstr "Ajouter une nouvelle commande"
-
-#: librairy/add_window.py:255
-msgid "Try"
-msgstr "Essayer"
-
-#: librairy/add_window.py:259
-msgid "Try this command"
-msgstr "Essayer cette commande"
-
-#: librairy/add_window.py:264 librairy/add_window.py:446
-msgid "Remove"
-msgstr "Supprimer"
-
-#: librairy/add_window.py:268
-msgid "Remove this command"
-msgstr "Supprimer cette commande"
-
-#: librairy/add_window.py:273
-msgid "Clean up"
-msgstr "Nettoyer"
-
-#: librairy/add_window.py:277 librairy/add_window.py:467
-msgid "Remove all commands"
-msgstr "Supprimer toutes les commandes"
-
-#: librairy/add_window.py:282
-msgid "Help"
-msgstr "Aide"
-
-#: librairy/add_window.py:286
-msgid "Display help message"
-msgstr "Afficher l'aide"
-
-#: librairy/add_window.py:314
-msgid "All"
-msgstr "Toutes"
-
-#: librairy/add_window.py:315
-msgid "External"
-msgstr "Externes"
-
-#: librairy/add_window.py:316
-msgid "Internal"
-msgstr "Internes"
-
-#: librairy/add_window.py:317
-msgid "Modules"
-msgstr "Modules"
-
-#: librairy/add_window.py:321
-msgid "What type of command to add"
-msgstr "Quelle type de commande ajouter"
-
-#: librairy/add_window.py:362 librairy/add_window.py:366
-#: librairy/add_window.py:489 librairy/stringParser.py:65
+#: librairy/add_window.py:208 librairy/add_window.py:405
+#: librairy/add_window.py:409 librairy/add_window.py:420
+#: librairy/add_window.py:542 librairy/stringParser.py:66
 msgid "modules"
 msgstr "modules"
 
-#: librairy/add_window.py:362 librairy/add_window.py:364
-#: librairy/add_window.py:388 librairy/add_window.py:489
-#: librairy/stringParser.py:70
-msgid "internal"
-msgstr "interne"
+#: librairy/add_window.py:236
+msgid "External commands"
+msgstr "Commandes externes"
 
-#: librairy/add_window.py:386
-msgid "your command"
-msgstr "votre commande"
+#: librairy/add_window.py:240
+msgid "Internal commands"
+msgstr "Commandes internes"
 
-#: librairy/add_window.py:388
-msgid "word"
-msgstr "mot"
+#: librairy/add_window.py:244
+msgid "Module"
+msgstr "Module"
 
-#: librairy/add_window.py:396
-msgid "Error, you must choose a file"
-msgstr "Erreur, vous devez choisir un fichier"
+#: librairy/add_window.py:251
+msgid "Add"
+msgstr "Ajouter"
 
-#: librairy/add_window.py:427
-msgid "Error, args file missing"
-msgstr "Error, fichier args manquant"
+#: librairy/add_window.py:261
+msgid "Add a new command"
+msgstr "Ajouter une nouvelle commande"
 
-#: librairy/add_window.py:571
-msgid "Save commands"
-msgstr "Sauvegarde des commandes"
+#: librairy/add_window.py:266 librairy/add_window.py:278
+#: librairy/add_window.py:499
+msgid "Remove"
+msgstr "Supprimer"
 
-#: librairy/ArgsWindow.py:29
+#: librairy/add_window.py:268 librairy/add_window.py:288
+msgid "Remove this command"
+msgstr "Supprimer cette commande"
+
+#: librairy/add_window.py:271
+msgid "Clean up"
+msgstr "Nettoyer"
+
+#: librairy/add_window.py:273 librairy/add_window.py:520
+msgid "Remove all commands"
+msgstr "Supprimer toutes les commandes"
+
+#: librairy/add_window.py:293
+msgid "Try"
+msgstr "Essayer"
+
+#: librairy/add_window.py:296
+msgid "Try this command"
+msgstr "Essayer cette commande"
+
+#: librairy/add_window.py:303 librairy/add_window.py:306
+#: librairy/ArgsWindow.py:27
 msgid "Module setup"
 msgstr "Configuration du module"
 
-#: librairy/ArgsWindow.py:37
+#: librairy/add_window.py:312
+msgid "Setup"
+msgstr "Configuration"
+
+#: librairy/add_window.py:316
+msgid "Open setup window"
+msgstr "Ouvrir la fenêtre de configuration"
+
+#: librairy/add_window.py:333
+msgid "Help"
+msgstr "Aide"
+
+#: librairy/add_window.py:337
+msgid "Display help message"
+msgstr "Afficher l'aide"
+
+#: librairy/add_window.py:357
+msgid "All"
+msgstr "Toutes"
+
+#: librairy/add_window.py:358
+msgid "External"
+msgstr "Externes"
+
+#: librairy/add_window.py:359
+msgid "Internal"
+msgstr "Internes"
+
+#: librairy/add_window.py:360
+msgid "Modules"
+msgstr "Modules"
+
+#: librairy/add_window.py:364
+msgid "What type of command to add"
+msgstr "Quelle type de commande ajouter"
+
+#: librairy/add_window.py:405 librairy/add_window.py:407
+#: librairy/add_window.py:440 librairy/add_window.py:542
+#: librairy/stringParser.py:28 librairy/stringParser.py:71
+msgid "internal"
+msgstr "interne"
+
+#: librairy/add_window.py:438
+msgid "your command"
+msgstr "votre commande"
+
+#: librairy/add_window.py:440
+msgid "word"
+msgstr "mot"
+
+#: librairy/add_window.py:448
+msgid "Error, you must choose a file"
+msgstr "Erreur, vous devez choisir un fichier"
+
+#: librairy/add_window.py:479
+msgid "Error, args file missing"
+msgstr "Error, fichier args manquant"
+
+#: librairy/add_window.py:629
+msgid "Save commands"
+msgstr "Sauvegarde des commandes"
+
+#: librairy/ArgsWindow.py:35
 msgid "Linking word"
 msgstr "Mot de liaison"
 
-#: librairy/ArgsWindow.py:41
+#: librairy/ArgsWindow.py:39
 msgid "Word to separate call and parameter"
 msgstr "Mot séparant l'appel du module des paramètres"
 
-#: librairy/ArgsWindow.py:43 librairy/ArgsWindow.py:44
+#: librairy/ArgsWindow.py:41 librairy/ArgsWindow.py:42
 msgid "Replace space by plus"
 msgstr "Remplacer les espaces par des plus"
 
-#: librairy/ArgsWindow.py:46 librairy/ArgsWindow.py:47
+#: librairy/ArgsWindow.py:45 librairy/ArgsWindow.py:46
 msgid "Go"
 msgstr "Continuer"
 
-#: librairy/basicCommands.py:30
+#: librairy/basicCommands.py:28
 msgid "time"
 msgstr "heure"
 
-#: librairy/basicCommands.py:32
+#: librairy/basicCommands.py:30
 msgid "power"
 msgstr "batterie"
 
-#: librairy/basicCommands.py:34
+#: librairy/basicCommands.py:32
 msgid "clipboard"
 msgstr "presse-papier"
 
-#: librairy/basicCommands.py:36
+#: librairy/basicCommands.py:34
 msgid "dictation mode"
 msgstr "mode dictée"
 
-#: librairy/basicCommands.py:39
+#: librairy/basicCommands.py:37 librairy/stringParser.py:28
 msgid "exit dictation mode"
 msgstr "sortir du mode dictée"
 
-#: librairy/basicCommands.py:57
+#: librairy/basicCommands.py:55
 msgid "Nothing in the clipboard"
 msgstr "Rien dans le presse papier"
 
-#: librairy/basicCommands.py:68
+#: librairy/basicCommands.py:66
 msgid "it is"
 msgstr "il est"
 
-#: librairy/basicCommands.py:68
+#: librairy/basicCommands.py:66
 msgid "hour"
 msgstr "heure"
 
-#: librairy/basicCommands.py:68
+#: librairy/basicCommands.py:66
 msgid "minute"
 msgstr "minute"
 
-#: librairy/basicCommands.py:86
+#: librairy/basicCommands.py:85
 msgid "Charging"
 msgstr "Chargement"
 
-#: librairy/basicCommands.py:86
+#: librairy/basicCommands.py:85
 msgid "before charging"
 msgstr "avant chargement"
 
-#: librairy/basicCommands.py:88
+#: librairy/basicCommands.py:87
 msgid "Discharging"
 msgstr "Déchargement"
 
-#: librairy/basicCommands.py:88
+#: librairy/basicCommands.py:87
 msgid "remaining"
 msgstr "restant"
 
-#: librairy/basicCommands.py:90
+#: librairy/basicCommands.py:89
 msgid "battery is not plugged"
 msgstr "La batterie est absente"
 
-#: librairy/HelpWindow.py:26
+#: librairy/HelpWindow.py:28
 msgid "Help Google2Ubuntu"
 msgstr "Aide Google2Ubuntu"
 
-#: librairy/interface.py:82
+#: librairy/interface.py:94
 msgid "unable to translate"
 msgstr "impossible de traduire"
 
-#: librairy/moduleSelection.py:20
+#: librairy/moduleSelection.py:18
 msgid "Choose a file"
 msgstr "Choisir un fichier"
 
-#: librairy/osd.py:41
+#: librairy/osd.py:49
 msgid "Error"
 msgstr "Erreur"
 
-#: librairy/osd.py:53
+#: librairy/osd.py:61
 msgid "Recognition result"
 msgstr "Résultats de la reconnaissance"
 
-#: librairy/osd.py:63
+#: librairy/osd.py:71
 msgid "Calling command"
 msgstr "Appel de la commande"
 
-#: librairy/osd.py:70
+#: librairy/osd.py:78
 msgid "Information"
 msgstr "Information"
 
-#: librairy/osd.py:76
+#: librairy/osd.py:84
 msgid "Performing recording"
 msgstr "Enregistrement en cours"
 
-#: librairy/osd.py:77
+#: librairy/osd.py:85
 msgid "Please speak"
 msgstr "Vous pouvez parler"
 
-#: librairy/osd.py:87
+#: librairy/osd.py:95
 msgid "Done"
 msgstr "Fait"
+
+#: librairy/SetupWindow.py:27
+msgid "Setup window"
+msgstr "Fenêtre de configuration"
+
+#: librairy/SetupWindow.py:82
+msgid "Select your language"
+msgstr "Choisir votre langue"
+
+#: librairy/SetupWindow.py:85
+msgid "Set the recording time (seconds)"
+msgstr "Régler le temps d'enregistrement"
+
+#: librairy/SetupWindow.py:88
+msgid "Set the music player's play command"
+msgstr "Commande pour relancer le lecteur multimédia"
+
+#: librairy/SetupWindow.py:91
+msgid "Set the music player's pause command"
+msgstr "Commande pour mettre en pause le lecteur multimédia"
+
+#: librairy/SetupWindow.py:100
+msgid "Change the recording time"
+msgstr "Changer le temps d'enregistrement"
+
+#: librairy/SetupWindow.py:104
+msgid "Set the play command"
+msgstr "Régler la commande de lecture"
+
+#: librairy/SetupWindow.py:109
+msgid "Set the pause command"
+msgstr "Définir la commande de pause"
+
+#: librairy/SetupWindow.py:183
+msgid "What language to choose"
+msgstr "Quel langue choisir"
 
 #: librairy/stringParser.py:84
 msgid "Setup file missing"
 msgstr "Fichier de configuration manquant"
 
-#: librairy/workWithModule.py:54
+#: librairy/workWithModule.py:55
 msgid "you didn't say the linking word"
 msgstr "vous n'avez pas prononcé le mot de liaison"
 
-#: librairy/workWithModule.py:58
+#: librairy/workWithModule.py:59
 msgid "args file missing"
 msgstr "fichier args manquant"
+
+#~ msgid "Set the music palyer's pause command"
+#~ msgstr "Commande pour relancer la lecture sur le lecteur multimédia"
 
 #~ msgid "between"
 #~ msgstr "entre"

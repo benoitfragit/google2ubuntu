@@ -14,8 +14,8 @@ class SetupWindow():
         localeHelper = LocaleHelper('en_EN')
         self.locale = localeHelper.getLocale()
         self.recording_time = 5
-        self.player_pause = 'undefine'
-        self.player_play = 'undefine'
+        self.player_pause = ''
+        self.player_play = ''
         self.dictation = False
         self.config = expanduser('~')+'/.config/google2ubuntu/google2ubuntu.conf'
         
@@ -88,7 +88,7 @@ class SetupWindow():
         label4=Gtk.Label(_("Set the music player's play command"))
         label4.set_justify(Gtk.Justification.LEFT) 
         label4.set_halign(Gtk.Align.START) 
-        label5=Gtk.Label(_("Set the music palyer's pause command"))
+        label5=Gtk.Label(_("Set the music player's pause command"))
         label5.set_justify(Gtk.Justification.LEFT) 
         label5.set_halign(Gtk.Align.START) 
         
