@@ -4,10 +4,10 @@ from os.path import expanduser
 import locale
 import os
 
-RELATIVE_LOCALE_CONFIG_PATH = '/.config/google2ubuntu/locale.conf'
+RELATIVE_LOCALE_CONFIG_PATH = '/.config/google2ubuntu/google2ubuntu.conf'
 
 class LocaleHelper:
-    def __init__(self, defaultLocale='en_EN', languageFolder=os.path.dirname(os.path.abspath(__file__)) + '/../i18n/'):
+    def __init__(self, defaultLocale = 'en_EN', languageFolder = os.path.dirname(os.path.abspath(__file__))+'/../i18n/'):
         systemLocale = locale.getlocale()
         
         self.__systemLocale = None
@@ -18,64 +18,40 @@ class LocaleHelper:
         
         self.__languageFolder = languageFolder
         self.__defaultLocale = defaultLocale
-        self.__localeConfPath = expanduser('~') + RELATIVE_LOCALE_CONFIG_PATH
+        self.__localeConfPath = expanduser('~')+RELATIVE_LOCALE_CONFIG_PATH
     
     def __getSystemLocale(self):
         if self.__checkIfLocalePresent(self.__systemLocale):
             return self.__systemLocale
         else:
-            fallback = self.__getLocaleFallbackValue(self.__systemLocale)
-            if self.__checkIfLocalePresent(fallback):
-                return fallback
-            else:
-                return self.__defaultLocale
-
-    def __readSingleLine(self, filePath):
-        fileHandle = None
-        line = None
+            return self.__defaultLocale
+        
+    def __getLocaleConfigValue(self):
+        configFileHandle = None
+        localeConfig = None
         try:
-            fileHandle = open(filePath, 'r')
-            line = fileHandle.readline().strip('\n')
+            configFileHandle = open(self.__localeConfPath, 'r')
+            for line in configFileHandle.readlines():
+                line = line.strip('\n')
+                field=line.split('=')
+                if field[0] == 'locale':
+                    localeConfig = field[1]
         except:
             pass
         finally:
-            if fileHandle:
-                fileHandle.close()
-        return line
-
-    def __getLocaleConfigValue(self):
-        lc = self.__readSingleLine(self.__localeConfPath)
-        if self.__checkIfLocalePresent(lc):
-            return lc
-        else:
+            if configFileHandle:
+                configFileHandle.close()
+        
+        if localeConfig is None or localeConfig == '':
             return self.__getSystemLocale()
-
-    def __getLocaleFallbackValue(self, lang):
-        if lang is not None and lang != '':
-            return self.__readSingleLine(self.__languageFolder + lang + '/fallback')
-        return None
-
+        else:
+            if self.__checkIfLocalePresent(localeConfig):
+                return localeConfig
+            else:
+                return self.__defaultLocale
+            
     def __checkIfLocalePresent(self, lang):
-        if lang is not None:
-            if lang.strip() != '' and os.path.isdir(self.__languageFolder + lang + '/LC_MESSAGES') == True:
-                return True
-        
-        return False
+        return os.path.isdir(self.__languageFolder+lang) == True
     
-    def getFormatedLocaleString(self, localeString, longFormat=True):
-        if localeString is None:
-            return None
-        elif localeString.strip() == '':
-            return None
-
-        localeString = localeString.replace(' ', '')
-
-        if '_' not in localeString and longFormat == True:
-            localeString = localeString + '_' + localeString.upper()
-        elif '_' in localeString and longFormat == False:
-            localeString = localeString.split('_')[0]
-        
-        return localeString
-    
-    def getLocale(self, longFormat=True):
-        return self.getFormatedLocaleString(self.__getLocaleConfigValue(), longFormat)
+    def getLocale(self):
+        return self.__getLocaleConfigValue()
