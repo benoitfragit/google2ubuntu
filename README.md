@@ -20,10 +20,10 @@ Before I begin, I want to thank some of you that help me.
 ##Contributors
 Devs | Translators | Bug reports
 -----| ----- | -----
- [tectas](https://github.com/tectas) | [tectas](https://github.com/tectas) | [bmeznarsic](https://github.com/bmeznarsic) 
- [mte90](https://github.com/mte90) | [mte90](https://github.com/mte90) | [Andrew from Webupd8](https://github.com/hotice)
- | [lincus](https://github.com/lincus) |  [mte90](https://github.com/mte90)
- | |  [mads5408](https://github.com/mads5408)
+[tectas](https://github.com/tectas)|[tectas](https://github.com/tectas)|[bmeznarsic](https://github.com/bmeznarsic) 
+[mte90](https://github.com/mte90)|[mte90](https://github.com/mte90)|[Andrew from Webupd8](https://github.com/hotice)
+[levan7](https://github.com/Levan7)|[lincus](https://github.com/lincus)|[mte90](https://github.com/mte90)
+[ladios](https://github.com/ladios)|[ladios](https://github.com/ladios)|[mads5408](https://github.com/mads5408)
 
 
 ##Publication
@@ -286,6 +286,8 @@ I've wrote a documentation page with Sphinx
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | correct a bug due to module execution
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding pt_BR support
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding pt_PT support
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding traditional chinese translation
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | correct the wikipedia module
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | update the documentation
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | improve translation 
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | bug fixe 
