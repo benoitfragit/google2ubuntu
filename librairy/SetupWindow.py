@@ -109,7 +109,7 @@ class SetupWindow():
         entry2.set_tooltip_text(_('Set the pause command'))
         entry2.connect("activate", self.entry2_activate)
         image = Gtk.Image()
-        image.set_from_stock(Gtk.STOCK_APPLY, Gtk.IconSize.BUTTON)
+        image.set_from_stock(Gtk.STOCK_OK, Gtk.IconSize.BUTTON)
         button = Gtk.Button(label="", image=image)
         button.connect("clicked",self.on_clicked)
         

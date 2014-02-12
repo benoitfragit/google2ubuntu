@@ -14,6 +14,26 @@ lang = localeHelper.getLocale()
 t=gettext.translation('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/',languages=[lang])
 t.install()
 
-#keep the old way for the moment
-#gettext.install('google2ubuntu',os.path.dirname(os.path.abspath(__file__))+'/i18n/')
+
+# pause media player if necessary
+config = expanduser('~')+'/.config/google2ubuntu/google2ubuntu.conf'
+paused = False
+try:
+    with open(config,"r") as f:
+        for line in f.readlines():
+            line = line.strip('\n')
+            field = line.split('=')
+            if field[0] == 'pause' and field[1] != '':
+                os.system(field[1]+' &')
+                paused = True
+            elif field[0] == 'play':
+                play_command = field[1]
+except Exception:
+    print 'Error reading google2ubuntu.conf file'
+
+# launch the recognition                    
 g2u = interface()
+
+# restore media player state
+if paused:
+    os.system(play_command+' &')
