@@ -35,12 +35,7 @@ class LocaleHelper:
         line = None
         try:
             fileHandle = open(filePath, 'r')
-            for ligne in fileHandle.readlines():
-                ligne = ligne.strip('\n')
-                field=ligne.split('=')
-                if field[0] == 'locale':
-                    line = field[1]
-            
+            line = fileHandle.readline().strip('\n')
         except:
             pass
         finally:
@@ -49,7 +44,21 @@ class LocaleHelper:
         return line
 
     def __getLocaleConfigValue(self):
-        lc = self.__readSingleLine(self.__localeConfPath)
+        fileHandle = None
+        lc = None
+        try:
+            fileHandle = open(self.__localeConfPath, 'r')
+            for ligne in fileHandle.readlines():
+                ligne = ligne.strip('\n')
+                field=ligne.split('=')
+                if field[0] == 'locale':
+                    lc = field[1]
+
+        except:
+            pass
+        finally:
+            if fileHandle:
+                fileHandle.close()
         if self.__checkIfLocalePresent(lc):
             return lc
         else:
