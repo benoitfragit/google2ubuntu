@@ -90,7 +90,7 @@ In this window you can:
 * Set the command to pause the media player, (If you don't know what command to use let it emply)
 * Set the command to make the media player play (If you don't know, let it empty)
 
-For the last two parameters, as there is a lot of media player (vlc, mplayer, banshee, ...) I think this way is the most effective because it lets everybody writing a basic shell script that will pause or play his favorite media player. So those commands could be shell commands or could be more elaborated scripts
+For the last two parameters, as there is a lot of media player (vlc, mplayer, banshee, ...) I think this way is the most efficient because it lets everybody writing a basic shell script that will pause or play his favorite media player. So those commands could be shell commands or could be more elaborated scripts
 
 #Manage commands
 
