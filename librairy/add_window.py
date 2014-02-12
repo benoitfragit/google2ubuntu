@@ -328,7 +328,6 @@ class add_window():
         separator.set_expand(True)
         toolbar.insert(separator,6)
         
-<<<<<<< HEAD
         # create a button for the "Help" action
         help_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_HELP)
         help_button.set_label(_("Help"))
@@ -337,26 +336,6 @@ class add_window():
         help_button.connect("clicked",self.help_clicked )
         help_button.set_tooltip_text(_("Display help message"))
         help_button.show() 
-=======
-        # create a little menu button to override locale language
-
-        locale_path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
-        locale_path += 'i18n'
-        locale_menu = Gtk.Menu()
-        
-        for language in os.listdir(locale_path):
-            if os.path.isdir(locale_path+'/'+language+'/LC_MESSAGES'):
-                item = Gtk.MenuItem(label=language)
-                item.connect("activate",self.change_locale,locale_path,language)
-                item.show()
-                locale_menu.append(item)
-        
-        self.locale_button = Gtk.MenuToolButton.new(None,self.lang)
-        self.locale_button.set_is_important(True)
-        self.locale_button.set_menu(locale_menu)
-        self.locale_button.show()
-        toolbar.insert(self.locale_button,7)
->>>>>>> master
         
         # return the complete toolbar
         return toolbar
@@ -589,9 +568,11 @@ class add_window():
         # default config file for the selected language
         path = os.path.dirname(os.path.abspath(__file__)).strip('librairy')    
         localeHelper = LocaleHelper('en_EN')
-        self.lang = localeHelper.getLocale()
+        lang = localeHelper.getLocale()
+        # this line can be remove if we change config/en_EN to config/en
+        #lang = lang+'_'+lang.upper()
         
-        default = path +'config/'+self.lang+'/default.xml'
+        default = path +'config/'+lang+'/default.xml'        
 
         try:
             if os.path.isfile(config):
