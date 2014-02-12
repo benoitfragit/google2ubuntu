@@ -82,6 +82,7 @@ As you can see, google2ubuntu comes with several default commands. I will explai
 ###Basic configs
 Then you can configure google2ubuntu by clicking on the **Setup** button, that will open a window
 ![setup](http://pix.toile-libre.org/upload/original/1392223488.png)
+
 In this window you can:
 
 * configure the language you want to use, by changing the language in the combobox. For the GUI the will take effect after restart. 
