@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='utf-8'?>
+<data>
+    <entry name="內部">
+        <key>時間</key>
+        <command>時間</command>
+    </entry>
+    <entry name="內部">
+        <key>時辰</key>
+        <command>時間</command>
+    </entry>
+    <entry name="內部">
+        <key>咩時辰</key>
+        <command>時間</command>
+    </entry>
+    <entry name="內部">
+        <key>幾點</key>
+        <command>時間</command>
+    </entry>
+    <entry name="內部">
+        <key>而家幾點</key>
+        <command>時間</command>
+    </entry>
+    <entry name="內部">
+        <key>而家幾多點鐘</key>
+        <command>時間</command>
+    </entry>
+    <entry name="內部">
+        <key>電源</key>
+        <command>電源</command>
+    </entry>
+    <entry name="內部">
+        <key>電池</key>
+        <command>電源</command>
+    </entry>
+    <entry name="內部">
+        <key>電量</key>
+        <command>電源</command>
+    </entry>
+    <entry name="外部">
+        <key>關閉視窗</key>
+        <command>xdotool key "Alt+F4"</command>
+    </entry>
+    <entry name="外部">
+        <key>隱藏視窗</key>
+        <command>xdotool key "Alt+F9"</command>
+    </entry>
+    <entry name="外部">
+        <key>切換視窗</key>
+        <command>xdotool key "Alt+Tab"</command>
+    </entry>
+    <entry name="外部">
+        <key>其他視窗</key>
+        <command>xdotool key "Alt+Tab"</command>
+    </entry>
+    <entry name="外部">
+        <key>Enter</key>
+        <command>xdotool key "Return"</command>
+    </entry>
+    <entry name="外部">
+        <key>輸入</key>
+        <command>xdotool key "Return"</command>
+    </entry>
+    <entry name="外部">
+        <key>回車</key>
+        <command>xdotool key "Return"</command>
+    </entry>
+    <entry name="外部">
+        <key>Tab</key>
+        <command>xdotool key "Tab"</command>
+    </entry>
+    <entry name="外部">
+        <key>選單</key>
+        <command>xdotool key "Alt+F1"</command>
+    </entry>
+    <entry name="外部">
+        <key>顯示選單</key>
+        <command>xdotool key "Alt+F1"</command>
+    </entry>
+    <entry name="外部">
+        <key>開啟瀏覽器</key>
+        <command>exo-open --launch WebBrowser</command>
+    </entry>
+    <entry name="外部">
+        <key>開啟檔案總管</key>
+        <command>exo-open --launch FileManager</command>
+    </entry>
+    <entry name="外部">
+        <key>開啟終端機</key>
+        <command>exo-open --launch TerminalEmulator</command>
+    </entry>
+    <entry name="外部">
+        <key>開啟圖片</key>
+        <command>xdg-open ~/圖片</command>
+    </entry>
+    <entry name="外部">
+        <key>開啟音樂</key>
+        <command>xdg-open ~/音樂</command>
+    </entry>
+    <entry name="外部">
+        <key>開啟文件</key>
+        <command>xdg-open ~/文件</command>
+    </entry>
+    <entry name="外部">
+        <key>開啟下載</key>
+        <command>xdg-open ~/下載</command>
+    </entry>
+    <entry name="外部">
+        <key>複製</key>
+        <command>xdotool key "Ctrl+c"</command>
+    </entry>
+    <entry name="外部">
+        <key>貼上</key>
+        <command>xdotool key "Ctrl+v"</command>
+    </entry>
+    <entry name="外部">
+        <key>剪下</key>
+        <command>xdotool key "Ctrl+x"</command>
+    </entry>
+    <entry name="模組">
+        <key>google</key>
+        <command>google/google.sh</command>
+    </entry>
+    <entry name="模組">
+        <key>搜尋</key>
+        <command>google/google.sh</command>
+    </entry>
+    <entry name="模組">
+        <key>wiki</key>
+        <command>wikipedia/wikipedia.sh</command>
+    </entry>
+    <entry name="模組">
+        <key>維基百科</key>
+        <command>wikipedia/wikipedia.sh</command>
+    </entry>
+    <entry name="模組">
+        <key>youtube</key>
+        <command>youtube/youtube.sh</command>
+    </entry>
+    <entry name="外部">
+        <key>閱讀郵件</key>
+        <command>exo-open --launch MailReader;</command>
+    </entry>
+    <entry name="模組">
+        <key>天氣</key>
+        <command>weather/weather.sh</command>
+    </entry>
+    <entry name="模組">
+        <key>咩天氣</key>
+        <command>weather/weather.sh</command>
+    </entry>
+    <entry name="模組">
+        <key>天氣點</key>
+        <command>weather/weather.sh</command>
+    </entry>
+    <entry name="模組">
+        <key>天氣如何</key>
+        <command>weather/weather.sh</command>
+    </entry>
+</data>
+
