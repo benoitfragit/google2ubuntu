@@ -36,6 +36,26 @@
         <key>電量</key>
         <command>電源</command>
     </entry>
+    <entry name="內部">
+        <key>剪貼簿</key>
+        <command>剪貼簿</command>
+    </entry>
+    <entry name="內部">
+        <key>開始口述</key>
+        <command>口述模式</command>
+    </entry>
+    <entry name="內部">
+        <key>口述開始</key>
+        <command>口述模式</command>
+    </entry>
+    <entry name="內部">
+        <key>結束口述</key>
+        <command>離開口述模式</command>
+    </entry>
+    <entry name="內部">
+        <key>口述結束</key>
+        <command>離開口述模式</command>
+    </entry>
     <entry name="外部">
         <key>關閉視窗</key>
         <command>xdotool key "Alt+F4"</command>
