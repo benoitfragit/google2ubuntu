@@ -1,5 +1,5 @@
 #!/bin/bash
 
-xdg-open https://www.google.fr/#q=m%C3%A9t%C3%A9o+$1&safe=off &
+xdg-open "https://www.google.com/#q=weather+$1&hl=${LANG%%.*}&safe=off" &
 
 exit 0
