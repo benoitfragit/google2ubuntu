@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: google 2ubuntu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-05 21:31+0100\n"
+"POT-Creation-Date: 2014-02-12 15:32+0100\n"
 "PO-Revision-Date: 2014-02-12 04:52+0800\n"
 "Last-Translator: Ladios Jonquil <ladios.jonquil@gmail.com>\n"
 "Language-Team: Chinese (traditional)\n"
@@ -28,247 +28,294 @@ msgstr "語音鍵"
 msgid "Commands"
 msgstr "系統指令"
 
-#: librairy/add_window.py:78 librairy/osd.py:27 librairy/osd.py:32
+#: librairy/add_window.py:78 librairy/osd.py:35 librairy/osd.py:40
 msgid "Ready"
 msgstr "就緒"
 
-#: librairy/add_window.py:145 librairy/add_window.py:386
-#: librairy/add_window.py:388 librairy/add_window.py:418
+#: librairy/add_window.py:145 librairy/add_window.py:438
+#: librairy/add_window.py:440 librairy/add_window.py:470
 msgid "key sentence"
 msgstr "指令語句"
 
-#: librairy/add_window.py:145 librairy/add_window.py:386
-#: librairy/stringParser.py:74
+#: librairy/add_window.py:145 librairy/add_window.py:205
+#: librairy/add_window.py:438 librairy/stringParser.py:75
 msgid "external"
 msgstr "外部"
 
-#: librairy/add_window.py:225
-msgid "External commands"
-msgstr "外部指令"
-
-#: librairy/add_window.py:229
-msgid "Internal commands"
-msgstr "內部指令"
-
-#: librairy/add_window.py:233
-msgid "Module"
-msgstr "模組"
-
-#: librairy/add_window.py:240
-msgid "Add"
-msgstr "新增"
-
-#: librairy/add_window.py:250
-msgid "Add a new command"
-msgstr "新增指令"
-
-#: librairy/add_window.py:255
-msgid "Try"
-msgstr "試試"
-
-#: librairy/add_window.py:259
-msgid "Try this command"
-msgstr "試一下這指令"
-
-#: librairy/add_window.py:264 librairy/add_window.py:446
-msgid "Remove"
-msgstr "移除"
-
-#: librairy/add_window.py:268
-msgid "Remove this command"
-msgstr "移除這指令"
-
-#: librairy/add_window.py:273
-msgid "Clean up"
-msgstr "清理"
-
-#: librairy/add_window.py:277 librairy/add_window.py:467
-msgid "Remove all commands"
-msgstr "移除所有指令"
-
-#: librairy/add_window.py:282
-msgid "Help"
-msgstr "幫助"
-
-#: librairy/add_window.py:286
-msgid "Display help message"
-msgstr "顯示幫助信息"
-
-#: librairy/add_window.py:314
-msgid "All"
-msgstr "全部"
-
-#: librairy/add_window.py:315
-msgid "External"
-msgstr "外部"
-
-#: librairy/add_window.py:316
-msgid "Internal"
-msgstr "內部"
-
-#: librairy/add_window.py:317
-msgid "Modules"
-msgstr "模組"
-
-#: librairy/add_window.py:321
-msgid "What type of command to add"
-msgstr "要新增的指令"
-
-#: librairy/add_window.py:362 librairy/add_window.py:366
-#: librairy/add_window.py:489 librairy/stringParser.py:65
+#: librairy/add_window.py:208 librairy/add_window.py:405
+#: librairy/add_window.py:409 librairy/add_window.py:420
+#: librairy/add_window.py:542 librairy/stringParser.py:66
 msgid "modules"
 msgstr "模組"
 
-#: librairy/add_window.py:362 librairy/add_window.py:364
-#: librairy/add_window.py:388 librairy/add_window.py:489
-#: librairy/stringParser.py:70
-msgid "internal"
-msgstr "內部"
+#: librairy/add_window.py:236
+msgid "External commands"
+msgstr "外部指令"
 
-#: librairy/add_window.py:386
-msgid "your command"
-msgstr "您的指令"
+#: librairy/add_window.py:240
+msgid "Internal commands"
+msgstr "內部指令"
 
-#: librairy/add_window.py:388
-msgid "word"
-msgstr "詞語"
+#: librairy/add_window.py:244
+msgid "Module"
+msgstr "模組"
 
-#: librairy/add_window.py:396
-msgid "Error, you must choose a file"
-msgstr "錯誤，您必須選擇一個檔案"
+#: librairy/add_window.py:251
+msgid "Add"
+msgstr "新增"
 
-#: librairy/add_window.py:427
-msgid "Error, args file missing"
-msgstr "錯誤，欠缺參數檔"
+#: librairy/add_window.py:261
+msgid "Add a new command"
+msgstr "新增指令"
 
-#: librairy/add_window.py:571
-msgid "Save commands"
-msgstr "儲存指令"
+#: librairy/add_window.py:266 librairy/add_window.py:278
+#: librairy/add_window.py:499
+msgid "Remove"
+msgstr "移除"
 
-#: librairy/ArgsWindow.py:29
+#: librairy/add_window.py:268 librairy/add_window.py:288
+msgid "Remove this command"
+msgstr "移除這指令"
+
+#: librairy/add_window.py:271
+msgid "Clean up"
+msgstr "清理"
+
+#: librairy/add_window.py:273 librairy/add_window.py:520
+msgid "Remove all commands"
+msgstr "移除所有指令"
+
+#: librairy/add_window.py:293
+msgid "Try"
+msgstr "試試看"
+
+#: librairy/add_window.py:296
+msgid "Try this command"
+msgstr "試一下這指令"
+
+#: librairy/add_window.py:303 librairy/add_window.py:306
+#: librairy/ArgsWindow.py:27
 msgid "Module setup"
 msgstr "模組設定"
 
-#: librairy/ArgsWindow.py:37
+#: librairy/add_window.py:312
+msgid "Setup"
+msgstr "設定"
+
+#: librairy/add_window.py:316
+msgid "Open setup window"
+msgstr "開啟設定視窗"
+
+#: librairy/add_window.py:333
+msgid "Help"
+msgstr "幫助"
+
+#: librairy/add_window.py:337
+msgid "Display help message"
+msgstr "顯示幫助信息"
+
+#: librairy/add_window.py:357
+msgid "All"
+msgstr "全部"
+
+#: librairy/add_window.py:358
+msgid "External"
+msgstr "外部"
+
+#: librairy/add_window.py:359
+msgid "Internal"
+msgstr "內部"
+
+#: librairy/add_window.py:360
+msgid "Modules"
+msgstr "模組"
+
+#: librairy/add_window.py:364
+msgid "What type of command to add"
+msgstr "要新增的指令"
+
+#: librairy/add_window.py:405 librairy/add_window.py:407
+#: librairy/add_window.py:440 librairy/add_window.py:542
+#: librairy/stringParser.py:28 librairy/stringParser.py:71
+msgid "internal"
+msgstr "內部"
+
+#: librairy/add_window.py:438
+msgid "your command"
+msgstr "您的指令"
+
+#: librairy/add_window.py:440
+msgid "word"
+msgstr "詞語"
+
+#: librairy/add_window.py:448
+msgid "Error, you must choose a file"
+msgstr "錯誤，您必須選擇一個檔案"
+
+#: librairy/add_window.py:479
+msgid "Error, args file missing"
+msgstr "錯誤，欠缺參數檔"
+
+#: librairy/add_window.py:629
+msgid "Save commands"
+msgstr "儲存指令"
+
+#: librairy/ArgsWindow.py:35
 msgid "Linking word"
 msgstr "連結詞語"
 
-#: librairy/ArgsWindow.py:41
+#: librairy/ArgsWindow.py:39
 msgid "Word to separate call and parameter"
 msgstr "分割命令與參數的詞語"
 
-#: librairy/ArgsWindow.py:43 librairy/ArgsWindow.py:44
+#: librairy/ArgsWindow.py:41 librairy/ArgsWindow.py:42
 msgid "Replace space by plus"
 msgstr "將空白置換為加號"
 
-#: librairy/ArgsWindow.py:46 librairy/ArgsWindow.py:47
+#: librairy/ArgsWindow.py:45 librairy/ArgsWindow.py:46
 msgid "Go"
 msgstr "前往"
 
-#: librairy/basicCommands.py:30
+#: librairy/basicCommands.py:28
 msgid "time"
 msgstr "時間"
 
-#: librairy/basicCommands.py:32
+#: librairy/basicCommands.py:30
 msgid "power"
 msgstr "電源"
 
-#: librairy/basicCommands.py:34
+#: librairy/basicCommands.py:32
 msgid "clipboard"
 msgstr "剪貼簿"
 
-#: librairy/basicCommands.py:36
+#: librairy/basicCommands.py:34
 msgid "dictation mode"
 msgstr "口述模式"
 
-#: librairy/basicCommands.py:39
+#: librairy/basicCommands.py:37 librairy/stringParser.py:28
 msgid "exit dictation mode"
 msgstr "離開口述模式"
 
-#: librairy/basicCommands.py:57
+#: librairy/basicCommands.py:55
 msgid "Nothing in the clipboard"
 msgstr "剪貼簿為空白"
 
-#: librairy/basicCommands.py:68
+#: librairy/basicCommands.py:66
 msgid "it is"
 msgstr "現在是"
 
-#: librairy/basicCommands.py:68
+#: librairy/basicCommands.py:66
 msgid "hour"
 msgstr "時"
 
-#: librairy/basicCommands.py:68
+#: librairy/basicCommands.py:66
 msgid "minute"
 msgstr "分"
 
-#: librairy/basicCommands.py:86
+#: librairy/basicCommands.py:85
 msgid "Charging"
 msgstr "正在充電"
 
-#: librairy/basicCommands.py:86
+#: librairy/basicCommands.py:85
 msgid "before charging"
 msgstr "後完成充電"
 
-#: librairy/basicCommands.py:88
+#: librairy/basicCommands.py:87
 msgid "Discharging"
 msgstr "放電中"
 
-#: librairy/basicCommands.py:88
+#: librairy/basicCommands.py:87
 msgid "remaining"
 msgstr "後會用盡"
 
-#: librairy/basicCommands.py:90
+#: librairy/basicCommands.py:89
 msgid "battery is not plugged"
 msgstr "沒有插入電池"
 
-#: librairy/HelpWindow.py:26
+#: librairy/HelpWindow.py:28
 msgid "Help Google2Ubuntu"
 msgstr "幫助 Google2Ubuntu"
 
-#: librairy/interface.py:82
+#: librairy/interface.py:94
 msgid "unable to translate"
 msgstr "無法翻譯"
 
-#: librairy/moduleSelection.py:20
+#: librairy/moduleSelection.py:18
 msgid "Choose a file"
 msgstr "選擇一個檔案"
 
-#: librairy/osd.py:41
+#: librairy/osd.py:49
 msgid "Error"
 msgstr "錯誤"
 
-#: librairy/osd.py:53
+#: librairy/osd.py:61
 msgid "Recognition result"
 msgstr "辨認結果"
 
-#: librairy/osd.py:63
+#: librairy/osd.py:71
 msgid "Calling command"
 msgstr "正在呼叫指令"
 
-#: librairy/osd.py:70
+#: librairy/osd.py:78
 msgid "Information"
 msgstr "資訊"
 
-#: librairy/osd.py:76
+#: librairy/osd.py:84
 msgid "Performing recording"
 msgstr "正在錄音"
 
-#: librairy/osd.py:77
+#: librairy/osd.py:85
 msgid "Please speak"
 msgstr "請說話"
 
-#: librairy/osd.py:87
+#: librairy/osd.py:95
 msgid "Done"
 msgstr "完成"
+
+#: librairy/SetupWindow.py:27
+msgid "Setup window"
+msgstr "設定視窗"
+
+#: librairy/SetupWindow.py:82
+msgid "Select your language"
+msgstr "選擇您的語言"
+
+#: librairy/SetupWindow.py:85
+msgid "Set the recording time (seconds)"
+msgstr "設定錄音時間（秒）"
+
+#: librairy/SetupWindow.py:88
+msgid "Set the music player's play command"
+msgstr "設定音樂播放器的播放指令"
+
+#: librairy/SetupWindow.py:91
+msgid "Set the music player's pause command"
+msgstr "設定音樂播放器的暫停指令"
+
+#: librairy/SetupWindow.py:100
+msgid "Change the recording time"
+msgstr "變更錄音時間"
+
+#: librairy/SetupWindow.py:104
+msgid "Set the play command"
+msgstr "設定播放指令"
+
+#: librairy/SetupWindow.py:109
+msgid "Set the pause command"
+msgstr "設定暫停指令"
+
+#: librairy/SetupWindow.py:183
+msgid "What language to choose"
+msgstr "要選擇的語言"
 
 #: librairy/stringParser.py:84
 msgid "Setup file missing"
 msgstr "欠缺設定檔"
 
-#: librairy/workWithModule.py:54
+#: librairy/workWithModule.py:55
 msgid "you didn't say the linking word"
 msgstr "您沒有說出連結詞語"
 
-#: librairy/workWithModule.py:58
+#: librairy/workWithModule.py:59
 msgid "args file missing"
 msgstr "欠缺參數檔"
