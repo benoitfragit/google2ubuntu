@@ -9,7 +9,7 @@ from localehelper import LocaleHelper
 import os, sys, gettext
 
 class SetupWindow():
-    def __init__(self):
+    def __init__(self,button_back):
         # class variables
         localeHelper = LocaleHelper('en_EN')
         self.locale = localeHelper.getLocale()
@@ -21,22 +21,60 @@ class SetupWindow():
         
         # looking for the configuration file
         self.__loadconfig()
-        
-        # build the window
-        self.w = Gtk.Window()
-        self.w.set_title(_("Setup window"))
-        self.w.set_resizable(False)     
-        self.w.get_focus()
-        self.w.set_position(Gtk.WindowPosition.CENTER)      
-        self.w.set_default_size(80,80)  
-        self.w.set_border_width(5)
-        self.w.set_hexpand(True)
-        self.w.set_vexpand(True)
 
-        # add the grid to the window        
-        grid = self.__getGrid()
-        self.w.add(grid)
-        self.w.show_all()
+        label1=Gtk.Label(_('Select your language'))
+        label1.set_justify(Gtk.Justification.LEFT)
+        label1.set_halign(Gtk.Align.START)
+        label2=Gtk.Label(_('Set the recording time (seconds)'))
+        label2.set_justify(Gtk.Justification.LEFT) 
+        label2.set_halign(Gtk.Align.START) 
+        label4=Gtk.Label(_("Set the music player's play command"))
+        label4.set_justify(Gtk.Justification.LEFT) 
+        label4.set_halign(Gtk.Align.START) 
+        label5=Gtk.Label(_("Set the music player's pause command"))
+        label5.set_justify(Gtk.Justification.LEFT) 
+        label5.set_halign(Gtk.Align.START) 
+        
+        combo = self.__get_combobox()
+        
+        self.scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL,1,10,1)
+        self.scale.set_value(self.recording_time)
+        self.scale.connect("value-changed", self.scale_moved)
+        self.scale.set_tooltip_text(_('Change the recording time'))
+                
+        self.entry1 = Gtk.Entry()
+        self.entry1.set_text(self.player_play)
+        self.entry1.set_tooltip_text(_('Set the play command'))
+        
+        
+        self.entry2 = Gtk.Entry()
+        self.entry2.set_text(self.player_pause)
+        self.entry2.set_tooltip_text(_('Set the pause command'))
+
+        #button_back = Gtk.Button.new_from_stock(Gtk.STOCK_OK)
+        button_back.connect("clicked",self.on_clicked)
+        
+        # an invisble widget to fill the window
+        ll = Gtk.Label()
+        ll.set_vexpand(True)
+        
+        self.grid = Gtk.Grid()
+        self.grid.set_border_width(10)
+        self.grid.set_row_spacing(15)
+        self.grid.set_vexpand(True)
+        self.grid.set_column_spacing(5)
+        self.grid.set_column_homogeneous(True)
+        self.grid.attach(label1,0,0,4,1)
+        self.grid.attach(combo,4,0,2,1)
+        self.grid.attach(label2,0,1,4,1)
+        self.grid.attach(self.scale, 4,1,2,1)
+        self.grid.attach(label4,0,2,4,1)
+        self.grid.attach(self.entry1,4,2,2,1)
+        self.grid.attach(label5,0,3,4,1)
+        self.grid.attach(self.entry2,4,3,2,1)
+        self.grid.attach(ll,0,4,6,1)
+        self.grid.attach(button_back,5,5,1,1)        
+
     
     # load the config    
     def __loadconfig(self):
@@ -78,58 +116,8 @@ class SetupWindow():
             print 'Unable to write'
     
     # get the grid        
-    def __getGrid(self):
-        label1=Gtk.Label(_('Select your language'))
-        label1.set_justify(Gtk.Justification.LEFT)
-        label1.set_halign(Gtk.Align.START)
-        label2=Gtk.Label(_('Set the recording time (seconds)'))
-        label2.set_justify(Gtk.Justification.LEFT) 
-        label2.set_halign(Gtk.Align.START) 
-        label4=Gtk.Label(_("Set the music player's play command"))
-        label4.set_justify(Gtk.Justification.LEFT) 
-        label4.set_halign(Gtk.Align.START) 
-        label5=Gtk.Label(_("Set the music player's pause command"))
-        label5.set_justify(Gtk.Justification.LEFT) 
-        label5.set_halign(Gtk.Align.START) 
-        
-        combo = self.__get_combobox()
-        
-        self.scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL,1,10,1)
-        self.scale.set_value(self.recording_time)
-        self.scale.connect("value-changed", self.scale_moved)
-        self.scale.set_tooltip_text(_('Change the recording time'))
-                
-        self.entry1 = Gtk.Entry()
-        self.entry1.set_text(self.player_play)
-        self.entry1.set_tooltip_text(_('Set the play command'))
-        
-        
-        self.entry2 = Gtk.Entry()
-        self.entry2.set_text(self.player_pause)
-        self.entry2.set_tooltip_text(_('Set the pause command'))
-
-        button = Gtk.Button.new_from_stock(Gtk.STOCK_OK)
-        button.connect("clicked",self.on_clicked)
-        
-        hs1 = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
-        hs2 = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
-        grid = Gtk.Grid()
-        grid.set_row_spacing(10)
-        grid.set_column_spacing(5)
-        grid.set_column_homogeneous(True)
-        grid.attach(label1,0,0,5,1)
-        grid.attach(combo,5,0,1,1)
-        grid.attach(hs1,0,1,6,1)
-        grid.attach(label2,0,2,6,1)
-        grid.attach(self.scale, 0,3,6,1)
-        grid.attach(hs2,0,4,6,1)
-        grid.attach(label4,0,5,6,1)
-        grid.attach(self.entry1,0,6,6,1)
-        grid.attach(label5,0,7,6,1)
-        grid.attach(self.entry2,0,8,6,1)
-        grid.attach(button,5,9,1,1)
-        
-        return grid
+    def getGrid(self):        
+        return self.grid
 
     def scale_moved(self,event):
         self.recording_time = int(self.scale.get_value())
@@ -145,7 +133,7 @@ class SetupWindow():
 
     def on_clicked(self,button):
         self.__recordconfig()
-        self.w.destroy()
+        #self.w.destroy()
 
     # return a combobox to add to the toolbar
     def __get_combobox(self):

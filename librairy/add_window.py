@@ -25,7 +25,8 @@ class add_window():
     @description: This class allow the user to manage all his commands thanks
     to a treeview. The grid generated will be added to the window
     """
-    def __init__(self):
+    def __init__(self,button_config):
+        self.Button = button_config
         # Gtk.ListStore will hold data for the TreeView
         # Only the first two columns will be displayed
         # The third one is for sorting file sizes as numbers
@@ -314,13 +315,8 @@ class add_window():
         #toolbar.insert(self.module_button,3)
 
         # create a button to setup the application
-        setup_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_PREFERENCES)
-        setup_button.set_label(_("Setup"))
-        setup_button.set_is_important(True)
-        toolbar.insert(setup_button,2)
-        setup_button.connect("clicked",self.setup_clicked)
-        setup_button.set_tooltip_text(_('Open setup window'))
-        setup_button.show() 
+        toolbar.insert(self.Button,2)
+
         
         # create a combobox to store user choice
         self.combo = self.get_combobox()
