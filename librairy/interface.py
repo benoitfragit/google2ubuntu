@@ -68,7 +68,8 @@ class interface():
         else:
             if os.path.exists(expanduser('~') +'/.config/google2ubuntu') == False:
                 os.makedirs(expanduser('~') +'/.config/google2ubuntu')
-                os.system('cp -r /usr/share/google2ubuntu/modules '+expanduser('~') +'/.config/google2ubuntu')    
+            if os.path.exists(expanduser('~') +'/.config/google2ubuntu/modules') == False:
+                os.system('cp -r '+self.p+'/modules '+expanduser('~') +'/.config/google2ubuntu')
             if os.path.exists(default) == False:
                 default = self.p+'config/en_EN/default.xml'
                 
