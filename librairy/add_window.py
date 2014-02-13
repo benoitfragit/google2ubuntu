@@ -83,13 +83,13 @@ class add_window():
         # Use ScrolledWindow to make the TreeView scrollable
         # Otherwise the TreeView would expand to show all items
         # Only allow vertical scrollbar
-        scrolled_window = Gtk.ScrolledWindow()
-        scrolled_window.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.add(treeview)
-        scrolled_window.set_min_content_width(200)
-        scrolled_window.set_min_content_height(200)        
-        scrolled_window.connect('drag_data_received', self.on_drag_data_received,store)
-        scrolled_window.drag_dest_set( Gtk.DestDefaults.MOTION | Gtk.DestDefaults.HIGHLIGHT | Gtk.DestDefaults.DROP, dnd_list, Gdk.DragAction.COPY)
+        self.scrolled_window = Gtk.ScrolledWindow()
+        self.scrolled_window.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+        self.scrolled_window.add(treeview)
+        self.scrolled_window.set_min_content_width(200)
+        self.scrolled_window.set_min_content_height(200)        
+        self.scrolled_window.connect('drag_data_received', self.on_drag_data_received,store)
+        self.scrolled_window.drag_dest_set( Gtk.DestDefaults.MOTION | Gtk.DestDefaults.HIGHLIGHT | Gtk.DestDefaults.DROP, dnd_list, Gdk.DragAction.COPY)
                 
         # a toolbar created in the method create_toolbar (see below)
         self.toolbar = self.create_toolbar(store)
@@ -107,7 +107,7 @@ class add_window():
         self.grid = Gtk.Grid()
         self.grid.set_row_spacing(2);
         self.grid.attach(self.toolbar,0,0,1,1)
-        self.grid.attach(scrolled_window, 0, 1, 1, 1)    
+        self.grid.attach(self.scrolled_window, 0, 1, 1, 1)    
         self.grid.attach(self.labelState,0,2,1,1) 
 
     def get_grid(self):
@@ -144,6 +144,7 @@ class add_window():
                     self.addModule(store,path)
                 elif os.path.isdir(path):
                     store.append([_('key sentence'),'xdg-open '+path,_('external')])
+                    self.scroll_to_bottom(store)
 
     def show_label(self,action):
         """
@@ -438,8 +439,10 @@ class add_window():
         """
         if add_type == 'externe':
             store.append([_('key sentence'),_('your command'),_('external')])
+            self.scroll_to_bottom(store)
         elif add_type == 'interne':
             store.append([_('key sentence'),_('word'),_('internal')])
+            self.scroll_to_bottom(store)
         elif add_type == 'module':
             mo = moduleSelection()
             module = mo.getModule()
@@ -448,6 +451,17 @@ class add_window():
             else:
                 self.show_label('show')
                 self.labelState.set_text(_("Error, you must choose a file"))
+    
+    def scroll_to_bottom(self,store):    
+        # autoscroll to the bottom
+        adj = self.scrolled_window.get_vadjustment()
+        adj.set_value( adj.get_upper()  - adj.get_page_size() )
+        
+        # select the bottom one
+        iter = store.get_iter(len(store)-1)
+        st,iters = self.tree_filter.convert_child_iter_to_iter(iter)
+        
+        self.selection.select_iter(iters)
 
 
     def addModule(self,store,module):
@@ -470,6 +484,7 @@ class add_window():
             # ex: récupération de weather
             path = module.split('/')[-2]
             store.append([_('key sentence'),path+'/'+name,'modules'])
+            self.scroll_to_bottom(store)
             # si le dossier de modules n'existe pas
             module_path=expanduser('~')+'/.config/google2ubuntu/modules/'
             if not os.path.exists(module_path):
