@@ -81,14 +81,14 @@ As you can see, google2ubuntu comes with several default commands. I will explai
 
 ###Basic configs
 Then you can configure google2ubuntu by clicking on the **Setup** button, that will open a window
-![setup](http://pix.toile-libre.org/upload/original/1392223488.png)
+![setup](http://pix.toile-libre.org/upload/original/1392400825.png)
 
 In this window you can:
 
-* configure the language you want to use, by changing the language in the combobox. For the GUI the will take effect after restart. 
-* Set the recording time (seconds) between 1 and 10 seconds
-* Set the command to pause the media player, (If you don't know what command to use let it emply)
-* Set the command to make the media player play (If you don't know, let it empty)
+1. configure the language you want to use, by changing the language in the combobox. For the GUI the will take effect after restart. 
+2. Set the recording time (seconds) between 1 and 10 seconds
+3. Set the command to pause/play the media player, (If you don't know what command to use let it emply)
+4. Activate/Deactivate and configure the hotword mode
 
 For the last two parameters, as there is a lot of media player (vlc, mplayer, banshee, ...) I think this way is the most efficient because it lets anybody writing a basic shell script that will pause or play his favorite media player. So those commands could be shell commands or could be more elaborated scripts
 
