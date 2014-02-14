@@ -20,7 +20,7 @@ t=gettext.translation('google2ubuntu',p +'/i18n/',languages=[lang])
 t.install()
 
 hotword = _('ok start')
-config_file = expanduser('~') + '/.config/google2ubuntu/google2ubntu.conf'
+config_file = expanduser('~') + '/.config/google2ubuntu/google2ubuntu.conf'
 try:
     if os.path.exists(config_file):
         f=open(config_file,'r')
@@ -64,7 +64,9 @@ try:
     # Parse
     #text=json.loads(d)['hypotheses'][0]['utterance']
     
-    if phrase.lower().count(hotword) > 0: 
+    print "hotword:", hotword
+    print "detected:", phrase   
+    if phrase.lower().count(hotword.lower()) > 0: 
         os.system('python ' + p + '/google2ubuntu.py')
 
 except Exception:

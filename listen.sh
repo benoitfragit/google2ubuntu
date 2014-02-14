@@ -10,8 +10,7 @@ CONFIGURATION="$HOME/.config/google2ubuntu/google2ubuntu.conf"
 threshold=5
 
 > "/tmp/hotword"
-while [ -f "/tmp/hotword" ]; do
-	clear	
+while [ -f "/tmp/hotword" ]; do	
 	# load the config every time, let the user setup the treshold and the hotword
 	if [ -f "$CONFIGURATION" ]; 
 	then
