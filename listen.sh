@@ -1,10 +1,11 @@
+#!/bin/sh
 # Okay Google hotword activation script
 # Josh Chen, 14 Feb 2014
 # Feel free to modify as you need
-
-#!/bin/sh
 # configuration file
 CONFIGURATION="$HOME/.config/google2ubuntu/google2ubuntu.conf"
+BASEDIR=$(dirname $0)
+cd $BASEDIR
 
 # default recording time
 threshold=5

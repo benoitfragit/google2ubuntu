@@ -27,6 +27,7 @@ class SetupWindow():
         label1=Gtk.Label(_('Select your language'))
         label1.set_justify(Gtk.Justification.LEFT)
         label1.set_halign(Gtk.Align.START)
+        label1.set_hexpand(True)
         label2=Gtk.Label(_('Set the recording time (seconds)'))
         label2.set_justify(Gtk.Justification.LEFT) 
         label2.set_halign(Gtk.Align.START) 
@@ -64,6 +65,7 @@ class SetupWindow():
 
         switch_active = Gtk.Switch()
         switch_active.set_active(False)
+        switch_active.set_hexpand(False)
         if os.path.exists('/tmp/hotword'):
             switch_active.set_active(True)
             
@@ -90,24 +92,25 @@ class SetupWindow():
         self.grid.set_border_width(10)
         self.grid.set_row_spacing(15)
         self.grid.set_vexpand(True)
-        self.grid.set_column_spacing(5)
-        self.grid.set_column_homogeneous(True)
-        self.grid.attach(label1,0,0,4,1)
-        self.grid.attach(combo,4,0,2,1)
-        self.grid.attach(label2,0,1,4,1)
-        self.grid.attach(self.scale, 4,1,2,1)
-        self.grid.attach(label3,0,2,4,1)
-        self.grid.attach(self.entry1,4,2,2,1)
-        self.grid.attach(label4,0,3,4,1)
-        self.grid.attach(self.entry2,4,3,2,1)
-        self.grid.attach(label5,0,4,5,1)
-        self.grid.attach(switch_active,5,4,1,1)
-        self.grid.attach(label7,0,5,4,1)
-        self.grid.attach(self.entry3,4,5,2,1)
-        self.grid.attach(label6,0,6,4,1)
-        self.grid.attach(self.scale_threshold,4,6,2,1)
-        self.grid.attach(ll,0,7,6,1)
-        self.grid.attach(button_back,5,8,1,1)        
+        self.grid.set_hexpand(True)
+        self.grid.set_column_spacing(2)
+        self.grid.set_column_homogeneous(False)
+        self.grid.attach(label1,0,0,14,1)
+        self.grid.attach(combo,14,0,1,1)
+        self.grid.attach(label2,0,1,11,1)
+        self.grid.attach(self.scale, 11,1,4,1)
+        self.grid.attach(label3,0,2,11,1)
+        self.grid.attach(self.entry1,11,2,4,1)
+        self.grid.attach(label4,0,3,11,1)
+        self.grid.attach(self.entry2,11,3,4,1)
+        self.grid.attach(label5,0,4,14,1)
+        self.grid.attach(switch_active,14,4,1,1)
+        self.grid.attach(label7,0,5,11,1)
+        self.grid.attach(self.entry3,11,5,4,1)
+        self.grid.attach(label6,0,6,11,1)
+        self.grid.attach(self.scale_threshold,11,6,4,1)
+        self.grid.attach(ll,0,7,15,1)
+        self.grid.attach(button_back,14,8,1,1)        
 
     
     # load the config    
@@ -169,8 +172,8 @@ class SetupWindow():
     
     def active_hotword(self,button,active):
         if button.get_active():
-            p = os.path.dirname(os.path.abspath(__file__))+'/..'
-            os.system('bash '+ p + '/listen.sh &')
+            p = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
+            os.system('bash '+p + 'listen.sh &')
         else:
             if os.path.exists('/tmp/hotword'):
                 os.remove('/tmp/hotword')
