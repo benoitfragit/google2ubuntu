@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-12 15:32+0100\n"
+"POT-Creation-Date: 2014-02-14 12:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,147 +17,155 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: librairy/add_window.py:41
+#: listener.py:22
+msgid "ok start"
+msgstr ""
+
+#: listener.py:76
+msgid "Cannot connect to Google Translate"
+msgstr ""
+
+#: listener.py:78
+msgid "Phrase parsing failed"
+msgstr ""
+
+#: listener.py:80
+msgid "Error processing value returned by Google Translate"
+msgstr ""
+
+#: librairy/add_window.py:42
 msgid "list of commands"
 msgstr ""
 
-#: librairy/add_window.py:54
+#: librairy/add_window.py:55
 msgid "Keys"
 msgstr ""
 
-#: librairy/add_window.py:70
+#: librairy/add_window.py:71
 msgid "Commands"
 msgstr ""
 
-#: librairy/add_window.py:78 librairy/osd.py:35 librairy/osd.py:40
+#: librairy/add_window.py:79 librairy/osd.py:35 librairy/osd.py:40
 msgid "Ready"
 msgstr ""
 
-#: librairy/add_window.py:145 librairy/add_window.py:438
-#: librairy/add_window.py:440 librairy/add_window.py:470
+#: librairy/add_window.py:147 librairy/add_window.py:442
+#: librairy/add_window.py:445 librairy/add_window.py:487
 msgid "key sentence"
 msgstr ""
 
-#: librairy/add_window.py:145 librairy/add_window.py:205
-#: librairy/add_window.py:438 librairy/stringParser.py:75
+#: librairy/add_window.py:147 librairy/add_window.py:208
+#: librairy/add_window.py:442 librairy/stringParser.py:75
 msgid "external"
 msgstr ""
 
-#: librairy/add_window.py:208 librairy/add_window.py:405
-#: librairy/add_window.py:409 librairy/add_window.py:420
-#: librairy/add_window.py:542 librairy/stringParser.py:66
+#: librairy/add_window.py:213 librairy/add_window.py:409
+#: librairy/add_window.py:413 librairy/add_window.py:424
+#: librairy/add_window.py:560 librairy/stringParser.py:66
 msgid "modules"
 msgstr ""
 
-#: librairy/add_window.py:236
+#: librairy/add_window.py:245
 msgid "External commands"
 msgstr ""
 
-#: librairy/add_window.py:240
+#: librairy/add_window.py:249
 msgid "Internal commands"
 msgstr ""
 
-#: librairy/add_window.py:244
+#: librairy/add_window.py:253
 msgid "Module"
 msgstr ""
 
-#: librairy/add_window.py:251
+#: librairy/add_window.py:260
 msgid "Add"
 msgstr ""
 
-#: librairy/add_window.py:261
+#: librairy/add_window.py:270
 msgid "Add a new command"
 msgstr ""
 
-#: librairy/add_window.py:266 librairy/add_window.py:278
-#: librairy/add_window.py:499
+#: librairy/add_window.py:275 librairy/add_window.py:287
+#: librairy/add_window.py:517
 msgid "Remove"
 msgstr ""
 
-#: librairy/add_window.py:268 librairy/add_window.py:288
+#: librairy/add_window.py:277 librairy/add_window.py:297
 msgid "Remove this command"
 msgstr ""
 
-#: librairy/add_window.py:271
+#: librairy/add_window.py:280
 msgid "Clean up"
 msgstr ""
 
-#: librairy/add_window.py:273 librairy/add_window.py:520
+#: librairy/add_window.py:282 librairy/add_window.py:538
 msgid "Remove all commands"
 msgstr ""
 
-#: librairy/add_window.py:293
+#: librairy/add_window.py:302
 msgid "Try"
 msgstr ""
 
-#: librairy/add_window.py:296
+#: librairy/add_window.py:305
 msgid "Try this command"
 msgstr ""
 
-#: librairy/add_window.py:303 librairy/add_window.py:306
+#: librairy/add_window.py:312 librairy/add_window.py:315
 #: librairy/ArgsWindow.py:27
 msgid "Module setup"
 msgstr ""
 
-#: librairy/add_window.py:312
-msgid "Setup"
-msgstr ""
-
-#: librairy/add_window.py:316
-msgid "Open setup window"
-msgstr ""
-
-#: librairy/add_window.py:333
+#: librairy/add_window.py:337
 msgid "Help"
 msgstr ""
 
-#: librairy/add_window.py:337
+#: librairy/add_window.py:341
 msgid "Display help message"
 msgstr ""
 
-#: librairy/add_window.py:357
+#: librairy/add_window.py:361
 msgid "All"
 msgstr ""
 
-#: librairy/add_window.py:358
+#: librairy/add_window.py:362
 msgid "External"
 msgstr ""
 
-#: librairy/add_window.py:359
+#: librairy/add_window.py:363
 msgid "Internal"
 msgstr ""
 
-#: librairy/add_window.py:360
+#: librairy/add_window.py:364
 msgid "Modules"
 msgstr ""
 
-#: librairy/add_window.py:364
+#: librairy/add_window.py:368
 msgid "What type of command to add"
 msgstr ""
 
-#: librairy/add_window.py:405 librairy/add_window.py:407
-#: librairy/add_window.py:440 librairy/add_window.py:542
+#: librairy/add_window.py:409 librairy/add_window.py:411
+#: librairy/add_window.py:445 librairy/add_window.py:560
 #: librairy/stringParser.py:28 librairy/stringParser.py:71
 msgid "internal"
 msgstr ""
 
-#: librairy/add_window.py:438
+#: librairy/add_window.py:442
 msgid "your command"
 msgstr ""
 
-#: librairy/add_window.py:440
+#: librairy/add_window.py:445
 msgid "word"
 msgstr ""
 
-#: librairy/add_window.py:448
+#: librairy/add_window.py:454
 msgid "Error, you must choose a file"
 msgstr ""
 
-#: librairy/add_window.py:479
+#: librairy/add_window.py:497
 msgid "Error, args file missing"
 msgstr ""
 
-#: librairy/add_window.py:629
+#: librairy/add_window.py:647
 msgid "Save commands"
 msgstr ""
 
@@ -237,8 +245,16 @@ msgstr ""
 msgid "Help Google2Ubuntu"
 msgstr ""
 
-#: librairy/interface.py:94
+#: librairy/interface.py:95
 msgid "unable to translate"
+msgstr ""
+
+#: librairy/MainWindow.py:33
+msgid "Setup"
+msgstr ""
+
+#: librairy/MainWindow.py:35
+msgid "Open setup window"
 msgstr ""
 
 #: librairy/moduleSelection.py:18
@@ -274,38 +290,59 @@ msgid "Done"
 msgstr ""
 
 #: librairy/SetupWindow.py:27
-msgid "Setup window"
-msgstr ""
-
-#: librairy/SetupWindow.py:82
 msgid "Select your language"
 msgstr ""
 
-#: librairy/SetupWindow.py:85
+#: librairy/SetupWindow.py:31
 msgid "Set the recording time (seconds)"
 msgstr ""
 
-#: librairy/SetupWindow.py:88
+#: librairy/SetupWindow.py:34
 msgid "Set the music player's play command"
 msgstr ""
 
-#: librairy/SetupWindow.py:91
+#: librairy/SetupWindow.py:37
 msgid "Set the music player's pause command"
 msgstr ""
 
-#: librairy/SetupWindow.py:100
+#: librairy/SetupWindow.py:40
+msgid "Hotword mode"
+msgstr ""
+
+#: librairy/SetupWindow.py:43
+msgid "Set the noise threshold"
+msgstr ""
+
+#: librairy/SetupWindow.py:46
+msgid "Set the hotword"
+msgstr ""
+
+#: librairy/SetupWindow.py:55
 msgid "Change the recording time"
 msgstr ""
 
-#: librairy/SetupWindow.py:104
+#: librairy/SetupWindow.py:59
 msgid "Set the play command"
 msgstr ""
 
-#: librairy/SetupWindow.py:109
+#: librairy/SetupWindow.py:64
 msgid "Set the pause command"
 msgstr ""
 
-#: librairy/SetupWindow.py:183
+#: librairy/SetupWindow.py:72
+msgid "Put the hotword mode ON or OFF"
+msgstr ""
+
+#: librairy/SetupWindow.py:78
+#, python-format
+msgid "Set the sound level in % under which sound is considerated as noise"
+msgstr ""
+
+#: librairy/SetupWindow.py:82
+msgid "Set the hotword to start effective recording"
+msgstr ""
+
+#: librairy/SetupWindow.py:217
 msgid "What language to choose"
 msgstr ""
 

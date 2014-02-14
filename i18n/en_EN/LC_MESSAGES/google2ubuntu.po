@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: google 2ubuntu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-12 15:32+0100\n"
+"POT-Creation-Date: 2014-02-14 12:33+0100\n"
 "PO-Revision-Date: 2014-02-02 09:47+0100\n"
 "Last-Translator: benoit <benoitfranquet@gmail.com>\n"
 "Language-Team: French\n"
@@ -18,147 +18,155 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: librairy/add_window.py:41
+#: listener.py:22
+msgid "ok start"
+msgstr "ok start"
+
+#: listener.py:76
+msgid "Cannot connect to Google Translate"
+msgstr "Cannot connect to Google Translate"
+
+#: listener.py:78
+msgid "Phrase parsing failed"
+msgstr "Phrase parsing failed"
+
+#: listener.py:80
+msgid "Error processing value returned by Google Translate"
+msgstr "Error processing value returned by Google Translate"
+
+#: librairy/add_window.py:42
 msgid "list of commands"
 msgstr "list of commands"
 
-#: librairy/add_window.py:54
+#: librairy/add_window.py:55
 msgid "Keys"
 msgstr "Keys"
 
-#: librairy/add_window.py:70
+#: librairy/add_window.py:71
 msgid "Commands"
 msgstr "Commands"
 
-#: librairy/add_window.py:78 librairy/osd.py:35 librairy/osd.py:40
+#: librairy/add_window.py:79 librairy/osd.py:35 librairy/osd.py:40
 msgid "Ready"
 msgstr "Ready"
 
-#: librairy/add_window.py:145 librairy/add_window.py:438
-#: librairy/add_window.py:440 librairy/add_window.py:470
+#: librairy/add_window.py:147 librairy/add_window.py:442
+#: librairy/add_window.py:445 librairy/add_window.py:487
 msgid "key sentence"
 msgstr "key sentence"
 
-#: librairy/add_window.py:145 librairy/add_window.py:205
-#: librairy/add_window.py:438 librairy/stringParser.py:75
+#: librairy/add_window.py:147 librairy/add_window.py:208
+#: librairy/add_window.py:442 librairy/stringParser.py:75
 msgid "external"
 msgstr "external"
 
-#: librairy/add_window.py:208 librairy/add_window.py:405
-#: librairy/add_window.py:409 librairy/add_window.py:420
-#: librairy/add_window.py:542 librairy/stringParser.py:66
+#: librairy/add_window.py:213 librairy/add_window.py:409
+#: librairy/add_window.py:413 librairy/add_window.py:424
+#: librairy/add_window.py:560 librairy/stringParser.py:66
 msgid "modules"
 msgstr "modules"
 
-#: librairy/add_window.py:236
+#: librairy/add_window.py:245
 msgid "External commands"
 msgstr "External commands"
 
-#: librairy/add_window.py:240
+#: librairy/add_window.py:249
 msgid "Internal commands"
 msgstr "Internal commands"
 
-#: librairy/add_window.py:244
+#: librairy/add_window.py:253
 msgid "Module"
 msgstr "Module"
 
-#: librairy/add_window.py:251
+#: librairy/add_window.py:260
 msgid "Add"
 msgstr "Add"
 
-#: librairy/add_window.py:261
+#: librairy/add_window.py:270
 msgid "Add a new command"
 msgstr "Add a new command"
 
-#: librairy/add_window.py:266 librairy/add_window.py:278
-#: librairy/add_window.py:499
+#: librairy/add_window.py:275 librairy/add_window.py:287
+#: librairy/add_window.py:517
 msgid "Remove"
 msgstr "Remove"
 
-#: librairy/add_window.py:268 librairy/add_window.py:288
+#: librairy/add_window.py:277 librairy/add_window.py:297
 msgid "Remove this command"
 msgstr "Remove this command"
 
-#: librairy/add_window.py:271
+#: librairy/add_window.py:280
 msgid "Clean up"
 msgstr "Clean up"
 
-#: librairy/add_window.py:273 librairy/add_window.py:520
+#: librairy/add_window.py:282 librairy/add_window.py:538
 msgid "Remove all commands"
 msgstr "Remove all commands"
 
-#: librairy/add_window.py:293
+#: librairy/add_window.py:302
 msgid "Try"
 msgstr "Try"
 
-#: librairy/add_window.py:296
+#: librairy/add_window.py:305
 msgid "Try this command"
 msgstr "Try this command"
 
-#: librairy/add_window.py:303 librairy/add_window.py:306
+#: librairy/add_window.py:312 librairy/add_window.py:315
 #: librairy/ArgsWindow.py:27
 msgid "Module setup"
 msgstr "Module setup"
 
-#: librairy/add_window.py:312
-msgid "Setup"
-msgstr "Setup"
-
-#: librairy/add_window.py:316
-msgid "Open setup window"
-msgstr "Open setup window"
-
-#: librairy/add_window.py:333
+#: librairy/add_window.py:337
 msgid "Help"
 msgstr "Help"
 
-#: librairy/add_window.py:337
+#: librairy/add_window.py:341
 msgid "Display help message"
 msgstr "Display help message"
 
-#: librairy/add_window.py:357
+#: librairy/add_window.py:361
 msgid "All"
 msgstr "All"
 
-#: librairy/add_window.py:358
+#: librairy/add_window.py:362
 msgid "External"
 msgstr "External"
 
-#: librairy/add_window.py:359
+#: librairy/add_window.py:363
 msgid "Internal"
 msgstr "Internal"
 
-#: librairy/add_window.py:360
+#: librairy/add_window.py:364
 msgid "Modules"
 msgstr "Modules"
 
-#: librairy/add_window.py:364
+#: librairy/add_window.py:368
 msgid "What type of command to add"
 msgstr "What type of command to add"
 
-#: librairy/add_window.py:405 librairy/add_window.py:407
-#: librairy/add_window.py:440 librairy/add_window.py:542
+#: librairy/add_window.py:409 librairy/add_window.py:411
+#: librairy/add_window.py:445 librairy/add_window.py:560
 #: librairy/stringParser.py:28 librairy/stringParser.py:71
 msgid "internal"
 msgstr "internal"
 
-#: librairy/add_window.py:438
+#: librairy/add_window.py:442
 msgid "your command"
 msgstr "your command"
 
-#: librairy/add_window.py:440
+#: librairy/add_window.py:445
 msgid "word"
 msgstr "word"
 
-#: librairy/add_window.py:448
+#: librairy/add_window.py:454
 msgid "Error, you must choose a file"
 msgstr "Error, you must choose a file"
 
-#: librairy/add_window.py:479
+#: librairy/add_window.py:497
 msgid "Error, args file missing"
 msgstr "Error, args file missing"
 
-#: librairy/add_window.py:629
+#: librairy/add_window.py:647
 msgid "Save commands"
 msgstr "Save commands"
 
@@ -238,9 +246,17 @@ msgstr "battery is not plugged"
 msgid "Help Google2Ubuntu"
 msgstr "Help Google2Ubuntu"
 
-#: librairy/interface.py:94
+#: librairy/interface.py:95
 msgid "unable to translate"
 msgstr "unable to translate"
+
+#: librairy/MainWindow.py:33
+msgid "Setup"
+msgstr "Setup"
+
+#: librairy/MainWindow.py:35
+msgid "Open setup window"
+msgstr "Open setup window"
 
 #: librairy/moduleSelection.py:18
 msgid "Choose a file"
@@ -275,38 +291,59 @@ msgid "Done"
 msgstr "Done"
 
 #: librairy/SetupWindow.py:27
-msgid "Setup window"
-msgstr "Setup window"
-
-#: librairy/SetupWindow.py:82
 msgid "Select your language"
 msgstr "Select your language"
 
-#: librairy/SetupWindow.py:85
+#: librairy/SetupWindow.py:31
 msgid "Set the recording time (seconds)"
 msgstr "Set the recording time (seconds)"
 
-#: librairy/SetupWindow.py:88
+#: librairy/SetupWindow.py:34
 msgid "Set the music player's play command"
 msgstr "Set the music player's play command"
 
-#: librairy/SetupWindow.py:91
+#: librairy/SetupWindow.py:37
 msgid "Set the music player's pause command"
 msgstr "Set the music player's pause command"
 
-#: librairy/SetupWindow.py:100
+#: librairy/SetupWindow.py:40
+msgid "Hotword mode"
+msgstr "Hotword mode"
+
+#: librairy/SetupWindow.py:43
+msgid "Set the noise threshold"
+msgstr "Set the noise threshold"
+
+#: librairy/SetupWindow.py:46
+msgid "Set the hotword"
+msgstr "Set the hotword"
+
+#: librairy/SetupWindow.py:55
 msgid "Change the recording time"
 msgstr "Change the recording time"
 
-#: librairy/SetupWindow.py:104
+#: librairy/SetupWindow.py:59
 msgid "Set the play command"
 msgstr "Set the play command"
 
-#: librairy/SetupWindow.py:109
+#: librairy/SetupWindow.py:64
 msgid "Set the pause command"
 msgstr "Set the pause command"
 
-#: librairy/SetupWindow.py:183
+#: librairy/SetupWindow.py:72
+msgid "Put the hotword mode ON or OFF"
+msgstr "Put the hotword mode ON or OFF"
+
+#: librairy/SetupWindow.py:78
+#, python-format
+msgid "Set the sound level in % under which sound is considerated as noise"
+msgstr "Set the sound level in % under which sound is considerated as noise"
+
+#: librairy/SetupWindow.py:82
+msgid "Set the hotword to start effective recording"
+msgstr "Set the hotword to start effective recording"
+
+#: librairy/SetupWindow.py:217
 msgid "What language to choose"
 msgstr "What language to choose"
 
@@ -321,6 +358,9 @@ msgstr "you didn't say th linking word"
 #: librairy/workWithModule.py:59
 msgid "args file missing"
 msgstr "args file missing"
+
+#~ msgid "Setup window"
+#~ msgstr "Setup window"
 
 #~ msgid "Set the music palyer's pause command"
 #~ msgstr "Set the music player's pause command"
