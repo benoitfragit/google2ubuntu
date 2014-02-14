@@ -18,6 +18,8 @@ class SetupWindow():
         self.player_play = ''
         self.dictation = False
         self.config = expanduser('~')+'/.config/google2ubuntu/google2ubuntu.conf'
+        self.threshold = 5
+        self.hotword = 'ok start'
         
         # looking for the configuration file
         self.__loadconfig()
@@ -28,12 +30,21 @@ class SetupWindow():
         label2=Gtk.Label(_('Set the recording time (seconds)'))
         label2.set_justify(Gtk.Justification.LEFT) 
         label2.set_halign(Gtk.Align.START) 
-        label4=Gtk.Label(_("Set the music player's play command"))
+        label3=Gtk.Label(_("Set the music player's play command"))
+        label3.set_justify(Gtk.Justification.LEFT) 
+        label3.set_halign(Gtk.Align.START) 
+        label4=Gtk.Label(_("Set the music player's pause command"))
         label4.set_justify(Gtk.Justification.LEFT) 
         label4.set_halign(Gtk.Align.START) 
-        label5=Gtk.Label(_("Set the music player's pause command"))
+        label5=Gtk.Label(_('Hotword mode'))
         label5.set_justify(Gtk.Justification.LEFT) 
         label5.set_halign(Gtk.Align.START) 
+        label6=Gtk.Label(_('Set the noise threshold'))
+        label6.set_justify(Gtk.Justification.LEFT) 
+        label6.set_halign(Gtk.Align.START)         
+        label7 = Gtk.Label(_('Set the hotword'))
+        label7.set_justify(Gtk.Justification.LEFT) 
+        label7.set_halign(Gtk.Align.START) 
         
         combo = self.__get_combobox()
         
@@ -51,6 +62,23 @@ class SetupWindow():
         self.entry2.set_text(self.player_pause)
         self.entry2.set_tooltip_text(_('Set the pause command'))
 
+        switch_active = Gtk.Switch()
+        switch_active.set_active(False)
+        if os.path.exists('/tmp/hotword'):
+            switch_active.set_active(True)
+            
+        switch_active.set_tooltip_text(_('Put the hotword mode ON or OFF'))
+        switch_active.connect("notify::active", self.active_hotword)
+
+        self.scale_threshold = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL,1,20,0.5)
+        self.scale_threshold.set_value(self.threshold)
+        self.scale_threshold.connect("value-changed",self.threshold_changed)
+        self.scale_threshold.set_tooltip_text(_('Set the sound level in % under which sound is considerated as noise'))
+
+        self.entry3 = Gtk.Entry()
+        self.entry3.set_text(self.hotword)
+        self.entry3.set_tooltip_text(_('Set the hotword to start effective recording'))
+        
         #button_back = Gtk.Button.new_from_stock(Gtk.STOCK_OK)
         button_back.connect("clicked",self.on_clicked)
         
@@ -68,12 +96,18 @@ class SetupWindow():
         self.grid.attach(combo,4,0,2,1)
         self.grid.attach(label2,0,1,4,1)
         self.grid.attach(self.scale, 4,1,2,1)
-        self.grid.attach(label4,0,2,4,1)
+        self.grid.attach(label3,0,2,4,1)
         self.grid.attach(self.entry1,4,2,2,1)
-        self.grid.attach(label5,0,3,4,1)
+        self.grid.attach(label4,0,3,4,1)
         self.grid.attach(self.entry2,4,3,2,1)
-        self.grid.attach(ll,0,4,6,1)
-        self.grid.attach(button_back,5,5,1,1)        
+        self.grid.attach(label5,0,4,5,1)
+        self.grid.attach(switch_active,5,4,1,1)
+        self.grid.attach(label7,0,5,4,1)
+        self.grid.attach(self.entry3,4,5,2,1)
+        self.grid.attach(label6,0,6,4,1)
+        self.grid.attach(self.scale_threshold,4,6,2,1)
+        self.grid.attach(ll,0,7,6,1)
+        self.grid.attach(button_back,5,8,1,1)        
 
     
     # load the config    
@@ -94,6 +128,10 @@ class SetupWindow():
                                 self.player_pause = field[1]
                             elif field[0] == 'play':
                                 self.player_play = field[1]
+                            elif field[0] == 'hotword':
+                                self.hotword = field[1]
+                            elif field[0] == 'threshold':
+                                self.threshold = int(field[1])
                 
                 # here we check mode
                 if os.path.exists('/tmp/g2u_dictation'):
@@ -110,6 +148,8 @@ class SetupWindow():
                 f.write('pause='+self.entry2.get_text()+'\n')
                 f.write('play='+self.entry1.get_text()+'\n')
                 f.write('locale='+self.locale+'\n')
+                f.write('hotword='+self.entry3.get_text()+'\n')
+                f.write('threshold='+str(self.threshold)+'\n')
                 f.close()
         except Exception:
             print 'Config file', self.config
@@ -122,6 +162,18 @@ class SetupWindow():
     def scale_moved(self,event):
         self.recording_time = int(self.scale.get_value())
         self.__recordconfig()
+
+    def threshold_changed(self,event):
+        self.threshold = int(self.scale_threshold.get_value())
+        self.__recordconfig()
+    
+    def active_hotword(self,button,active):
+        if button.get_active():
+            p = os.path.dirname(os.path.abspath(__file__))+'/..'
+            os.system('bash '+ p + '/listen.sh &')
+        else:
+            if os.path.exists('/tmp/hotword'):
+                os.remove('/tmp/hotword')
 
     def dictation_state(self,button,active):
         if button.get_active() :
