@@ -28,7 +28,7 @@ try:
             line = line.strip('\n')
             field = line.split('=')
             if field[0] == 'hotword':  
-                hotword = field[1]
+                hotword = field[1].replace('"','')
         f.close()
 except Exception:
     print "Error loading", config_file

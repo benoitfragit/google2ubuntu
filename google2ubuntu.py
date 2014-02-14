@@ -23,11 +23,11 @@ try:
         for line in f.readlines():
             line = line.strip('\n')
             field = line.split('=')
-            if field[0] == 'pause' and field[1] != '':
-                os.system(field[1]+' &')
+            if field[0] == 'pause' and field[1].replace('"','') != '':
+                os.system(field[1].replace('"','')+' &')
                 paused = True
             elif field[0] == 'play':
-                play_command = field[1]
+                play_command = field[1].replace('"','')
 except Exception:
     print 'Error reading google2ubuntu.conf file'
 
@@ -35,5 +35,6 @@ except Exception:
 g2u = interface()
 
 # restore media player state
+print paused
 if paused:
     os.system(play_command+' &')

@@ -125,11 +125,11 @@ class SetupWindow():
                             if field[0] == 'recording':
                                 self.recording_time=int(field[1])
                             elif field[0] == 'pause':
-                                self.player_pause = field[1]
+                                self.player_pause = field[1].replace('"','')
                             elif field[0] == 'play':
-                                self.player_play = field[1]
+                                self.player_play = field[1].replace('"','')
                             elif field[0] == 'hotword':
-                                self.hotword = field[1]
+                                self.hotword = field[1].replace('"','')
                             elif field[0] == 'threshold':
                                 self.threshold = int(field[1])
                 
@@ -145,10 +145,10 @@ class SetupWindow():
         try:
             with open(self.config, "w") as f:
                 f.write('recording='+str(self.recording_time)+'\n')
-                f.write('pause='+self.entry2.get_text()+'\n')
-                f.write('play='+self.entry1.get_text()+'\n')
+                f.write('pause="'+self.entry2.get_text()+'"\n')
+                f.write('play="'+self.entry1.get_text()+'"\n')
                 f.write('locale='+self.locale+'\n')
-                f.write('hotword='+self.entry3.get_text()+'\n')
+                f.write('hotword="'+self.entry3.get_text()+'"\n')
                 f.write('threshold='+str(self.threshold)+'\n')
                 f.close()
         except Exception:
