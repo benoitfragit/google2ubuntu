@@ -595,10 +595,10 @@ class add_window():
             else:
                 if os.path.exists(expanduser('~') +'/.config/google2ubuntu') == False:
                     os.makedirs(expanduser('~') +'/.config/google2ubuntu')
-                    os.system('cp -r /usr/share/google2ubuntu/modules '+expanduser('~') +'/.config/google2ubuntu')    
-                
                 tree = ET.parse(default)
-            
+            if os.path.exists(expanduser('~') +'/.config/google2ubuntu/modules') == False:
+                os.system('cp -r '+path+'/modules '+expanduser('~') +'/.config/google2ubuntu')
+
             root = tree.getroot()
             for entry in root.findall('entry'):
                 Type=entry.get('name')

@@ -36,12 +36,12 @@ class workWithModule():
             #
             # Le mot de liaison peut être " à "
             sentence=text.lower()
-            sentence=unicodedata.normalize('NFKD', text).encode('ASCII', 'ignore')
+            sentence=unicodedata.normalize('NFKD', text)
             sentence=sentence.lower()  
-       
+
             if sentence.count(linker) > 0:
-                param =(sentence.split(linker)[1]).encode("utf-8")
-                
+                param =(sentence.split(linker,1)[1]).encode("utf-8")
+
                 # on regarde si l'utilisateur veut transformer les ' ' en +
                 
                 if plus == '1':
