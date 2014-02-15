@@ -107,7 +107,11 @@ class add_window():
 
         # Use a grid to add all item
         self.grid = Gtk.Grid()
+        self.grid.set_border_width(0)
         self.grid.set_vexpand(True)
+        self.grid.set_hexpand(True)
+        self.grid.set_column_spacing(2)
+        self.grid.set_column_homogeneous(False)
         self.grid.set_row_spacing(2);
         self.grid.attach(self.toolbar,0,0,1,1)
         self.grid.attach(self.scrolled_window, 0, 1, 1, 1)    
@@ -423,15 +427,13 @@ class add_window():
             if iters is not None:
                 iter = self.tree_filter.convert_iter_to_child_iter(iters)
                 if store[iter][2] == _('modules'):
-                    w = ArgsWindow("",((store[iter][1]).split('/'))[-1],store,iter)
-                    self.setup_grid = w.get_grid()
-                    self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1)                     
+                    w = ArgsWindow("",((store[iter][1]).split('/'))[-1],store,iter)                   
                 elif store[iter][2] == _('external'):
                     w = externalWindow(store,iter)
-                    self.setup_grid = w.get_grid()
-                    self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1) 
                 elif store[iter][2] == _('internal'):
                     w = internalWindow(store,iter)
+                    
+                if self.setup_grid.get_parent() is None:
                     self.setup_grid = w.get_grid()
                     self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1)                     
 
@@ -450,24 +452,25 @@ class add_window():
         @param: add_type
             the type of the new command to add
         """
-        if add_type == 'externe':
-            win = externalWindow(store,None)
-            self.setup_grid = win.get_grid()
-            self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1) 
-            self.grid.show_all()
+        if self.setup_grid.get_parent() is None:
+            if add_type == 'externe':
+                win = externalWindow(store,None)
+                self.setup_grid = win.get_grid()
+                self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1) 
+                self.grid.show_all()
 
-        elif add_type == 'interne':
-            win = internalWindow(store,None)
-            self.setup_grid = win.get_grid()
-            self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1)   
+            elif add_type == 'interne':
+                win = internalWindow(store,None)
+                self.setup_grid = win.get_grid()
+                self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1)   
 
-        elif add_type == 'module':
-            mo = moduleSelection()
-            module = mo.getModule()
-            if module != '-1':
-                self.addModule(store,module)
-            else:
-                self.show_label('show')
+            elif add_type == 'module':
+                mo = moduleSelection()
+                module = mo.getModule()
+                if module != '-1':
+                    self.addModule(store,module)
+                else:
+                    self.show_label('show')
                 self.labelState.set_text(_("Error, you must choose a file"))
     
     def scroll_to_bottom(self,store):    
