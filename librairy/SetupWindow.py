@@ -9,7 +9,7 @@ from localehelper import LocaleHelper
 import os, sys, gettext
 
 class SetupWindow():
-    def __init__(self,button_back):
+    def __init__(self,button_back, button_cancel):
         # class variables
         localeHelper = LocaleHelper('en_EN')
         self.locale = localeHelper.getLocale()
@@ -81,9 +81,8 @@ class SetupWindow():
         self.entry3.set_text(self.hotword)
         self.entry3.set_tooltip_text(_('Set the hotword to start effective recording'))
         
-        #button_back = Gtk.Button.new_from_stock(Gtk.STOCK_OK)
         button_back.connect("clicked",self.on_clicked)
-        
+                
         # an invisble widget to fill the window
         ll = Gtk.Label()
         ll.set_vexpand(True)
@@ -110,9 +109,9 @@ class SetupWindow():
         self.grid.attach(label6,0,6,11,1)
         self.grid.attach(self.scale_threshold,11,6,4,1)
         self.grid.attach(ll,0,7,15,1)
-        self.grid.attach(button_back,14,8,1,1)        
-
-    
+        self.grid.attach(button_cancel,13,8,1,1)
+        self.grid.attach(button_back,14,8,1,1) 
+       
     # load the config    
     def __loadconfig(self):
         # if a config file is available

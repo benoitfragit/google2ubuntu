@@ -10,6 +10,8 @@ from moduleSelection import moduleSelection
 from HelpWindow import HelpWindow
 from localehelper import LocaleHelper
 from SetupWindow import *
+from externalWindow import *
+from internalWindow import *
 import os
 import sys
 import subprocess
@@ -110,6 +112,10 @@ class add_window():
         self.grid.attach(self.toolbar,0,0,1,1)
         self.grid.attach(self.scrolled_window, 0, 1, 1, 1)    
         self.grid.attach(self.labelState,0,2,1,1) 
+        
+        # a grid for setup
+        self.setup_grid = Gtk.Grid()
+
 
     def get_grid(self):
         """
@@ -203,23 +209,17 @@ class add_window():
         # get the model and the iterator that points at the data in the model
         (model, iter) = selection.get_selected()
         if iter is not None:
+            if self.setup_grid.get_parent is not None:
+                self.setup_grid.destroy()
+                
             self.show_label('hide')
             path = self.tree_filter.convert_iter_to_child_iter(iter)
             if store[path][2] == _('external'):
-                if self.module_button.get_parent() is not None:
-                    self.toolbar.remove(self.module_button)
                 if self.try_button.get_parent() is None:
                     self.toolbar.insert(self.try_button,2)
-            elif store[path][2] == _('modules'):
-                if self.try_button.get_parent() is not None:
-                    self.toolbar.remove(self.try_button)
-                if self.module_button.get_parent() is None:
-                    self.toolbar.insert(self.module_button,2)
             else:
                 if self.try_button.get_parent() is not None:
                     self.toolbar.remove(self.try_button)
-                if self.module_button.get_parent() is not None:
-                    self.toolbar.remove(self.module_button)
          
         return True
 
@@ -309,15 +309,15 @@ class add_window():
         
         # create a button to edit a module
         self.module_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_EDIT)
-        self.module_button.set_label(_('Module setup'))
+        self.module_button.set_label(_('Edit'))
         self.module_button.set_is_important(True)
         self.module_button.connect("clicked",self.edit_clicked,store)
-        self.module_button.set_tooltip_text(_('Module setup'))
+        self.module_button.set_tooltip_text(_('Edit this command'))
         self.module_button.show()
-        #toolbar.insert(self.module_button,3)
+        toolbar.insert(self.module_button,2)
 
         # create a button to setup the application
-        toolbar.insert(self.Button,2)
+        toolbar.insert(self.Button,3)
 
         
         # create a combobox to store user choice
@@ -325,18 +325,18 @@ class add_window():
         toolcombo = Gtk.ToolItem()
         toolcombo.add(self.combo)
         toolcombo.show()
-        toolbar.insert(toolcombo,3)        
+        toolbar.insert(toolcombo,4)        
         
         # add a separator
         separator = Gtk.ToolItem()
         separator.set_expand(True)
-        toolbar.insert(separator,4)
+        toolbar.insert(separator,5)
         
         # create a button for the "Help" action
         help_button = Gtk.ToolButton.new_from_stock(Gtk.STOCK_HELP)
         help_button.set_label(_("Help"))
         help_button.set_is_important(True)
-        toolbar.insert(help_button,5)
+        toolbar.insert(help_button,6)
         help_button.connect("clicked",self.help_clicked )
         help_button.set_tooltip_text(_("Display help message"))
         help_button.show() 
@@ -418,12 +418,24 @@ class add_window():
     def edit_clicked(self,button,store):
         # get the selected line, if it is module then we can open the window
         (model, iters) = self.selection.get_selected()
+
         if len(store) != 0:
             if iters is not None:
                 iter = self.tree_filter.convert_iter_to_child_iter(iters)
                 if store[iter][2] == _('modules'):
-                    w=ArgsWindow("",((store[iter][1]).split('/'))[-1],store,True)
-                    
+                    w = ArgsWindow("",((store[iter][1]).split('/'))[-1],store,iter)
+                    self.setup_grid = w.get_grid()
+                    self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1)                     
+                elif store[iter][2] == _('external'):
+                    w = externalWindow(store,iter)
+                    self.setup_grid = w.get_grid()
+                    self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1) 
+                elif store[iter][2] == _('internal'):
+                    w = internalWindow(store,iter)
+                    self.setup_grid = w.get_grid()
+                    self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1)                     
+
+                
     def add_clicked(self,button,store,add_type):
         """
         @description: callback function called when the user want to add
@@ -439,11 +451,16 @@ class add_window():
             the type of the new command to add
         """
         if add_type == 'externe':
-            store.append([_('key sentence'),_('your command'),_('external')])
-            self.scroll_to_bottom(store)
+            win = externalWindow(store,None)
+            self.setup_grid = win.get_grid()
+            self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1) 
+            self.grid.show_all()
+
         elif add_type == 'interne':
-            store.append([_('key sentence'),_('word'),_('internal')])
-            self.scroll_to_bottom(store)
+            win = internalWindow(store,None)
+            self.setup_grid = win.get_grid()
+            self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1)   
+
         elif add_type == 'module':
             mo = moduleSelection()
             module = mo.getModule()
@@ -492,10 +509,16 @@ class add_window():
                 os.makedirs(os.path.dirname(module_path))
                 # on copie le dossier du module    
             os.system('cp -r '+module+' '+module_path)
+            iter = iter = store.get_iter(len(store)-1)
+            win = ArgsWindow(module,name,store,iter)
+            self.setup_grid = win.get_grid()
+            self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1)   
         else:
             self.show_label('show')
             self.labelState.set_text(_("Error, args file missing"))
-            win = ArgsWindow(module,name,store)        
+            win = ArgsWindow(module,name,store) 
+            self.setup_grid = win.get_grid()
+            self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1)          
     
     def remove_clicked(self,button,store):
         """

@@ -20,7 +20,7 @@ class MainWindow(Gtk.ApplicationWindow):
     """
     def __init__(self,app):
         Gtk.Window.__init__(self, title="google2ubuntu-manager",application=app)
-        self.set_default_size(600, 400)  
+        self.set_default_size(800, 400)  
         self.set_resizable(True)     
         self.set_border_width(0)
         self.get_focus()
@@ -38,11 +38,13 @@ class MainWindow(Gtk.ApplicationWindow):
         
         button_back = Gtk.Button.new_from_stock(Gtk.STOCK_OK)
         button_back.connect("clicked",self.change_page,0)
+        button_cancel = Gtk.Button.new_from_stock(Gtk.STOCK_CANCEL)
+        button_cancel.connect("clicked",self.change_page,0)
         
         # get the main view 
         content = add_window(button_config)
         label_main = Gtk.Label("main")
-        config = SetupWindow(button_back)
+        config = SetupWindow(button_back,button_cancel)
         label_config = Gtk.Label("config")
         
         # create a Gtk.Notebook to store both page
