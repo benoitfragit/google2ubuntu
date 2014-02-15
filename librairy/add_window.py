@@ -112,6 +112,7 @@ class add_window():
         self.grid.set_hexpand(True)
         self.grid.set_column_spacing(2)
         self.grid.set_column_homogeneous(False)
+        self.grid.set_row_homogeneous(False)
         self.grid.set_row_spacing(2);
         self.grid.attach(self.toolbar,0,0,1,1)
         self.grid.attach(self.scrolled_window, 0, 1, 1, 1)    
