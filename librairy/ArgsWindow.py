@@ -40,6 +40,10 @@ class ArgsWindow():
         label2 = Gtk.Label(_("Linking word"))
         label2.set_justify(Gtk.Justification.LEFT) 
         label2.set_halign(Gtk.Align.START) 
+
+        label3 = Gtk.Label(_("Replace space by plus"))
+        label3.set_justify(Gtk.Justification.LEFT) 
+        label3.set_halign(Gtk.Align.START) 
         
         ll = Gtk.Label()
         ll.set_vexpand(True)
@@ -49,10 +53,10 @@ class ArgsWindow():
         
         self.entry2 = Gtk.Entry()
         self.entry2.set_tooltip_text(_("Word to separate call and parameter"))
-        self.checkbutton = Gtk.CheckButton()
-        self.checkbutton.set_label(_("Replace space by plus"))
+        self.checkbutton = Gtk.Switch()
         self.checkbutton.set_tooltip_text(_("Replace space by plus"))
         self.checkbutton.set_active(False)
+        
         button = Gtk.Button()
         button.set_label(_("Go"))
         button.set_tooltip_text(_("Go"))
@@ -88,8 +92,10 @@ class ArgsWindow():
         self.grid.attach(self.entry1,11,0,4,1)        
         self.grid.attach(label2,0,1,11,1)
         self.grid.attach(self.entry2,11,1,4,1)
-        self.grid.attach(self.checkbutton,0,2,15,1) 
+        self.grid.attach(label3,0,2,14,1)
+        self.grid.attach(self.checkbutton,14,2,1,1) 
         self.grid.attach(ll,0,3,15,1)
+        self.grid.attach(button_cancel,13,4,1,1)
         self.grid.attach(button,14,4,1,1)    
         self.grid.show_all()            
     
