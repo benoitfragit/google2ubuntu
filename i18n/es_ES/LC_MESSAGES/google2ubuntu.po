@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: google 2ubuntu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-14 12:33+0100\n"
+"POT-Creation-Date: 2014-02-15 14:54+0100\n"
 "PO-Revision-Date: 2014-02-06 18:32+0100\n"
 "Last-Translator: benoit <benoitfranquet@gmail.com>\n"
 "Language-Team: French\n"
@@ -34,37 +34,33 @@ msgstr "Análisis Frase fallado"
 msgid "Error processing value returned by Google Translate"
 msgstr "Error al procesar el valor devuelto por el traductor de Google"
 
-#: librairy/add_window.py:42
+#: librairy/add_window.py:44
 msgid "list of commands"
 msgstr "lista de ordenes"
 
-#: librairy/add_window.py:55
+#: librairy/add_window.py:57
 msgid "Keys"
 msgstr "clave"
 
-#: librairy/add_window.py:71
+#: librairy/add_window.py:73
 msgid "Commands"
 msgstr "ordenes"
 
-#: librairy/add_window.py:79 librairy/osd.py:35 librairy/osd.py:40
+#: librairy/add_window.py:81 librairy/osd.py:35 librairy/osd.py:40
 msgid "Ready"
 msgstr "Listo"
 
-#: librairy/add_window.py:147 librairy/add_window.py:442
-#: librairy/add_window.py:445 librairy/add_window.py:487
+#: librairy/add_window.py:153 librairy/add_window.py:504
+#: librairy/ArgsWindow.py:35 librairy/ArgsWindow.py:48
+#: librairy/externalWindow.py:20 librairy/internalWindow.py:22
 msgid "key sentence"
 msgstr "su sentencia"
 
-#: librairy/add_window.py:147 librairy/add_window.py:208
-#: librairy/add_window.py:442 librairy/stringParser.py:75
+#: librairy/add_window.py:153 librairy/add_window.py:217
+#: librairy/add_window.py:429 librairy/externalWindow.py:59
+#: librairy/stringParser.py:75
 msgid "external"
 msgstr "externas"
-
-#: librairy/add_window.py:213 librairy/add_window.py:409
-#: librairy/add_window.py:413 librairy/add_window.py:424
-#: librairy/add_window.py:560 librairy/stringParser.py:66
-msgid "modules"
-msgstr "módulos"
 
 #: librairy/add_window.py:245
 msgid "External commands"
@@ -87,7 +83,7 @@ msgid "Add a new command"
 msgstr "Agregar nueva orden"
 
 #: librairy/add_window.py:275 librairy/add_window.py:287
-#: librairy/add_window.py:517
+#: librairy/add_window.py:540
 msgid "Remove"
 msgstr "Eliminar"
 
@@ -99,7 +95,7 @@ msgstr "Eliminar esta orden"
 msgid "Clean up"
 msgstr "Limpiar"
 
-#: librairy/add_window.py:282 librairy/add_window.py:538
+#: librairy/add_window.py:282 librairy/add_window.py:561
 msgid "Remove all commands"
 msgstr "Eliminar todas las ordenes"
 
@@ -111,10 +107,13 @@ msgstr "Intentar"
 msgid "Try this command"
 msgstr "Intentar esta orden"
 
-#: librairy/add_window.py:312 librairy/add_window.py:315
-#: librairy/ArgsWindow.py:27
-msgid "Module setup"
-msgstr "Módulo confiuguracion"
+#: librairy/add_window.py:312
+msgid "Edit"
+msgstr "Editar"
+
+#: librairy/add_window.py:315
+msgid "Edit this command"
+msgstr "Editar este orden"
 
 #: librairy/add_window.py:337
 msgid "Help"
@@ -144,65 +143,69 @@ msgstr "Módulos"
 msgid "What type of command to add"
 msgstr "Que type de orden agregar"
 
+#: librairy/add_window.py:409 librairy/add_window.py:413
+#: librairy/add_window.py:425 librairy/add_window.py:583
+#: librairy/stringParser.py:66
+msgid "modules"
+msgstr "módulos"
+
 #: librairy/add_window.py:409 librairy/add_window.py:411
-#: librairy/add_window.py:445 librairy/add_window.py:560
-#: librairy/stringParser.py:28 librairy/stringParser.py:71
+#: librairy/add_window.py:433 librairy/add_window.py:583
+#: librairy/internalWindow.py:60 librairy/stringParser.py:28
+#: librairy/stringParser.py:71
 msgid "internal"
 msgstr "internas"
 
-#: librairy/add_window.py:442
-msgid "your command"
-msgstr "su orden"
-
-#: librairy/add_window.py:445
-msgid "word"
-msgstr "palabra"
-
-#: librairy/add_window.py:454
+#: librairy/add_window.py:471
 msgid "Error, you must choose a file"
 msgstr "Error, debe seleccionar un archivo"
 
-#: librairy/add_window.py:497
+#: librairy/add_window.py:518
 msgid "Error, args file missing"
 msgstr "Error, archivo args ausente"
 
-#: librairy/add_window.py:647
+#: librairy/add_window.py:670
 msgid "Save commands"
 msgstr "Salvar ordenes"
 
-#: librairy/ArgsWindow.py:35
+#: librairy/ArgsWindow.py:40
 msgid "Linking word"
 msgstr "Palabra para vincular"
 
-#: librairy/ArgsWindow.py:39
+#: librairy/ArgsWindow.py:51
 msgid "Word to separate call and parameter"
 msgstr "Palabra que permite separar los parametros y la llamade del modulo"
 
-#: librairy/ArgsWindow.py:41 librairy/ArgsWindow.py:42
+#: librairy/ArgsWindow.py:53 librairy/ArgsWindow.py:54
 msgid "Replace space by plus"
 msgstr "Substituir los espacios por adicion"
 
-#: librairy/ArgsWindow.py:45 librairy/ArgsWindow.py:46
+#: librairy/ArgsWindow.py:57 librairy/ArgsWindow.py:58
 msgid "Go"
 msgstr "Continuar"
 
-#: librairy/basicCommands.py:28
+#: librairy/basicCommands.py:28 librairy/internalWindow.py:80
+#: librairy/internalWindow.py:81
 msgid "time"
 msgstr "hora"
 
-#: librairy/basicCommands.py:30
+#: librairy/basicCommands.py:30 librairy/internalWindow.py:82
+#: librairy/internalWindow.py:83
 msgid "power"
 msgstr "bateria"
 
-#: librairy/basicCommands.py:32
+#: librairy/basicCommands.py:32 librairy/internalWindow.py:84
+#: librairy/internalWindow.py:85
 msgid "clipboard"
 msgstr "portapapeles"
 
-#: librairy/basicCommands.py:34
+#: librairy/basicCommands.py:34 librairy/internalWindow.py:86
+#: librairy/internalWindow.py:87
 msgid "dictation mode"
 msgstr "modo dictado"
 
-#: librairy/basicCommands.py:37 librairy/stringParser.py:28
+#: librairy/basicCommands.py:37 librairy/internalWindow.py:88
+#: librairy/internalWindow.py:89 librairy/stringParser.py:28
 msgid "exit dictation mode"
 msgstr "salgar del modo dictado"
 
@@ -242,6 +245,10 @@ msgstr "queda"
 msgid "battery is not plugged"
 msgstr "la bateria no esta"
 
+#: librairy/externalWindow.py:24 librairy/internalWindow.py:26
+msgid "your command"
+msgstr "su orden"
+
 #: librairy/HelpWindow.py:28
 msgid "Help Google2Ubuntu"
 msgstr "Ayuda de google2ubuntu"
@@ -249,6 +256,10 @@ msgstr "Ayuda de google2ubuntu"
 #: librairy/interface.py:95
 msgid "unable to translate"
 msgstr "imposible de traducir"
+
+#: librairy/internalWindow.py:99
+msgid "Which internal command to choose"
+msgstr "que orden interno eligir"
 
 #: librairy/MainWindow.py:33
 msgid "Setup"
@@ -343,7 +354,7 @@ msgstr "Ajuste el nivel de sonido en% en virtud del cual el sonido es considerar
 msgid "Set the hotword to start effective recording"
 msgstr "Ajuste el hotword para iniciar la grabación efectiva"
 
-#: librairy/SetupWindow.py:217
+#: librairy/SetupWindow.py:216
 msgid "What language to choose"
 msgstr "Qué idioma para elegir"
 
@@ -358,6 +369,12 @@ msgstr "no has dicho la palabra de enlace"
 #: librairy/workWithModule.py:59
 msgid "args file missing"
 msgstr "args archivo ausente"
+
+#~ msgid "Module setup"
+#~ msgstr "Módulo confiuguracion"
+
+#~ msgid "word"
+#~ msgstr "palabra"
 
 #~ msgid "Setup window"
 #~ msgstr "Ventana de configuración"

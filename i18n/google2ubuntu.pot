@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-14 12:33+0100\n"
+"POT-Creation-Date: 2014-02-15 14:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,36 +33,32 @@ msgstr ""
 msgid "Error processing value returned by Google Translate"
 msgstr ""
 
-#: librairy/add_window.py:42
+#: librairy/add_window.py:44
 msgid "list of commands"
 msgstr ""
 
-#: librairy/add_window.py:55
+#: librairy/add_window.py:57
 msgid "Keys"
 msgstr ""
 
-#: librairy/add_window.py:71
+#: librairy/add_window.py:73
 msgid "Commands"
 msgstr ""
 
-#: librairy/add_window.py:79 librairy/osd.py:35 librairy/osd.py:40
+#: librairy/add_window.py:81 librairy/osd.py:35 librairy/osd.py:40
 msgid "Ready"
 msgstr ""
 
-#: librairy/add_window.py:147 librairy/add_window.py:442
-#: librairy/add_window.py:445 librairy/add_window.py:487
+#: librairy/add_window.py:153 librairy/add_window.py:504
+#: librairy/ArgsWindow.py:35 librairy/ArgsWindow.py:48
+#: librairy/externalWindow.py:20 librairy/internalWindow.py:22
 msgid "key sentence"
 msgstr ""
 
-#: librairy/add_window.py:147 librairy/add_window.py:208
-#: librairy/add_window.py:442 librairy/stringParser.py:75
+#: librairy/add_window.py:153 librairy/add_window.py:217
+#: librairy/add_window.py:429 librairy/externalWindow.py:59
+#: librairy/stringParser.py:75
 msgid "external"
-msgstr ""
-
-#: librairy/add_window.py:213 librairy/add_window.py:409
-#: librairy/add_window.py:413 librairy/add_window.py:424
-#: librairy/add_window.py:560 librairy/stringParser.py:66
-msgid "modules"
 msgstr ""
 
 #: librairy/add_window.py:245
@@ -86,7 +82,7 @@ msgid "Add a new command"
 msgstr ""
 
 #: librairy/add_window.py:275 librairy/add_window.py:287
-#: librairy/add_window.py:517
+#: librairy/add_window.py:540
 msgid "Remove"
 msgstr ""
 
@@ -98,7 +94,7 @@ msgstr ""
 msgid "Clean up"
 msgstr ""
 
-#: librairy/add_window.py:282 librairy/add_window.py:538
+#: librairy/add_window.py:282 librairy/add_window.py:561
 msgid "Remove all commands"
 msgstr ""
 
@@ -110,9 +106,12 @@ msgstr ""
 msgid "Try this command"
 msgstr ""
 
-#: librairy/add_window.py:312 librairy/add_window.py:315
-#: librairy/ArgsWindow.py:27
-msgid "Module setup"
+#: librairy/add_window.py:312
+msgid "Edit"
+msgstr ""
+
+#: librairy/add_window.py:315
+msgid "Edit this command"
 msgstr ""
 
 #: librairy/add_window.py:337
@@ -143,65 +142,69 @@ msgstr ""
 msgid "What type of command to add"
 msgstr ""
 
+#: librairy/add_window.py:409 librairy/add_window.py:413
+#: librairy/add_window.py:425 librairy/add_window.py:583
+#: librairy/stringParser.py:66
+msgid "modules"
+msgstr ""
+
 #: librairy/add_window.py:409 librairy/add_window.py:411
-#: librairy/add_window.py:445 librairy/add_window.py:560
-#: librairy/stringParser.py:28 librairy/stringParser.py:71
+#: librairy/add_window.py:433 librairy/add_window.py:583
+#: librairy/internalWindow.py:60 librairy/stringParser.py:28
+#: librairy/stringParser.py:71
 msgid "internal"
 msgstr ""
 
-#: librairy/add_window.py:442
-msgid "your command"
-msgstr ""
-
-#: librairy/add_window.py:445
-msgid "word"
-msgstr ""
-
-#: librairy/add_window.py:454
+#: librairy/add_window.py:471
 msgid "Error, you must choose a file"
 msgstr ""
 
-#: librairy/add_window.py:497
+#: librairy/add_window.py:518
 msgid "Error, args file missing"
 msgstr ""
 
-#: librairy/add_window.py:647
+#: librairy/add_window.py:670
 msgid "Save commands"
 msgstr ""
 
-#: librairy/ArgsWindow.py:35
+#: librairy/ArgsWindow.py:40
 msgid "Linking word"
 msgstr ""
 
-#: librairy/ArgsWindow.py:39
+#: librairy/ArgsWindow.py:51
 msgid "Word to separate call and parameter"
 msgstr ""
 
-#: librairy/ArgsWindow.py:41 librairy/ArgsWindow.py:42
+#: librairy/ArgsWindow.py:53 librairy/ArgsWindow.py:54
 msgid "Replace space by plus"
 msgstr ""
 
-#: librairy/ArgsWindow.py:45 librairy/ArgsWindow.py:46
+#: librairy/ArgsWindow.py:57 librairy/ArgsWindow.py:58
 msgid "Go"
 msgstr ""
 
-#: librairy/basicCommands.py:28
+#: librairy/basicCommands.py:28 librairy/internalWindow.py:80
+#: librairy/internalWindow.py:81
 msgid "time"
 msgstr ""
 
-#: librairy/basicCommands.py:30
+#: librairy/basicCommands.py:30 librairy/internalWindow.py:82
+#: librairy/internalWindow.py:83
 msgid "power"
 msgstr ""
 
-#: librairy/basicCommands.py:32
+#: librairy/basicCommands.py:32 librairy/internalWindow.py:84
+#: librairy/internalWindow.py:85
 msgid "clipboard"
 msgstr ""
 
-#: librairy/basicCommands.py:34
+#: librairy/basicCommands.py:34 librairy/internalWindow.py:86
+#: librairy/internalWindow.py:87
 msgid "dictation mode"
 msgstr ""
 
-#: librairy/basicCommands.py:37 librairy/stringParser.py:28
+#: librairy/basicCommands.py:37 librairy/internalWindow.py:88
+#: librairy/internalWindow.py:89 librairy/stringParser.py:28
 msgid "exit dictation mode"
 msgstr ""
 
@@ -241,12 +244,20 @@ msgstr ""
 msgid "battery is not plugged"
 msgstr ""
 
+#: librairy/externalWindow.py:24 librairy/internalWindow.py:26
+msgid "your command"
+msgstr ""
+
 #: librairy/HelpWindow.py:28
 msgid "Help Google2Ubuntu"
 msgstr ""
 
 #: librairy/interface.py:95
 msgid "unable to translate"
+msgstr ""
+
+#: librairy/internalWindow.py:99
+msgid "Which internal command to choose"
 msgstr ""
 
 #: librairy/MainWindow.py:33
@@ -342,7 +353,7 @@ msgstr ""
 msgid "Set the hotword to start effective recording"
 msgstr ""
 
-#: librairy/SetupWindow.py:217
+#: librairy/SetupWindow.py:216
 msgid "What language to choose"
 msgstr ""
 
