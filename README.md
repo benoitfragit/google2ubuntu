@@ -24,7 +24,7 @@ Devs | Translators | Bug reports
 [mte90](https://github.com/mte90)|[mte90](https://github.com/mte90)|[Andrew from Webupd8](https://github.com/hotice)
 [levan7](https://github.com/Levan7)|[lincus](https://github.com/lincus)|[mte90](https://github.com/mte90)
 [ladios](https://github.com/ladios)|[ladios](https://github.com/ladios)|[mads5408](https://github.com/mads5408)
-
+Josh Chen||
 
 ##Publication
 
