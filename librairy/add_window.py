@@ -427,11 +427,12 @@ class add_window():
         if len(store) != 0:
             if iters is not None:
                 iter = self.tree_filter.convert_iter_to_child_iter(iters)
-                if store[iter][2] == _('modules'):
+                print store[iter][2]
+                if store[iter][2] == 'modules':
                     w = ArgsWindow("",((store[iter][1]).split('/'))[-1],store,iter)                   
-                elif store[iter][2] == _('external'):
+                elif store[iter][2] == 'externe':
                     w = externalWindow(store,iter)
-                elif store[iter][2] == _('internal'):
+                elif store[iter][2] == 'interne':
                     w = internalWindow(store,iter)
                     
                 if self.setup_grid.get_parent() is None:
