@@ -23,6 +23,7 @@ class HelpWindow():
         translators += "Tectas\n"
         translators += "Daniele Scasciafratte <mte90net@gmail.com>\n"
         translators += "Leor < leor.bi.otti.flor@gmail.com﻿>"
+        translators += "Ladios"
 
         # we fill in the aboutdialog
         self.aboutdialog.set_program_name(_("Help Google2Ubuntu"))
