@@ -427,7 +427,7 @@ class add_window():
         if len(store) != 0:
             if iters is not None:
                 iter = self.tree_filter.convert_iter_to_child_iter(iters)
-                print store[iter][2]
+                w = None
                 if store[iter][2] == 'modules':
                     w = ArgsWindow("",((store[iter][1]).split('/'))[-1],store,iter)                   
                 elif store[iter][2] == 'externe':
@@ -435,7 +435,7 @@ class add_window():
                 elif store[iter][2] == 'interne':
                     w = internalWindow(store,iter)
                     
-                if self.setup_grid.get_parent() is None:
+                if self.setup_grid.get_parent() is None and w is not None:
                     self.setup_grid = w.get_grid()
                     self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1)                     
 
@@ -503,6 +503,7 @@ class add_window():
         module=module.strip(name)
         print module+"args"
         # ex: recherche du fichier args
+        iter = None
         if os.path.exists(module+'args'):
             # ex: récupération de weather
             path = module.split('/')[-2]
@@ -514,12 +515,10 @@ class add_window():
                 os.makedirs(os.path.dirname(module_path))
                 # on copie le dossier du module    
             os.system('cp -r '+module+' '+module_path)
-            iter = iter = store.get_iter(len(store)-1)  
-        else:
-            iter = None
+            iter = store.get_iter(len(store)-1)  
         
         if self.setup_grid.get_parent() is None:
-            win = ArgsWindow(module,name,store) 
+            win = ArgsWindow(module,name,store,iter) 
             self.setup_grid = win.get_grid()
             self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1)          
     
