@@ -514,13 +514,11 @@ class add_window():
                 os.makedirs(os.path.dirname(module_path))
                 # on copie le dossier du module    
             os.system('cp -r '+module+' '+module_path)
-            iter = iter = store.get_iter(len(store)-1)
-            win = ArgsWindow(module,name,store,iter)
-            self.setup_grid = win.get_grid()
-            self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1)   
+            iter = iter = store.get_iter(len(store)-1)  
         else:
-            self.show_label('show')
-            self.labelState.set_text(_("Error, args file missing"))
+            iter = None
+        
+        if self.setup_grid.get_parent() is None:
             win = ArgsWindow(module,name,store) 
             self.setup_grid = win.get_grid()
             self.grid.attach_next_to(self.setup_grid,self.scrolled_window,Gtk.PositionType.BOTTOM,1,1)          
