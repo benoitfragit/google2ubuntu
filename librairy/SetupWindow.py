@@ -19,7 +19,7 @@ class SetupWindow():
         self.dictation = False
         self.config = expanduser('~')+'/.config/google2ubuntu/google2ubuntu.conf'
         self.threshold = 5
-        self.hotword = 'ok start'
+        self.hotword = _('ok start')
         
         # looking for the configuration file
         self.__loadconfig()
