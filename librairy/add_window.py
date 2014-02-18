@@ -32,7 +32,7 @@ class add_window():
         # Gtk.ListStore will hold data for the TreeView
         # Only the first two columns will be displayed
         # The third one is for sorting file sizes as numbers
-        store = Gtk.ListStore(str, str, str)
+        store = Gtk.ListStore(str, str, str, str, str, str)
         # Get the data - see below
         self.populate_store(store)
 
@@ -155,7 +155,7 @@ class add_window():
                 if os.path.isfile(path):
                     self.addModule(store,path)
                 elif os.path.isdir(path):
-                    store.append([_('key sentence'),'xdg-open '+path,_('external')])
+                    store.append([_('key sentence'),'xdg-open '+path,_('external'),' ', ' ', ' '])
                     self.scroll_to_bottom(store)
 
     def show_label(self,action):
@@ -429,7 +429,7 @@ class add_window():
                 iter = self.tree_filter.convert_iter_to_child_iter(iters)
                 w = None
                 if store[iter][2] == _('modules'):
-                    w = ArgsWindow("",((store[iter][1]).split('/'))[-1],store,iter)                   
+                    w = ArgsWindow(store[iter][3], store[iter][1],store,iter)                   
                 elif store[iter][2] == _('external'):
                     w = externalWindow(store,iter)
                 elif store[iter][2] == _('internal'):
@@ -499,24 +499,8 @@ class add_window():
         """
         # ex: recup de weather.sh
         name = module.split('/')[-1]
-        # ex: ~/.config/google2ubuntu/weather
-        module=module.strip(name)
-        print module+"args"
-        # ex: recherche du fichier args
         iter = None
-        if os.path.exists(module+'args'):
-            # ex: récupération de weather
-            path = module.split('/')[-2]
-            store.append([_('key sentence'),path+'/'+name,'modules'])
-            self.scroll_to_bottom(store)
-            # si le dossier de modules n'existe pas
-            module_path=expanduser('~')+'/.config/google2ubuntu/modules/'
-            if not os.path.exists(module_path):
-                os.makedirs(os.path.dirname(module_path))
-                # on copie le dossier du module    
-            os.system('cp -r '+module+' '+module_path)
-            iter = store.get_iter(len(store)-1)  
-        
+                
         if self.setup_grid.get_parent() is None:
             win = ArgsWindow(module,name,store,iter) 
             self.setup_grid = win.get_grid()
@@ -628,9 +612,12 @@ class add_window():
             root = tree.getroot()
             for entry in root.findall('entry'):
                 Type=entry.get('name')
-                Key=entry.find('key').text
-                Command=entry.find('command').text
-                store.append([Key, Command, Type])  
+                Key = entry.find('key').text
+                Command = entry.find('command').text
+                path = entry.find('path').text
+                linker = entry.find('linker').text
+                spacebyplus = entry.find('spacebyplus').text
+                store.append([Key, Command, Type, path, linker, spacebyplus])  
         except Exception as e:
             print 'Error while reading config file'
             print type(e)
@@ -665,7 +652,14 @@ class add_window():
                             Key.text = unicode(s,"utf-8")
                             Command = ET.SubElement(Type, "command")
                             Command.text = unicode(model[iter][1],"utf-8")
-                
+                            Path = ET.SubElement(Type, "path")                            
+                            Linker = ET.SubElement(Type, "linker") 
+                            Spacebyplus = ET.SubElement(Type, "spacebyplus")
+                            if store[iter][3] is not None or store[iter][4] is not None or store[iter][5] is not None:
+                                Path.text =  unicode(store[iter][3],"utf-8")
+                                Linker.text = unicode(store[iter][4],"utf-8")
+                                Spacebyplus.text = unicode(store[iter][5],"utf-8")
+                            
             tree = ET.ElementTree(root).write(config,encoding="utf-8",xml_declaration=True)
 
             self.show_label('show')

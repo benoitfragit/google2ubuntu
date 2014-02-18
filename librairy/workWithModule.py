@@ -15,20 +15,10 @@ class workWithModule():
     the module's config file before extracting modules's parameter from the
     text you have pronounced
     """
-    def __init__(self,module_path,module_name,text,PID):
+    def __init__(self,module_path,module_name,text,linker,plus,PID):
         self.pid = PID
         
         try:
-            # Lecture du fichier de configuration du module
-            argsfile=expanduser('~')+'/.config/google2ubuntu/modules/'+module_path+'/args';
-            f = open(argsfile,'r')
-            ligne=(f.readline()).rstrip('\n\r')  
-            linker=unicode(ligne.split('=')[1],"utf-8")
-            ligne=(f.readline()).rstrip('\n\r')              
-            plus=ligne.split('=')[1] 
-            f.close()  
-
-            print linker+'_', plus
             # on utilise un mot de liaison pour séparer l'appel du module
             # des arguments à lui envoyer
             # ex: Quelle est la météo à Paris
@@ -43,13 +33,11 @@ class workWithModule():
                 param =(sentence.split(linker,1)[1]).encode("utf-8")
 
                 # on regarde si l'utilisateur veut transformer les ' ' en +
-                
                 if plus == '1':
                     param=param.replace(' ','+')
                 
                 # commande qui sera exécutée    
-                
-                execute = expanduser('~') +'/.config/google2ubuntu/modules/'+module_path+'/'+module_name+' '+'"'+param+'" &'
+                execute = expanduser('~')+'/.config/modules/'+module_name+' '+'"'+param+'" &'
                 os.system(execute)
             else:
                 message=_("you didn't say the linking word")   

@@ -45,6 +45,10 @@ class stringParser():
                     Type=entry.get('name')
                     Key=entry.find('key').text
                     Command=entry.find('command').text
+                    Path = entry.find('path').text
+                    Linker = entry.find('linker').text
+                    Spacebyplus = entry.find('spacebyplus').text
+                    
                     key=Key.split(' ')
                     for j in range(len(key)):
                         score += text.count(key[j])
@@ -53,21 +57,24 @@ class stringParser():
                         max = score
                         do = Command
                         tp = Type
+                        path = Path
+                        linker = Linker
+                        spacebyplus = Spacebyplus
             
-            # on regarde si la commande fait appel à un module
-            # si oui, alors on lui passe en paramètre les dernier mots prononcé
-            # ex: si on prononce "quelle est la météo à Paris"
-            # la ligne de configuration dans le fichier est: [q/Q]uelle*météo=/modules/weather/weather.sh
-            # on coupe donc l'action suivant '/'
             do = do.encode('utf8') 
             tp = tp.encode('utf8')
-            print tp, do
+            
+            print 'key', tp
+            print 'command', do
+            
             os.system('echo "'+do+'" > /tmp/g2u_cmd_'+self.pid)
             if _('modules') in tp:
-                check = do.split('/')
                 # si on trouve le mot "modules", on instancie une classe workWithModule et on lui passe
-                # le dossier ie weather, search,...; le nom du module ie weather.sh, search.sh et le texte prononcé
-                wm = workWithModule(check[0],check[1],text,self.pid)
+                # le dossier ie weather, search,...; le nom du module ie weather.sh, search.sh et le texte prononcé 
+                path = path.encode('utf8')
+                linker = linker.encode('utf8')
+                spacebyplus = spacebyplus.encode('utf8')
+                wm = workWithModule(path,do,text,linker,spacebyplus,self.pid)
             elif _('internal') in tp:
                 # on execute une commande intene, la commande est configurée
                 # ainsi interne/batterie, on envoie batterie à la fonction
