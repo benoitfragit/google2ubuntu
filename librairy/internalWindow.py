@@ -57,7 +57,7 @@ class internalWindow():
     def button_clicked(self,button,store,iter):
         if iter is None:
             if self.entry1.get_text() is not '':
-                store.append([self.entry1.get_text(),str(self.dic[self.combo.get_active()]),_('internal'),' ',' ',' '])
+                store.append([self.entry1.get_text(),str(self.dic[self.combo.get_active()]),_('internal'),' ',' '])
                 self.saveTree(store)
         else:
             store[iter][0] = str(self.entry1.get_text())
@@ -140,13 +140,11 @@ class internalWindow():
                             Key.text = unicode(s,"utf-8")
                             Command = ET.SubElement(Type, "command")
                             Command.text = unicode(store[iter][1],"utf-8")
-                            Path = ET.SubElement(Type, "path")                            
                             Linker = ET.SubElement(Type, "linker") 
                             Spacebyplus = ET.SubElement(Type, "spacebyplus")
-                            if store[iter][3] is not None and store[iter][4] is not None or store[iter][5] is not None:
-                                Path.text =  unicode(store[iter][3],"utf-8")
-                                Linker.text = unicode(store[iter][4],"utf-8")
-                                Spacebyplus.text = unicode(store[iter][5],"utf-8")
+                            if store[iter][3] is not None and store[iter][4] is not None:
+                                Linker.text = unicode(store[iter][3],"utf-8")
+                                Spacebyplus.text = unicode(store[iter][4],"utf-8")
                 
             tree = ET.ElementTree(root).write(config,encoding="utf-8",xml_declaration=True)
 

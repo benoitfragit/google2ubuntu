@@ -45,7 +45,6 @@ class stringParser():
                     Type=entry.get('name')
                     Key=entry.find('key').text
                     Command=entry.find('command').text
-                    Path = entry.find('path').text
                     Linker = entry.find('linker').text
                     Spacebyplus = entry.find('spacebyplus').text
                     
@@ -57,7 +56,6 @@ class stringParser():
                         max = score
                         do = Command
                         tp = Type
-                        path = Path
                         linker = Linker
                         spacebyplus = Spacebyplus
             
@@ -71,10 +69,9 @@ class stringParser():
             if _('modules') in tp:
                 # si on trouve le mot "modules", on instancie une classe workWithModule et on lui passe
                 # le dossier ie weather, search,...; le nom du module ie weather.sh, search.sh et le texte prononcé 
-                path = path.encode('utf8')
                 linker = linker.encode('utf8')
                 spacebyplus = spacebyplus.encode('utf8')
-                wm = workWithModule(path,do,text,linker,spacebyplus,self.pid)
+                wm = workWithModule(do,text,linker,spacebyplus,self.pid)
             elif _('internal') in tp:
                 # on execute une commande intene, la commande est configurée
                 # ainsi interne/batterie, on envoie batterie à la fonction

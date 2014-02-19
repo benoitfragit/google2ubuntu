@@ -15,7 +15,7 @@ class workWithModule():
     the module's config file before extracting modules's parameter from the
     text you have pronounced
     """
-    def __init__(self,module_path,module_name,text,linker,plus,PID):
+    def __init__(self,module_name,text,linker,plus,PID):
         self.pid = PID
         
         try:
@@ -26,16 +26,21 @@ class workWithModule():
             #
             # Le mot de liaison peut être " à "
             sentence=text.lower()
-            sentence=unicodedata.normalize('NFKD', text)
+            # oblige to put this .encode('ASCII', 'ignore') for french
+            print sentence
+            sentence = unicodedata.normalize('NFKD', sentence)
+            print sentence
+            sentence=sentence.encode('ASCII', 'ignore')
+            print sentence
             sentence=sentence.lower()  
-
+            
             if sentence.count(linker) > 0:
                 param =(sentence.split(linker,1)[1]).encode("utf-8")
 
                 # on regarde si l'utilisateur veut transformer les ' ' en +
                 if plus == '1':
                     param=param.replace(' ','+')
-                
+                print param
                 # commande qui sera exécutée    
                 execute = expanduser('~')+'/.config/google2ubuntu/modules/'+module_name+' '+'"'+param+'" &'
                 os.system(execute)

@@ -71,21 +71,11 @@ class ArgsWindow():
         if iter is None:
             button.connect("clicked",self.do_clicked,module,name,store)
         else:
-            # currently modifying
-            # if selection is not None then the user want to modify an existing module
-            # path = name.split('.')[0]
-            # args file for the module should exist
-            # argsfile = expanduser('~')+'/.config/google2ubuntu/modules/'+path+'/args'
-
             self.entry1.set_text(store[iter][0])
-            #if os.path.exists(argsfile):    
-            #    f = open(argsfile,"r")
-            #    linker = (f.readline().strip('\n')).split('=')[-1]
-            #    spacebyplus = (f.readline().strip('\n')).split('=')[-1]
-            #    f.close()
-            linker = store[iter][4]
-            spacebyplus = store[iter][5]
+            linker = store[iter][3]
+            spacebyplus = store[iter][4]
             self.entry2.set_text(linker)
+            
             if spacebyplus == '1':
                 self.checkbutton.set_active(True)
             button.connect("clicked",self.do_modify,store[iter][3],store,iter)
@@ -124,22 +114,14 @@ class ArgsWindow():
             try:
                 # folder = name.split('.')[0]
                 module_path=expanduser('~')+'/.config/google2ubuntu/modules/'
-
-                # if not os.path.exists(module_path):
-                #    os.makedirs(module_path)    
                                 
-                # f = open(module_path+'/args',"w")
-                # f.write('linker='+linker+'\n')
-                # f.write('spacebyplus='+spacebyplus+'\n')
-                # f.close()
-                
                 os.system('cp '+module+' '+module_path)
                 print 'key', key
                 print 'name', name
                 print 'module', module_path+name
                 print 'linker', linker
                 print 'spacebyplus', spacebyplus
-                store.append([key,name,'modules',module_path+name,linker,spacebyplus])    
+                store.append([key,name,'modules',linker,spacebyplus])    
                 #save the store
                 self.saveTree(store)
             except IOError:
@@ -148,27 +130,18 @@ class ArgsWindow():
         self.grid.destroy()
     
     def do_modify(self,button,argsfile,store,iter):
-        # modifying args file
-        # f = open(argsfile,"w")
-        # f.write('linker='+self.entry2.get_text()+'\n')
         if self.checkbutton.get_active():
-           # f.write('spacebyplus=1\n')
            spacebyplus = 1
         else:
-           # f.write('spacebyplus=0\n')
            spacebyplus = 0
-            
-        # f.close()
-        
-        
+                
         # modifying the store
         store[iter][0] = self.entry1.get_text()
-        store[iter][4] = self.entry2.get_text()
-        store[iter][5] = str(spacebyplus)
+        store[iter][3] = self.entry2.get_text()
+        store[iter][4] = str(spacebyplus)
         
         #save the store
         self.saveTree(store)
-        
         self.grid.destroy()
 
     def saveTree(self,store):
@@ -198,13 +171,11 @@ class ArgsWindow():
                             Key.text = unicode(s,"utf-8")
                             Command = ET.SubElement(Type, "command")
                             Command.text = unicode(store[iter][1],"utf-8")
-                            Path = ET.SubElement(Type, "path")                            
                             Linker = ET.SubElement(Type, "linker") 
                             Spacebyplus = ET.SubElement(Type, "spacebyplus")
-                            if store[iter][3] is not None or store[iter][4] is not None or store[iter][5] is not None:
-                                Path.text =  unicode(store[iter][3],"utf-8")
-                                Linker.text = unicode(store[iter][4],"utf-8")
-                                Spacebyplus.text = unicode(store[iter][5],"utf-8")
+                            if store[iter][3] is not None or store[iter][4] is not None:
+                                Linker.text = unicode(store[iter][3],"utf-8")
+                                Spacebyplus.text = unicode(store[iter][4],"utf-8")
                 
             tree = ET.ElementTree(root).write(config,encoding="utf-8",xml_declaration=True)
 
