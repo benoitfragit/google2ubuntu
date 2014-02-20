@@ -159,11 +159,10 @@ If you want to add an internal command, open the little menu near the "Add" butt
 The dictation mode let you type all word you pronouce. If you want to enter in the dictation mode use the dictation mode internal function. If you want to exit this mode just use the associated function. Dictation is not continue so you have to launch google2ubuntu for each sentence you want to type
 
 ###Modules
-In order to extand google2ubuntu very easily I've implemented a system of menu that let developers adds their own scripts in google2ubuntu. Besides, all modules will receive the text tha you pronouce in parameter
+In order to extand google2ubuntu very easily I've implemented a system of modules that lets developers adds their own scripts in google2ubuntu. Besides, all modules will receive the text that you pronounce in parameter
 
 ####Module's description
-A module is composed of 2 files, an executable file and a config file named "args" placed both in the same folder.
-The args file contains 2 fields:
+A module is basically, an executable file that will receive some text in argument. each module embed its configuration in your configuration file. Two fields are recorded for each module:
 
 * linker
 a vord that let us distinguish the call to the module and the parameter we have to send to this module. For example, if I want to configure the module google, I can choose the linker "google " because when I make a research I say:
@@ -175,7 +174,7 @@ So, the google module will be call with `who is barack obama` in parameter.
 If spacebyplus=1 then space are replace py +.
 
 ####How to add a module
-If you want to add a script, but this script doesn't have an args file don't worry, the gui will help you to create one and will place the module in :
+If you want to add a script,  the gui will help you to create one and will place the module in :
 ```
 ~/.config/google2ubuntu/modules
 ```
@@ -193,11 +192,6 @@ This plugin allows you to make search on Google and open the web browser on the 
 This plugin allows you to make search on Wikipedia
 * **youtube**
 This plugin allows you to make search on YouTube
-* **way**
-This plugin allows you to find a way between to place on Google map. You have to pronounce your place like this:
-```
-way between Pars and Marseille
-```
 So your locations need to be between the word "between" and "and"
 * **weather**
 This plugin allows you to ask Google to show you the weather for a city
@@ -209,10 +203,8 @@ meaning barack obama
 The plugin will tell me that he is the actual president of the US
 
 ####Note for the user
-Perhaps, you will have to modify the linker field of those module by modifying the corresponding args file in :
-```
-~/.config/google2ubuntu/modules/<name>/args
-```
+Perhaps, you will have to modify the linker field of those module by selecting the module and clicking on the edit button
+
 #Go Linux automation
 Once you have personalized and take care about the commands already included in google2ubuntu, you can launch the recognition by launching `google2ubuntu.py`
 
@@ -302,6 +294,9 @@ I've wrote a documentation page with Sphinx
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding pt_PT support
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding traditional chinese translation
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | correct the wikipedia module
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding nl_NL support
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | simplify module configuration storage
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding an edit button that open an edit window
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | update the documentation
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | improve translation 
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | bug fixe 
