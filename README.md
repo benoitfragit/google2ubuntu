@@ -297,6 +297,7 @@ I've wrote a documentation page with Sphinx
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding nl_NL support
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | simplify module configuration storage
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding an edit button that open an edit window
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding an hotword mode
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | update the documentation
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | improve translation 
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | bug fixe 
