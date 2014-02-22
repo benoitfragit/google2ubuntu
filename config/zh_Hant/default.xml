@@ -3,166 +3,253 @@
     <entry name="內部">
         <key>時間</key>
         <command>時間</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="內部">
         <key>什麼時間</key>
         <command>時間</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="內部">
         <key>時辰</key>
         <command>時間</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="內部">
         <key>什麼時辰</key>
         <command>時間</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="內部">
         <key>幾點鐘</key>
         <command>時間</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="內部">
         <key>現在幾點鐘</key>
         <command>時間</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="內部">
         <key>電源</key>
         <command>電源</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="內部">
         <key>電池</key>
         <command>電源</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="內部">
         <key>電量</key>
         <command>電源</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="內部">
         <key>剪貼簿</key>
         <command>剪貼簿</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="內部">
         <key>開始口述</key>
         <command>口述模式</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="內部">
         <key>口述開始</key>
         <command>口述模式</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="內部">
         <key>結束口述</key>
         <command>離開口述模式</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="內部">
         <key>口述結束</key>
         <command>離開口述模式</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="外部">
         <key>關閉視窗</key>
         <command>xdotool key "Alt+F4"</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="外部">
         <key>隱藏視窗</key>
         <command>xdotool key "Alt+F9"</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="外部">
         <key>切換視窗</key>
         <command>xdotool key "Alt+Tab"</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="外部">
         <key>其他視窗</key>
         <command>xdotool key "Alt+Tab"</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="外部">
         <key>輸入</key>
         <command>xdotool key "Return"</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="外部">
         <key>Tab</key>
         <command>xdotool key "Tab"</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="外部">
         <key>選單</key>
         <command>xdotool key "Alt+F1"</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="外部">
         <key>顯示選單</key>
         <command>xdotool key "Alt+F1"</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="外部">
         <key>開啟瀏覽器</key>
         <command>exo-open --launch WebBrowser</command>
-    </entry>
-    <entry name="外部">
-        <key>開啟檔案總管</key>
-        <command>exo-open --launch FileManager</command>
-    </entry>
-    <entry name="外部">
-        <key>開啟終端機</key>
-        <command>exo-open --launch TerminalEmulator</command>
-    </entry>
-    <entry name="外部">
-        <key>開啟圖片</key>
-        <command>xdg-open ~/圖片</command>
-    </entry>
-    <entry name="外部">
-        <key>開啟音樂</key>
-        <command>xdg-open ~/音樂</command>
-    </entry>
-    <entry name="外部">
-        <key>開啟文件</key>
-        <command>xdg-open ~/文件</command>
-    </entry>
-    <entry name="外部">
-        <key>開啟下載</key>
-        <command>xdg-open ~/下載</command>
-    </entry>
-    <entry name="外部">
-        <key>複製</key>
-        <command>xdotool key "Ctrl+c"</command>
-    </entry>
-    <entry name="外部">
-        <key>貼上</key>
-        <command>xdotool key "Ctrl+v"</command>
-    </entry>
-    <entry name="外部">
-        <key>剪下</key>
-        <command>xdotool key "Ctrl+x"</command>
-    </entry>
-    <entry name="模組">
-        <key>google</key>
-        <command>google/google.sh</command>
-    </entry>
-    <entry name="模組">
-        <key>搜尋</key>
-        <command>google/google.sh</command>
-    </entry>
-    <entry name="模組">
-        <key>wiki</key>
-        <command>wikipedia/wikipedia.sh</command>
-    </entry>
-    <entry name="模組">
-        <key>維基百科</key>
-        <command>wikipedia/wikipedia.sh</command>
-    </entry>
-    <entry name="模組">
-        <key>youtube</key>
-        <command>youtube/youtube.sh</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
     </entry>
     <entry name="外部">
         <key>閱讀郵件</key>
         <command>exo-open --launch MailReader;</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
+    </entry>
+    <entry name="外部">
+        <key>開啟檔案總管</key>
+        <command>exo-open --launch FileManager</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
+    </entry>
+    <entry name="外部">
+        <key>開啟終端機</key>
+        <command>exo-open --launch TerminalEmulator</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
+    </entry>
+    <entry name="外部">
+        <key>開啟圖片</key>
+        <command>xdg-open ~/圖片</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
+    </entry>
+    <entry name="外部">
+        <key>開啟音樂</key>
+        <command>xdg-open ~/音樂</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
+    </entry>
+    <entry name="外部">
+        <key>開啟文件</key>
+        <command>xdg-open ~/文件</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
+    </entry>
+    <entry name="外部">
+        <key>開啟下載</key>
+        <command>xdg-open ~/下載</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
+    </entry>
+    <entry name="外部">
+        <key>複製</key>
+        <command>xdotool key "Ctrl+c"</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
+    </entry>
+    <entry name="外部">
+        <key>貼上</key>
+        <command>xdotool key "Ctrl+v"</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
+    </entry>
+    <entry name="外部">
+        <key>剪下</key>
+        <command>xdotool key "Ctrl+x"</command>
+        <linker> </linker>
+        <spacebyplus> </spacebyplus>
+    </entry>
+    <entry name="模組">
+        <key>google</key>
+        <command>google.sh</command>
+        <linker>google </linker>
+        <spacebyplus>1</spacebyplus>
+    </entry>
+    <entry name="模組">
+        <key>搜尋</key>
+        <command>google.sh</command>
+        <linker>搜尋</linker>
+        <spacebyplus>1</spacebyplus>
+    </entry>
+    <entry name="modules">
+        <key>定義</key>
+        <command>meaning.py</command>
+        <linker>定義</linker>
+        <spacebyplus>1</spacebyplus>
+    </entry>
+    <entry name="模組">
+        <key>wiki</key>
+        <command>wikipedia.sh</command>
+        <linker>wiki </linker>
+        <spacebyplus>1</spacebyplus>
+    </entry>
+    <entry name="模組">
+        <key>維基百科</key>
+        <command>wikipedia.sh</command>
+        <linker>維基百科</linker>
+        <spacebyplus>1</spacebyplus>
+    </entry>
+    <entry name="模組">
+        <key>youtube</key>
+        <command>youtube.sh</command>
+        <linker>youtube </linker>
+        <spacebyplus>1</spacebyplus>
     </entry>
     <entry name="模組">
         <key>天氣</key>
-        <command>weather/weather.sh</command>
+        <command>weather.sh</command>
+        <linker>天氣</linker>
+        <spacebyplus>1</spacebyplus>
     </entry>
     <entry name="模組">
         <key>天氣怎麼樣</key>
-        <command>weather/weather.sh</command>
+        <command>weather.sh</command>
+        <linker>天氣</linker>
+        <spacebyplus>1</spacebyplus>
     </entry>
     <entry name="模組">
         <key>天氣如何</key>
-        <command>weather/weather.sh</command>
+        <command>weather.sh</command>
+        <linker>天氣</linker>
+        <spacebyplus>1</spacebyplus>
     </entry>
 </data>
-
