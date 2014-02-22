@@ -321,7 +321,7 @@ msgstr "字詞偵測模式"
 
 #: librairy/SetupWindow.py:43
 msgid "Set the noise threshold"
-msgstr "設定嘈音閾值"
+msgstr "設定噪音閾值"
 
 #: librairy/SetupWindow.py:46
 msgid "Set the hotword"
@@ -346,7 +346,7 @@ msgstr "開關字詞偵測模式"
 #: librairy/SetupWindow.py:78
 #, python-format
 msgid "Set the sound level in % under which sound is considerated as noise"
-msgstr "設定將低於這聲浪水平 % 的聲音判斷為嘈音"
+msgstr "設定將低於這聲浪水平 % 的聲音判斷為噪音"
 
 #: librairy/SetupWindow.py:82
 msgid "Set the hotword to start effective recording"
