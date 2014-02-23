@@ -195,6 +195,13 @@ This plugin allows you to make search on YouTube
 So your locations need to be between the word "between" and "and"
 * **weather**
 This plugin allows you to ask Google to show you the weather for a city
+* **goto**
+This plugin allows you to open a new web page with the web page you want. For example if you have configurated the plugin liker this:
+```
+your sentence = go to
+linker = to 
+```
+Then if you say "go to gmail.com", a new web page is going to be open with gmail.com
 * **meaning**
 This plugin allows you to ask to the meaning of a word, for exemple if I ask:
 ```
