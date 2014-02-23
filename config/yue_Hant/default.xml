@@ -222,6 +222,18 @@
         <linker>搜尋</linker>
         <spacebyplus>1</spacebyplus>
     </entry>
+    <entry name="模組">
+        <key>瀏覽</key>
+        <command>goto.py</command>
+        <linker>瀏覽</linker>
+        <spacebyplus> </spacebyplus>
+    </entry>
+    <entry name="模組">
+        <key>前往</key>
+        <command>goto.py</command>
+        <linker>前往</linker>
+        <spacebyplus> </spacebyplus>
+    </entry>
     <entry name="modules">
         <key>定義</key>
         <command>meaning.py</command>
