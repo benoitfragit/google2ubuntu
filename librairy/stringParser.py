@@ -77,7 +77,7 @@ class stringParser():
                 # ainsi interne/batterie, on envoie batterie à la fonction
                 b = basicCommands(do,self.pid)
             elif _('external') in tp:
-                os.system(do)
+                os.system(do+' &')
             else:
                 os.system('xdotool type "'+do+'"')
                 
