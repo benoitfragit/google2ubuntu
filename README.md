@@ -30,6 +30,7 @@ Josh Chen|[Frank Claessen](https://github.com/frankclaessen)|
 
 * [WebUpd8](http://www.webupd8.org/2014/02/linux-speech-recognition-using-google.html#more)
 * [La vache libre](http://la-vache-libre.org/google2ubuntu-le-projet-de-reconnaissance-vocale-pour-gnulinux-a-un-nouveau-developpeur/)
+* [chimeravo](http://www.chimerarevo.com/linux/comandi-vocali-su-ubuntu)
 
 
 
