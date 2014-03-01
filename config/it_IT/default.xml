@@ -3,140 +3,140 @@
 	<entry name="interno">
 		<key>orario</key>
 		<command>orario</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="interno">
 		<key>stato batteria</key>
 		<command>batteria</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="interno">
 		<key>quanta batteria</key>
 		<command>batteria</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>chiudi finestra</key>
 		<command>xdotool key "Alt+F4"</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>nascondi finestra</key>
 		<command>xdotool key "Alt+F9"</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>cambia finestra</key>
 		<command>xdotool key "Alt+Tab"</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>altra finestra</key>
 		<command>xdotool key "Alt+Tab"</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>invia</key>
 		<command>xdotool key "Return"</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>invio</key>
 		<command>xdotool key "Return"</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>tab</key>
 		<command>xdotool key "Tab"</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>menu</key>
 		<command>xdotool key "Alt+F1"</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>apri menu</key>
 		<command>xdotool key "Alt+F1"</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>apri browser</key>
 		<command>exo-open --launch WebBrowser</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>apri internet</key>
 		<command>exo-open --launch WebBrowser</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>apri file manager</key>
 		<command>exo-open --launch FileManager</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>apri terminale</key>
 		<command>exo-open --launch TerminalEmulator</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>apri immagini</key>
 		<command>xdg-open ~/Immagini</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>apri musica</key>
 		<command>xdg-open ~/Music</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>apri documenti</key>
 		<command>xdg-open ~/Documenti</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>apri download</key>
 		<command>xdg-open ~/Downloads</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>copia</key>
 		<command>xdotool key "Ctrl+c"</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>incolla</key>
 		<command>xdotool key "Ctrl+v"</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="esterno">
 		<key>taglia</key>
 		<command>xdotool key "Ctrl+x"</command>
-		<linker />
-		<spacebyplus />
+		<linker> </linker>
+		<spacebyplus> </spacebyplus>
 	</entry>
 	<entry name="moduli">
 		<key>google</key>
