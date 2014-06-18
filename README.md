@@ -1,6 +1,10 @@
 google2ubuntu
 =============
 
+#UPDATE
+
+Because google speech api v1 is no more working and because the v2 need each user to get a key from google, google2ubuntu is no more avalaible. Maybe a future update will use the v2 and ask users for a key.
+
 #Presentation
 
 The aim of this project is to let you use the Google speech recognition API to control your linux computer. The project is developed in Python.
