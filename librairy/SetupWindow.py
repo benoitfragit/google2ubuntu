@@ -60,7 +60,7 @@ class SetupWindow():
         
         self.entry0 = Gtk.Entry()
         self.entry0.set_text(self.key)    
-        self.entry0.set_tooltip_text(_('Set the Googel Api Key'));
+        self.entry0.set_tooltip_text(_('Set the Google Api Key'));
         
         self.entry1 = Gtk.Entry()
         self.entry1.set_text(self.player_play)
