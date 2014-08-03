@@ -164,7 +164,7 @@ class SetupWindow():
                 f.write('locale='+self.locale+'\n')
                 f.write('hotword="'+self.entry3.get_text()+'"\n')
                 f.write('threshold='+str(self.threshold)+'\n')
-                f.write('key='+str(self.key)+'\n')
+                f.write('key="'+self.entry0.get_text()+'"\n')
                 f.close()
         except Exception:
             print 'Config file', self.config

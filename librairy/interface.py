@@ -16,7 +16,7 @@ class interface():
     asking Google for the translation. Then, the result is parsing in order to
     execute the associated action
     """
-    def __init__(self):
+    def __init__(self, key):
         # make the program able to switch language
         self.p = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
 
@@ -41,9 +41,9 @@ class interface():
         output,error  = p.communicate()
         # return to 16kHz
         os.system(self.p+'convert.sh '+self.PID)
-        self.sendto()
+        self.sendto(key)
 
-    def sendto(self):
+    def sendto(self, key):
         """
         @function: Send the flac file to Google and start the parser
         """
@@ -74,9 +74,11 @@ class interface():
             config_file = default
 
         print 'config file:', config_file
+        print key
         try:
             # envoie une requête à Google
-            req = urllib2.Request('https://www.google.com/speech-api/v2/recognize?output=json&lang='+self.lang+'&key=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw&client=chromium', data=data, headers={'Content-type': 'audio/x-flac; rate=16000'})
+            #req = urllib2.Request('https://www.google.com/speech-api/v2/recognize?output=json&lang='+self.lang+'&key=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw&client=chromium', data=data, headers={'Content-type': 'audio/x-flac; rate=16000'})
+            req = urllib2.Request('https://www.google.com/speech-api/v2/recognize?output=json&lang='+self.lang+'&key='+key+'&client=chromium', data=data, headers={'Content-type': 'audio/x-flac; rate=16000'})
             # retour de la requête
             ret = urllib2.urlopen(req)
             response = ret.read()
