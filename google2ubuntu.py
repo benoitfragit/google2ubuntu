@@ -18,6 +18,8 @@ t.install()
 # pause media player if necessary
 config = expanduser('~')+'/.config/google2ubuntu/google2ubuntu.conf'
 paused = False
+has_key = False
+
 try:
     with open(config,"r") as f:
         for line in f.readlines():
@@ -28,13 +30,16 @@ try:
                 paused = True
             elif field[0] == 'play':
                 play_command = field[1].replace('"','')
+            elif field[0] == 'key' and field[1].replace('"','') != ''
+                    has_key = True
+                
 except Exception:
     print 'Error reading google2ubuntu.conf file'
 
-# launch the recognition                    
-g2u = interface()
+if has_key == True:
+    # launch the recognition                    
+    g2u = interface()
 
-# restore media player state
-print paused
-if paused:
-    os.system(play_command+' &')
+    # restore media player state
+    if paused:
+        os.system(play_command+' &')

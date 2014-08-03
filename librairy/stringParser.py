@@ -15,7 +15,7 @@ class stringParser():
     """
     def __init__(self,text,File,PID):
         # read configuration files
-        self.pid=PID
+        self.pid=PID        
         try:
             max = 0
             text=text.lower()

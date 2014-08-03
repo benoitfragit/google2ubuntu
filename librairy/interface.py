@@ -18,14 +18,14 @@ class interface():
     """
     def __init__(self):
         # make the program able to switch language
-        self.p = os.path.dirname(os.path.abspath(__file__)).strip('librairy')        
+        self.p = os.path.dirname(os.path.abspath(__file__)).strip('librairy')
 
         localeHelper = LocaleHelper('en_EN')
 
         self.lang = localeHelper.getLocale()
         # this line can be remove if we modify the config/en_EN to config/en
         #self.lang = self.lang+'_'+self.lang.upper()
-   
+
         # Initialisation des notifications
         self.PID = str(os.getpid())
         os.system('rm /tmp/g2u_*_'+self.PID+' 2>/dev/null')
@@ -39,11 +39,9 @@ class interface():
         command =self.p+'record.sh ' + self.PID
         p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         output,error  = p.communicate()
-
         # return to 16kHz
         os.system(self.p+'convert.sh '+self.PID)
-        
-        self.sendto()    
+        self.sendto()
 
     def sendto(self):
         """
@@ -54,15 +52,15 @@ class interface():
         f = open(filename)
         data = f.read()
         f.close()
-        
+
         # suppression du fichier audio
         if os.path.exists('/tmp/voix_'+self.PID+'.flac'):
             os.system('rm /tmp/voix_'+self.PID+'.flac')
-        
+
         # fichier de configuration
         config = expanduser('~') + '/.config/google2ubuntu/google2ubuntu.xml'
         default = self.p +'config/'+self.lang+'/default.xml'
-        
+
         if os.path.exists(config):
             config_file = config
         else:
@@ -72,25 +70,24 @@ class interface():
                 os.system('cp -r '+self.p+'/modules '+expanduser('~') +'/.config/google2ubuntu')
             if os.path.exists(default) == False:
                 default = self.p+'config/en_EN/default.xml'
-                
+
             config_file = default
-        
+
         print 'config file:', config_file
         try:
             # envoie une requête à Google
-            req = urllib2.Request('https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang='+self.lang, data=data, headers={'Content-type': 'audio/x-flac; rate=16000'})  
+            req = urllib2.Request('https://www.google.com/speech-api/v2/recognize?output=json&lang='+self.lang+'&key=AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw&client=chromium', data=data, headers={'Content-type': 'audio/x-flac; rate=16000'})
             # retour de la requête
             ret = urllib2.urlopen(req)
-            
-            # before parsing we need to eliminate eventually empty result when sox bug
-            # ret= ((ret.read()).split('}'))[0]+'}]}'
-
+            response = ret.read()
+            response = response.split('\n', 1)[1]
+            text = response.split('"transcript":"',2)[1].split('"',2)[0]
             # parsing du retour
-            text=json.loads(ret.read())['hypotheses'][0]['utterance']
+            #text=json.load(response)
             os.system('echo "'+text.encode("utf-8")+'" > /tmp/g2u_result_'+self.PID)
-
+            
             # parsing du résultat pour trouver l'action
-            sp = stringParser(text,config_file,self.PID)                 
+            sp = stringParser(text,config_file,self.PID)
         except Exception:
             message = _('unable to translate')
             os.system('echo "'+message+'" > /tmp/g2u_error_'+self.PID)

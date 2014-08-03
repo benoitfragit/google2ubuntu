@@ -19,11 +19,15 @@ class SetupWindow():
         self.dictation = False
         self.config = expanduser('~')+'/.config/google2ubuntu/google2ubuntu.conf'
         self.threshold = 5
+        self.key = ''
         self.hotword = _('ok start')
         
         # looking for the configuration file
         self.__loadconfig()
 
+        label0=Gtk.Label(_('Set Google Api Key'))
+        label0.set_justify(Gtk.Justification.LEFT)
+        label0.set_halign(Gtk.Align.START)
         label1=Gtk.Label(_('Select your language'))
         label1.set_justify(Gtk.Justification.LEFT)
         label1.set_halign(Gtk.Align.START)
@@ -53,7 +57,11 @@ class SetupWindow():
         self.scale.set_value(self.recording_time)
         self.scale.connect("value-changed", self.scale_moved)
         self.scale.set_tooltip_text(_('Change the recording time'))
-                
+        
+        self.entry0 = Gtk.Entry()
+        self.entry0.set_text(self.key)    
+        self.entry0.set_tooltip_text(_('Set the Googel Api Key'));
+        
         self.entry1 = Gtk.Entry()
         self.entry1.set_text(self.player_play)
         self.entry1.set_tooltip_text(_('Set the play command'))
@@ -108,9 +116,11 @@ class SetupWindow():
         self.grid.attach(self.entry3,11,5,4,1)
         self.grid.attach(label6,0,6,11,1)
         self.grid.attach(self.scale_threshold,11,6,4,1)
-        self.grid.attach(ll,0,7,15,1)
-        self.grid.attach(button_cancel,13,8,1,1)
-        self.grid.attach(button_back,14,8,1,1) 
+        self.grid.attach(label0, 0, 7, 11, 1)
+        self.grid.attach(self.entry0, 11, 7, 4, 1)        
+        self.grid.attach(ll,0,8,15,1)
+        self.grid.attach(button_cancel,13,9,1,1)
+        self.grid.attach(button_back,14,9,1,1) 
        
     # load the config    
     def __loadconfig(self):
@@ -134,6 +144,8 @@ class SetupWindow():
                                 self.hotword = field[1].replace('"','')
                             elif field[0] == 'threshold':
                                 self.threshold = int(field[1])
+                            elif field[0] == 'key':
+                                self.key = field[1].replace('"','')
                 
                 # here we check mode
                 if os.path.exists('/tmp/g2u_dictation'):
@@ -152,6 +164,7 @@ class SetupWindow():
                 f.write('locale='+self.locale+'\n')
                 f.write('hotword="'+self.entry3.get_text()+'"\n')
                 f.write('threshold='+str(self.threshold)+'\n')
+                f.write('key='+str(self.key)+'\n')
                 f.close()
         except Exception:
             print 'Config file', self.config
