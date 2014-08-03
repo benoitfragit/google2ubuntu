@@ -3,7 +3,7 @@ google2ubuntu
 
 #UPDATE
 
-Because google speech api v1 is no more working and because the v2 need each user to get a key from google, google2ubuntu is no more avalaible. Maybe a future update will use the v2 and ask users for a key.
+I've updated google2ubuntu in order to be able to use the google web speech api v2. You need to request a key to google.
 
 #Presentation
 
@@ -310,6 +310,7 @@ I've wrote a documentation page with Sphinx
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | simplify module configuration storage
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding an edit button that open an edit window
 | ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | adding an hotword mode
+| ![done](http://www.pronosoft.com/fr/bookmakers/img/logo_ok.png) | Support for google web speech api v2
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | update the documentation
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | improve translation 
 | ![todo](http://www.yabo-concept.ch/admin/themes/YaboConcept/images/icons/system/false.gif) | bug fixe 
