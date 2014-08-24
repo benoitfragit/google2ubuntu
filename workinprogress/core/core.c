@@ -5,6 +5,12 @@
 #include <string.h>
 
 
+typedef struct Word 
+{
+	gint 	occurence;
+	gchar  *w;
+}Word; 
+
 static gint word_list_inspect(gconstpointer data, gconstpointer user_data)
 {
 	gchar *c1 = ((Word *)data)->w;
@@ -164,7 +170,6 @@ Dictionnary* dictionnary_new(const gchar *path)
 	table 	 		 	= g_hash_table_new(g_str_hash, g_str_equal);
 	dico->projections	= g_hash_table_new(g_str_hash, g_str_equal);
 	dico->allwords 	 	= NULL;
-	dico->kmeans		= NULL;
 		
 	fp 	 				= fopen(path, "r");
 	nbr  				= get_num_line(fp);
@@ -240,7 +245,7 @@ Dictionnary* dictionnary_new(const gchar *path)
 					j++;
 				}
 				
-				g_hash_table_insert(table, g_strdup(commands[0]), list[nbr]);
+				g_hash_table_insert(table, g_strdup(g_strstrip(commands[0])), list[nbr]);
 			}
 						
 			if(commands != NULL) g_strfreev(commands);
@@ -284,10 +289,9 @@ void dictionnary_free(Dictionnary *dico)
 	}
 }
 
-gchar* dictionnary_process_request(Dictionnary *dico, gchar *input, gboolean use_clusters)
+gchar* dictionnary_process_request(Dictionnary *dico, gchar *input)
 {
 	g_return_val_if_fail(NULL != input, NULL);
-	if(use_clusters == TRUE) g_return_val_if_fail(NULL != dico->kmeans, NULL);
 	
 	//découpe la chaine
 	gchar **keys		= g_strsplit_set(input, " \n\0", -1);
@@ -337,63 +341,146 @@ gchar* dictionnary_process_request(Dictionnary *dico, gchar *input, gboolean use
 			tab[k] = (gdouble)(((Word *)res->data)->occurence ) / (gdouble) j * log((gdouble)N/(gdouble)w->occurence);			
 		}
 		
-		
 		k++;
 	}	
 	
-	if (use_clusters == FALSE)
+
+	GList	*values		= g_hash_table_get_values(dico->projections);
+	GList   *commands	= g_hash_table_get_keys(dico->projections);
+	//find nearest in all vectors
+	gdouble mdist= 0.0f;	
+	for(i = 0; i< g_list_length(values); ++i)
 	{
-		GList	*values		= g_hash_table_get_values(dico->projections);
-		GList   *commands	= g_hash_table_get_keys(dico->projections);
-		//find nearest in all vectors
-		gdouble mdist= 0.0f;	
-		for(i = 0; i< g_list_length(values); ++i)
+		gdouble* t = g_list_nth_data(values, i);
+		gdouble dist = 0.0f;
+		
+		for(j = 0; j < g_list_length(dico->allwords); ++j)
 		{
-			gdouble* t = g_list_nth_data(values, i);
-			gdouble dist = 0.0f;
+			dist += pow(tab[j] - t[j],2);
+		}
+		
+		if(i == 0 || mdist > dist)
+		{
+			mdist = dist;
 			
-			for(j = 0; j < g_list_length(dico->allwords); ++j)
-			{
-				dist += pow(tab[j] - t[j],2);
-			}
-			
-			if(i == 0 || mdist > dist)
-			{
-				mdist = dist;
-				
-				cmd = g_strdup(g_list_nth_data(commands, i));
-			}
+			cmd = g_strdup(g_list_nth_data(commands, i));
 		}
 	}
-	else
-	{
-		cmd =  kmean_cluster_process_request(dico->kmeans, tab);
-	}
+	
 
 	g_free(tab);
 	return cmd;
 }
 
 
-void dictionnary_clustering(Dictionnary *dico, gint num_class, gint max_iters)
+Dictionnary* dictionnary_new_from_file(const gchar *file)
 {
-	g_return_if_fail(dico != NULL);
+	g_return_val_if_fail(NULL != file, NULL);
+	g_return_val_if_fail(FALSE != g_file_test(file, G_FILE_TEST_EXISTS ), NULL);
 
-	GList *tabs 		= g_hash_table_get_values(dico->projections);
-	GList *commands		= g_hash_table_get_keys(dico->projections);
-	gint num_vectors 	= g_list_length(tabs);
-	gint size_vectors 	= g_list_length(dico->allwords);
-	gint i, j;
+	GKeyFile* keyfile;
+	GKeyFileFlags flags;
+	GError *error = NULL;
+	keyfile = g_key_file_new();
 	
-	g_return_if_fail(num_class < num_vectors);
+	g_key_file_load_from_file (keyfile, file, flags, &error );
 	
-	//processing the kmean
-	dico->kmeans = kmean_cluster_new(max_iters, num_vectors, size_vectors, num_class);
-	kmean_cluster_process(dico->kmeans, tabs, commands);
-	kmean_cluster_display(dico->kmeans);
-	g_hash_table_foreach(dico->projections, projection_destroy, NULL);
-	g_hash_table_destroy(dico->projections);
-	dico->projections = NULL;
-	g_list_free(tabs);
+	flags = G_KEY_FILE_KEEP_COMMENTS;
+	gint i = 0;
+	
+	Dictionnary *dico	= (Dictionnary *)g_malloc0(sizeof(Dictionnary));
+	dico->projections	= g_hash_table_new(g_str_hash, g_str_equal);
+	dico->allwords 	 	= NULL;
+	
+	
+	//get the key in the Dictionnary group
+	gchar **words = g_key_file_get_keys (keyfile,
+										"Dictionnary",
+										NULL,
+										NULL);
+										
+	gchar **projections = g_key_file_get_keys(keyfile,
+										  "Projections",
+										  NULL,
+										  NULL);
+	
+	g_return_val_if_fail(NULL != words, NULL);
+	g_return_val_if_fail(NULL != projections, NULL);
+	
+	do
+	{
+		Word* ww = (Word *)g_malloc0(sizeof(Word));
+		ww->w = g_strdup(words[i]);
+		ww->occurence = g_key_file_get_integer(keyfile, "Dictionnary", words[i], NULL);
+		
+		dico->allwords = g_list_append(dico->allwords, ww);
+		
+		i++;
+	}while(words[i] != NULL);
+	i=0;
+	
+	do
+	{
+		gdouble* tab = g_key_file_get_double_list(keyfile,
+												  "Projections",
+												  projections[i],
+												  NULL,
+												  NULL);
+		
+		g_hash_table_insert(dico->projections, g_strdup(projections[i]), tab); 
+		i++;
+	}while(projections[i] != NULL);
+	
+	g_strfreev(words);
+	g_strfreev(projections);
+	
+	g_key_file_free(keyfile);
+	return dico;
+}
+
+
+void dictionnary_to_file(Dictionnary *dico, gchar *dicFile)
+{
+	g_return_if_fail(NULL != dico);
+	g_return_if_fail(NULL != dicFile);
+	
+	//create a g_key_file to store the dictionnary
+	GKeyFile* keyfile;
+    GError *error = NULL;
+    gsize size;
+    keyfile = g_key_file_new();
+
+
+	
+	//write all words of the dictionnary to the file in a string_list
+	gint words_size = g_list_length(dico->allwords);
+	gint i;
+
+	GList *commands	= NULL;
+	GList *values 	= NULL;
+	
+	for(i = 0; i < words_size; i++) 
+	{
+		Word *w1 = (Word *)g_list_nth_data(dico->allwords, i);
+	 
+		g_key_file_set_integer(keyfile, "Dictionnary", w1->w, w1->occurence);
+	}
+	
+	//write projections in the dictionnary
+	values	 = g_hash_table_get_values(dico->projections);
+	commands = g_hash_table_get_keys(dico->projections);
+	
+	for(i = 0; i < g_list_length(values); i++ )
+	{
+		const gchar* w = g_strdup((gchar *) g_list_nth_data(commands, i));
+		gdouble* tab = (gdouble *)g_list_nth_data(values, i);
+		
+		g_key_file_set_double_list(keyfile, "Projections", w, tab, words_size);
+	}
+		
+	g_key_file_save_to_file (keyfile, dicFile, NULL);
+	
+	g_list_free(values);
 	g_list_free(commands);
+	g_key_file_free(keyfile);
 }
