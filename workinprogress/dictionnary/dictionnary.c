@@ -1,4 +1,4 @@
-#include "core.h"
+#include "dictionnary.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -59,7 +59,7 @@ static void dictionnary_table_print(gpointer key, gpointer data, gpointer user_d
 	}
 }
 
-void dictionnary_display(Dictionnary *dico)
+void dictionnary_display(const Dictionnary *dico)
 {
 	//show dictionnary
 	GList *keys 	= g_hash_table_get_keys(dico->projections);
@@ -289,7 +289,7 @@ void dictionnary_free(Dictionnary *dico)
 	}
 }
 
-gchar* dictionnary_process_request(Dictionnary *dico, gchar *input)
+gchar* dictionnary_process_request(const Dictionnary *dico, const gchar *input)
 {
 	g_return_val_if_fail(NULL != input, NULL);
 	
@@ -439,7 +439,7 @@ Dictionnary* dictionnary_new_from_file(const gchar *file)
 }
 
 
-void dictionnary_to_file(Dictionnary *dico, gchar *dicFile)
+void dictionnary_to_file(const Dictionnary *dico, const gchar *dicFile)
 {
 	g_return_if_fail(NULL != dico);
 	g_return_if_fail(NULL != dicFile);
